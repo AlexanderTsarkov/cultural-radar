@@ -38,6 +38,8 @@ The website must communicate:
 4. research and status updates are performed manually for v0.1;
 5. Polina participates in the final choice.
 
+Ticket quantity, companion entitlement and other gift mechanics are defined by the printed Open Ticket. The website is not required to repeat or explain them.
+
 ## 3. First screen
 
 Approved hierarchy:
@@ -77,7 +79,7 @@ Approved hierarchy:
 
 Exact line breaks may adapt to the viewport. The primary action is `ОТКРЫТЬ РЕПЕРТУАР`.
 
-The restrained service label `ОТКРЫТЫЙ БИЛЕТ · ПОЛИНА + 1` may be shown. Detailed ticket mechanics must not displace the cultural value proposition.
+The first screen explains the cultural-season and curatorial proposition. It does not need to restate ticket quantity, companion entitlement or printed-ticket mechanics.
 
 ## 4. Repertoire
 
@@ -274,7 +276,7 @@ Avoid:
 Gift Edition v0.1 is ready when:
 
 1. the printed QR opens a stable mobile page without login;
-2. the first screen explains the gift and opens the repertoire;
+2. the first screen explains the personal cultural-season proposition and opens the repertoire;
 3. exactly six complete, sourced candidates are visible;
 4. each detail presents event, city, plain-language status, uncertainty and sources;
 5. event and city ratings work independently;
@@ -297,6 +299,7 @@ Gift Edition v0.1 does not require:
 - automated crawling, monitoring or notifications;
 - CMS or administration;
 - formal candidate lifecycle or action-posture state machines;
+- restating ticket quantity, `Полина + 1` or companion entitlement on the website;
 - ticket checkout or travel planning;
 - public marketplace architecture;
 - production-scale reliability or compliance programmes;
