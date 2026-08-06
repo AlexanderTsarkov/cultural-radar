@@ -173,7 +173,7 @@ Open Ticket v0.5 remains unchanged.
 - transparent summary score `eventRating + cityRating`;
 - screenshot-ready summary;
 - non-empty comments included in the share result when practical;
-- system Share contract with screenshot/manual-send fallback;
+- system Share contract with a complete copyable-text fallback and optional multi-screenshot/manual-send guidance;
 - mobile-first visual grammar aligned with Open Ticket v0.5;
 - reduced-motion-safe behaviour.
 
@@ -254,7 +254,7 @@ Persistent navigation is not required. A compact sticky affordance may expose `�
 17. Polina may return and revise any rating or comment; the summary updates immediately.
 18. Polina taps `Отправить художественному совету`.
 19. Where system Share is available, the browser share sheet opens with the result and page URL.
-20. Where Share is unavailable, fails or is cancelled, the page shows screenshot/manual-send instructions without claiming transmission.
+20. Where Share is unavailable, fails or is cancelled, the page preserves and exposes the complete text result, offers `Копировать результат`, supports manual text selection, and may additionally suggest multiple screenshots covering all six candidates. It never claims transmission.
 
 No step may imply that ratings or comments are already visible on another device.
 
@@ -599,6 +599,8 @@ Future product versions may add decision and fulfilment states when a user follo
 - sharing does not lock any input;
 - another browser, another device or cleared browser data does not inherit the inputs.
 
+Shared persistence, authentication, server storage and cross-device restoration are not conditional v0.1 options. They require a later owner-authorised iteration and different user-facing disclosure.
+
 ### 15.2 Required copy after first save
 
 > **Ваш выбор сохранён**  
@@ -622,10 +624,13 @@ Primary action:
 
 P0 uses the system share sheet where supported. The payload contains:
 
-- concise `Следующий акт` results;
+- all six `Следующий акт` results;
 - each candidate's total and component ratings;
-- non-empty candidate comments when the payload remains readable;
+- compact candidate status;
+- every non-empty candidate comment;
 - the page URL.
+
+The complete text payload is generated independently of system Share so the same full result can be copied when Share is unavailable or cancelled.
 
 Example:
 
@@ -634,27 +639,51 @@ Example:
 
 1. Парсифаль — 9/10
    Событие 5 · Город 4
+   Статус: Ждём даты
    Комментарий: Очень интересно, но важны даты.
 
 2. Пахита — 8/10
    Событие 4 · Город 4
+   Статус: Продажи открыты
+
+...
+
+6. [Кандидат] — 5/10
+   Событие 3 · Город 2
+   Статус: Ждём программу
 
 Культурный радар Полины · Сезон 2026/27
+[page URL]
 ```
 
-The URL does not contain device-local ratings or comments. They must be present in shared text or in a screenshot.
+The URL does not contain device-local ratings or comments. It must not be treated as a substitute for the complete result text.
 
-If sharing is unsupported, fails or is cancelled:
+If system Share is unsupported, fails or is cancelled:
 
 - do not claim the result was sent;
-- preserve the summary;
-- show screenshot/manual-send guidance;
-- allow retry.
+- preserve the summary and the complete generated text;
+- expose the full text in a selectable region;
+- provide action `КОПИРОВАТЬ РЕЗУЛЬТАТ`;
+- copy all six candidates, component ratings, totals, compact statuses and all non-empty comments;
+- after successful clipboard copy, show `Результат скопирован`, not `Отправлено`;
+- if the Clipboard API is unavailable or fails, keep the full text selectable for manual copying;
+- allow Share and copy retry;
+- screenshots may be offered only as an additional option and must explicitly instruct the user to capture multiple screens when one viewport does not include all six candidates.
 
 Required fallback copy:
 
 > **Результат ещё не отправлен**  
-> Сделайте скриншот этого экрана и отправьте его художественному совету.
+> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите текст вручную или сделайте несколько скриншотов, чтобы были видны все шесть кандидатов.
+
+Fallback action:
+
+```text
+КОПИРОВАТЬ РЕЗУЛЬТАТ
+```
+
+Clipboard success copy:
+
+> Результат скопирован.
 
 A generated share image is optional and not P0.
 
@@ -844,6 +873,7 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
    Событие 4 · Город 4 · Продажи открыты
 
 [ ОТПРАВИТЬ ХУДОЖЕСТВЕННОМУ СОВЕТУ ]
+[ КОПИРОВАТЬ РЕЗУЛЬТАТ ]
 ```
 
 ## 20. Implementation-readiness checklist
@@ -857,6 +887,7 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
 - [ ] Device-local comments use stable candidate keys.
 - [ ] Summary unlock requires both ratings for all six candidates.
 - [ ] System Share is feature-detected.
+- [ ] Clipboard copy is feature-detected and has a selectable-text fallback.
 - [ ] Reduced-motion preference is respected.
 - [ ] No backend, auth, database or automated monitoring infrastructure is introduced.
 
@@ -902,6 +933,9 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
 - [ ] Non-empty comments can be represented in the summary/share result.
 - [ ] Summary remains screenshot-ready.
 - [ ] Share cancellation or failure never claims successful sending.
+- [ ] Complete text for all six candidates remains available after Share failure or cancellation.
+- [ ] `Копировать результат` copies the complete payload; manual selection remains possible when clipboard access fails.
+- [ ] Screenshot guidance requires multiple captures when one viewport cannot contain the complete summary.
 
 ### 20.5 Cross-issue validation
 
@@ -933,7 +967,7 @@ The owner approved:
 15. no terminal selection or purchase states in v0.1;
 16. required P0 comment control with optional user input;
 17. device-local persistence wording for ratings and comments;
-18. system text sharing with screenshot/manual-send fallback;
+18. system text sharing with a complete copyable-text fallback and optional multi-screenshot/manual-send guidance;
 19. the visual direction and reference principles;
 20. this document as the implementation contract for issues #4–#7.
 
