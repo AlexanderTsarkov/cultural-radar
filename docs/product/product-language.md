@@ -297,10 +297,22 @@ Required summary note:
 
 > Результат пока хранится только на этом устройстве и ещё не отправлен.
 
-Required fallback:
+Required fallback heading and instruction:
 
 > **Результат ещё не отправлен**  
-> Сделайте скриншот этого экрана и отправьте его художественному совету.
+> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите текст вручную или сделайте несколько скриншотов, чтобы были видны все шесть кандидатов.
+
+Fallback action:
+
+```text
+КОПИРОВАТЬ РЕЗУЛЬТАТ
+```
+
+Success message after clipboard copy:
+
+> Результат скопирован.
+
+`Результат скопирован` confirms only a clipboard operation. It must not be replaced by `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
 Avoid `Ваш голос принят`, `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
