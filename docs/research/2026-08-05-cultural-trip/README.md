@@ -17,7 +17,7 @@ The report serves four explicit roles:
 
 - Research date: **2026-08-05**.
 - Imported into the repository: **2026-08-06**.
-- Primary source artifact: the original Word export of the deep-research report, which retained clickable official-source hyperlinks.
+- Source-recovery artifact: the user-provided original Word export of the deep-research report, which retained clickable official-source hyperlinks lost from the Markdown export.
 - Repository transcription: the report is split into three Markdown files only to keep review manageable.
 - Resolvable source URLs and recovered `turn...` mappings are stored in [`sources.md`](./sources.md).
 - The wording and conclusions are preserved as the research output.
