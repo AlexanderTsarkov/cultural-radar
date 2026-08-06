@@ -21,6 +21,41 @@ For Gift Edition v0.1, this document governs exact hierarchy, copy direction, na
 
 The contract does not assert current event dates, ticket sales or seat availability. Issue #5 must revalidate all publishable candidate facts.
 
+### 1.1 Delivery and assurance profile
+
+Gift Edition v0.1 is a time-bounded personal gift experience for one known recipient, not a public marketplace, safety-critical system or autonomous cultural-recommendation platform.
+
+The website supports presentation and participation:
+
+- it presents six manually curated cultural candidates;
+- it explains known facts, uncertainty and current status;
+- it collects device-local event ratings, city ratings and optional comments;
+- it produces a complete result that Polina can share with the artistic council.
+
+Editorial research, candidate validation, monitoring, status updates, communication and the final travel/event decision remain human-operated in v0.1. Manual operation and manual fallback are intentional parts of the delivery model, not temporary failures that must be replaced before release.
+
+Review and implementation should prioritise:
+
+- a working QR-to-mobile flow;
+- understandable gift and candidate presentation;
+- correct local saving of ratings and comments;
+- preservation of the complete shared result;
+- honest wording about local storage and manual monitoring;
+- usable core controls on an ordinary mobile browser;
+- no unsupported factual claims about events, dates or availability.
+
+Gift Edition v0.1 does not require:
+
+- enterprise availability or scalability;
+- accounts, authentication or cross-device state;
+- automated monitoring, crawling or notifications;
+- distributed consistency, audit logs or operational dashboards;
+- exhaustive recovery from every browser or platform limitation;
+- formal safety, compliance or threat-modelling processes beyond reasonable static-site and browser-local-storage hygiene;
+- elimination of every minor terminology difference that the owner has explicitly reviewed and accepted.
+
+A review finding is release-blocking when it can break the personal gift flow, lose or materially misrepresent Polina's input, publish unsupported event information, or make a required mobile interaction unusable. Minor implementation preferences, speculative future-platform concerns and owner-accepted limitations are non-blocking for Gift Edition v0.1.
+
 ## 2. Approved experience statement
 
 > Polina opens the printed Open Ticket and enters a personal cultural season that is already underway. She sees a small curated repertoire in which an event, a city and the people to share it with form one possible experience. For each candidate, she understands why it matters, what is confirmed, what remains unknown and what Cultural Radar is following. She rates the event and city separately, may leave a comment for the artistic council, reviews the completed result in `Следующий акт`, and shares a compact summary.
