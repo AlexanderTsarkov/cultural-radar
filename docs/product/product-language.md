@@ -314,6 +314,8 @@ Success message after clipboard copy:
 
 `Результат скопирован` confirms only a clipboard operation. It must not be replaced by `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
+A screenshot fallback must never imply that one viewport is sufficient. When screenshots are used, instruct the user to make enough captures to include all six candidates and any non-empty comments.
+
 Avoid `Ваш голос принят`, `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
 ## 10. Naming decisions not yet final
