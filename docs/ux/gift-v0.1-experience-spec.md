@@ -200,15 +200,15 @@ Open Ticket v0.5 remains unchanged.
 - city rating `1–5` keyed by stable city identity;
 - human scale explanations for all five values;
 - editable `Комментарий художественному совету` control for every candidate;
-- device-local comment persistence, editing and removal;
+- immediate device-local comment persistence, editing and removal without pending writes that can be lost on navigation;
 - visible evaluation state on each repertoire card;
 - automatic device-local rating persistence;
 - progress `Оценено X из 6`;
 - `Следующий акт` unlocked after all six candidates have both ratings;
 - transparent summary score `eventRating + cityRating`;
-- screenshot-ready summary;
+- screenshot-ready summary as a visual quality, not as a complete-result fallback;
 - every non-empty candidate comment included in every complete Web Share, clipboard-copy and manually selectable result payload;
-- system Share contract with a complete copyable-text fallback and optional multi-screenshot/manual-send guidance;
+- system Share contract with complete fallback through clipboard copy and manual text selection;
 - mobile-first visual grammar aligned with Open Ticket v0.5;
 - reduced-motion-safe behaviour.
 
@@ -266,7 +266,7 @@ QR entry
     └── Complete share/copy result with every non-empty comment
 ```
 
-Persistent navigation is not required. A compact sticky affordance may expose `На радаре`, progress and the locked or active `Следующий акт`, provided it does not obstruct screenshots or reading.
+Persistent navigation is not required. A compact sticky affordance may expose `На радаре`, progress and the locked or active `Следующий акт`, provided it does not obstruct reading.
 
 ## 7. Full user flow
 
@@ -280,16 +280,17 @@ Persistent navigation is not required. A compact sticky affordance may expose `�
 8. The detail explains the artistic case, city case, trip scale, confirmed facts, unknowns, status, dates, next expected update, action posture and sources.
 9. Polina rates the event and city separately.
 10. She may enter or edit `Комментарий художественному совету`.
-11. Ratings and comment save only in the current browser on the current device.
-12. Polina moves directly to the previous or next candidate without returning to the carousel, or returns to `На радаре` at any point.
-13. The repertoire card shows whether evaluation is absent, partial or complete and displays current scores when present.
-14. At any point she may open `Как работает радар` or the status explanation.
-15. `Следующий акт` remains inactive until all six candidates have both ratings.
-16. After completion, `Следующий акт` displays all six candidates sorted by the transparent score.
-17. Polina may return and revise any rating or comment; the summary updates immediately.
-18. Polina taps `Отправить художественному совету`.
-19. Where system Share is available, the browser share sheet opens with the complete result and page URL.
-20. Where Share is unavailable, fails or is cancelled, the page preserves and exposes the complete text result, offers `Копировать результат`, supports manual text selection, and may additionally suggest multiple screenshots covering all six candidates. It never claims transmission.
+11. Ratings and the latest comment value save only in the current browser on the current device.
+12. Before Polina leaves the detail, opens `Следующий акт`, shares or copies the result, the latest in-memory comment value is committed so the final edit cannot be lost.
+13. Polina moves directly to the previous or next candidate without returning to the carousel, or returns to `На радаре` at any point.
+14. The repertoire card shows whether evaluation is absent, partial or complete and displays current scores when present.
+15. At any point she may open `Как работает радар` or the status explanation.
+16. `Следующий акт` remains inactive until all six candidates have both ratings.
+17. After completion, `Следующий акт` displays all six candidates sorted by the transparent score.
+18. Polina may return and revise any rating or comment; the summary updates immediately.
+19. Polina taps `Отправить художественному совету`.
+20. Where system Share is available, the browser share sheet opens with the complete result and page URL.
+21. Where Share is unavailable, fails or is cancelled, the page preserves and exposes the complete text result, offers `Копировать результат` and supports manual text selection. It never claims transmission.
 
 No step may imply that ratings or comments are already visible on another device.
 
@@ -487,7 +488,10 @@ The control must be usable on mobile and must not be hidden behind an optional f
 ### 12.2 Behaviour
 
 - empty comment is allowed;
-- save locally after input change, using a reasonable debounce if needed;
+- update the in-memory comment value immediately on every edit;
+- save the latest comment value to device-local storage immediately after every edit;
+- before previous/next navigation, return to `На радаре`, opening `Следующий акт`, Web Share, clipboard copy, manual-result generation, blur or unmount, commit the latest in-memory value;
+- do not use a debounce that can leave a pending write behind when the detail closes or the result is generated;
 - restore in the same browser and device;
 - allow editing and complete removal;
 - do not require a comment before moving to the next candidate;
@@ -544,7 +548,7 @@ A non-empty comment may appear beneath the corresponding candidate, in a compact
 
 ### 13.3 Editing after completion
 
-Ratings and comments remain editable after the summary opens. Any rating change immediately recalculates order and the screenshot/share result. Comment changes update every complete share/copy payload without changing order.
+Ratings and comments remain editable after the summary opens. Any rating change immediately recalculates order, the visible summary and the complete share/copy result. Comment changes update every complete share/copy payload without changing order.
 
 ## 14. Candidate status and dates
 
@@ -628,7 +632,8 @@ Future product versions may add decision and fulfilment states when a user follo
 ### 15.1 Required behaviour
 
 - every rating saves immediately;
-- comments save locally after editing;
+- the latest comment value saves immediately after every edit;
+- the latest in-memory comment value is committed before navigation, detail close/unmount, summary generation, Web Share or clipboard copy;
 - ratings and comments restore when the page is reopened in the same browser on the same device;
 - ratings and comments remain editable;
 - summary order recalculates after rating edits;
@@ -666,7 +671,7 @@ P0 uses the system share sheet where supported. The payload contains:
 - every non-empty candidate comment;
 - the page URL.
 
-The complete text payload is generated independently of system Share so the same full result can be copied when Share is unavailable or cancelled. Web Share, clipboard copy and manual selection must use the same complete comment-preserving payload.
+Before generating the payload, the application commits the latest in-memory comment value. The complete text payload is generated independently of system Share so the same full result can be copied when Share is unavailable or cancelled. Web Share, clipboard copy and manual selection must use the same complete comment-preserving payload.
 
 Example:
 
@@ -705,13 +710,14 @@ If system Share is unsupported, fails or is cancelled:
 - copy all six candidates, component ratings, totals, compact statuses and all non-empty comments;
 - after successful clipboard copy, show `Результат скопирован`, not `Отправлено`;
 - if the Clipboard API is unavailable or fails, keep the full text selectable for manual copying;
-- allow Share and copy retry;
-- screenshots may be offered only as an additional option and must explicitly instruct the user to capture multiple screens when one viewport does not include all six candidates.
+- allow Share and copy retry.
+
+Clipboard copy and manual text selection are the complete-result fallback paths. Screenshots may be used for personal convenience, but must not be presented as a substitute for the complete comment-preserving text payload.
 
 Required fallback copy:
 
 > **Результат ещё не отправлен**  
-> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите текст вручную или сделайте несколько скриншотов, чтобы были видны все шесть кандидатов.
+> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите полный текст вручную.
 
 Fallback action:
 
@@ -923,6 +929,7 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
 - [ ] Candidate detail supports direct previous/next navigation.
 - [ ] Device-local ratings use stable candidate and city keys.
 - [ ] Device-local comments use stable candidate keys.
+- [ ] Latest comment edits are committed before navigation, detail close, summary, Share and copy.
 - [ ] Summary unlock requires both ratings for all six candidates.
 - [ ] System Share is feature-detected.
 - [ ] Clipboard copy is feature-detected and has a selectable-text fallback.
@@ -963,17 +970,17 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
 - [ ] Card evaluation state supports absent, partial and complete ratings.
 - [ ] Every candidate has an editable comment control.
 - [ ] Comment may be saved, restored, edited and removed locally.
+- [ ] The latest comment value cannot be lost by navigation, detail close, summary generation, Share or copy.
 - [ ] Comment does not affect rating completion or sorting.
 - [ ] Device-local disclosure covers ratings and comments.
 - [ ] `Следующий акт` remains inactive until all six candidates are complete.
 - [ ] Summary contains all six candidates sorted by transparent sum.
 - [ ] Component ratings remain visible beside the total.
 - [ ] Every non-empty comment is included in every complete Web Share, clipboard-copy and manually selectable result payload.
-- [ ] Summary remains screenshot-ready.
+- [ ] Summary remains visually screenshot-ready, but screenshots are not presented as a complete-result fallback.
 - [ ] Share cancellation or failure never claims successful sending.
 - [ ] Complete text for all six candidates remains available after Share failure or cancellation.
 - [ ] `Копировать результат` copies the complete payload; manual selection remains possible when clipboard access fails.
-- [ ] Screenshot guidance requires multiple captures when one viewport cannot contain the complete summary.
 
 ### 20.5 Cross-issue validation
 
@@ -1004,8 +1011,8 @@ The owner approved:
 14. required per-candidate action posture data;
 15. no terminal selection or purchase states in v0.1;
 16. required P0 comment control with optional user input;
-17. device-local persistence wording for ratings and comments;
-18. system text sharing with every non-empty comment preserved across Web Share, clipboard copy and manual selection, plus optional multi-screenshot guidance;
+17. immediate device-local persistence for the latest comment value before navigation or result generation;
+18. system text sharing with every non-empty comment preserved across Web Share, clipboard copy and manual selection; screenshots are not a complete-result fallback;
 19. the visual direction and reference principles;
 20. this document as the implementation contract for issues #4–#7.
 
