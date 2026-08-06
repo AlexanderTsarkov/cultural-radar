@@ -23,13 +23,15 @@ Do not describe manual v0.1 follow-up as automated monitoring.
 
 The printed gift artifact.
 
-Approved form:
+Approved print form:
 
 - `Открытый билет · Полина + 1`.
 
 Core phrase:
 
 > Событие ещё не выбрано. Впечатление уже подарено.
+
+`Полина + 1`, ticket quantity and companion entitlement belong to the printed artifact. They are not required website copy and must not be inferred as website acceptance criteria.
 
 ### На радаре
 
