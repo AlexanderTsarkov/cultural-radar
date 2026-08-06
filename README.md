@@ -31,6 +31,7 @@ GitHub is the canonical project workspace. Dated research snapshots preserve sou
 - [Active iteration](ITERATION.md)
 - [AI agent operating policy](AGENTS.md)
 - [Local AI execution overlay](CLAUDE.md)
+- [ChatGPT project context](docs/chatgpt/README.md)
 
 ## Documentation
 
