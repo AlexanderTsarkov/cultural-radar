@@ -84,7 +84,7 @@ Meaning in Gift Edition v0.1:
 - shows every candidate, not only a shortlist;
 - orders candidates by the transparent sum of the two ratings;
 - preserves separate event and city values;
-- provides the screenshot-ready result sent to the artistic council.
+- provides a complete share-ready result for the artistic council.
 
 Canonical usage:
 
@@ -300,7 +300,7 @@ Required summary note:
 Required fallback heading and instruction:
 
 > **Результат ещё не отправлен**  
-> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите текст вручную или сделайте несколько скриншотов, чтобы были видны все шесть кандидатов.
+> Скопируйте полный результат и отправьте его художественному совету. Если копирование недоступно, выделите полный текст вручную.
 
 Fallback action:
 
@@ -314,7 +314,7 @@ Success message after clipboard copy:
 
 `Результат скопирован` confirms only a clipboard operation. It must not be replaced by `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
-A screenshot fallback must never imply that one viewport is sufficient. When screenshots are used, instruct the user to make enough captures to include all six candidates and any non-empty comments.
+Clipboard copy and manual text selection are the complete-result fallback paths. Screenshots may be used for personal convenience, but must not be presented as a substitute for the complete comment-preserving text payload.
 
 Avoid `Ваш голос принят`, `Отправлено` or any equivalent unless transmission can actually be confirmed.
 
