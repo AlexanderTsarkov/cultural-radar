@@ -1,243 +1,35 @@
-# Domain Model: Cultural Candidate
+# Gift Edition v0.1 Candidate Model
 
-## 1. Purpose
+## 1. Authority
 
-This document defines the minimum domain model required for Gift Edition v0.1 while preserving distinctions needed by a future Cultural Radar product.
+This document is a minimal implementation aid for issue #5 and is subordinate to `docs/ux/gift-v0.1-experience-spec.md`.
 
-The model must support incomplete cultural information. A candidate may exist before there is a concrete date, venue or ticket page.
+It does not define additional product behaviour. Gift Edition v0.1 needs a small typed local dataset, not a general Cultural Radar domain platform.
 
-Exact Gift Edition interaction behaviour is defined by `docs/ux/gift-v0.1-experience-spec.md`.
+## 2. Required candidate data
 
-## 2. Core entities
+A published candidate must contain enough information to render its card and detail honestly:
 
-### Candidate
-
-A candidate is an item included in a particular personal repertoire.
-
-It answers:
-
-- why this item is relevant to this user or group;
-- what is currently known;
+- stable candidate ID and slug;
+- title and event type;
+- organisation or organiser;
+- city with stable city ID;
+- venue when known;
+- concise factual summary;
+- separate event and city rationales;
+- known date label or an honest statement that dates are not known;
+- plain-language current status;
 - what remains uncertain;
-- what Cultural Radar should follow next;
-- whether any practical action is currently possible;
-- which evidence supports the current statement.
+- what will be checked next, when useful;
+- at least one primary or official source;
+- optional image and credit;
+- editorial order from 1 to 6.
 
-A candidate is not always the same as a production or a scheduled performance. It is the editorial and user-specific observation object.
+The dataset contains exactly six publishable candidates.
 
-### Production
-
-A distinct artistic work or staging, for example:
-
-- a specific production of an opera;
-- a ballet by a particular choreographer;
-- a theatre performance by a specific company;
-- a festival programme or concert concept.
-
-A production may exist without a current scheduled performance.
-
-### Event
-
-A concrete occurrence of a production or cultural programme:
-
-- date and time;
-- city;
-- venue;
-- cast or programme, if applicable;
-- ticket availability.
-
-One production may have multiple events in different cities or dates.
-
-### Organisation
-
-A theatre, company, festival, orchestra, promoter or other organiser connected to the production or event.
-
-### Venue
-
-A specific performance location or hall.
-
-A venue is distinct from the organisation. A visiting company may perform at another organisation's venue.
-
-### City
-
-A destination or home city evaluated independently from the event.
-
-The city may carry:
-
-- editorial description;
-- travel value;
-- practical travel notes;
-- user rating;
-- multiple candidate events.
-
-### Source
-
-A page or publication supporting a factual claim.
-
-Examples:
-
-- official theatre announcement;
-- festival programme;
-- official ticket page;
-- season press release;
-- primary social-media announcement;
-- secondary discovery source.
-
-A source records which claim it supports and whether it is primary or secondary.
-
-### Availability status
-
-The current evidence and operational stage of the candidate: discovery, announcement, programme, dates, sales or suitable seats.
-
-### Action posture
-
-The practical consequence of the current candidate information:
-
-- `watching` — no practical action is available yet; Cultural Radar continues to follow the candidate;
-- `planning_possible` — dates or a sufficiently concrete period are known and planning can begin, but ticket action is not yet available or not yet appropriate;
-- `ticket_action_available` — current evidence supports a ticket-related action.
-
-Action posture concerns the real-world candidate situation. It is not a rating, navigation state or final selection.
-
-### Event rating
-
-Polina's `1–5` assessment of how much she wants to see a specific candidate.
-
-### City rating
-
-Polina's `1–5` assessment of how much she wants to be in or travel to a stable city identity.
-
-### Evaluation progress
-
-A derived presentation state indicating whether a candidate has neither rating, one rating or both ratings.
-
-### Comment
-
-An optional note for the artistic council connected to a candidate.
-
-The comment value is optional, but the comment control is a required Gift Edition v0.1 interaction.
-
-## 3. Availability lifecycle
-
-Canonical v0.1 states:
-
-```text
-research_candidate
-officially_announced
-waiting_for_programme_or_confirmation
-waiting_for_dates
-dates_published
-waiting_for_sales
-sales_open
-suitable_seats_available
-archived
-```
-
-Human labels are defined in `docs/product/product-language.md`.
-
-### State semantics
-
-#### `research_candidate`
-
-The item was discovered in research but requires additional confirmation. It is not automatically publishable.
-
-#### `officially_announced`
-
-A primary source confirms the production, festival or relevant programme.
-
-#### `waiting_for_programme_or_confirmation`
-
-A festival, city direction or other cultural proposition is known, but the programme or concrete publishable candidate remains incomplete.
-
-#### `waiting_for_dates`
-
-The cultural event is sufficiently confirmed, but a concrete suitable date is not yet published.
-
-#### `dates_published`
-
-At least one concrete event date in the target period is known.
-
-#### `waiting_for_sales`
-
-A suitable date exists, but tickets are not yet on sale.
-
-#### `sales_open`
-
-Tickets are publicly available. This does not mean that the required suitable seats exist.
-
-#### `suitable_seats_available`
-
-The required quantity and quality of seats appear purchasable.
-
-For the Polina Gift Edition, the operational target is four seats: two gifted seats and two seats for the donors.
-
-#### `archived`
-
-The candidate is no longer active, became impossible or moved to historical records.
-
-## 4. Important modelling rules
-
-### 4.1 Availability is not navigation
-
-`На радаре` and `Следующий акт` are interface destinations in Gift Edition v0.1. They are not values of `availabilityStatus`.
-
-### 4.2 Availability is not evaluation
-
-Event and city ratings never alter candidate availability or action posture.
-
-A candidate may be:
-
-- `waiting_for_dates` with ratings `5/5` and `4/5`;
-- `sales_open` but still unrated;
-- `suitable_seats_available` with low user interest.
-
-### 4.3 No selection state in Gift Edition v0.1
-
-Gift Edition v0.1 does not store per-candidate `shortlisted`, `keep`, `reject`, `selected` or `purchased` states.
-
-`Следующий акт` contains all six completed evaluations. It is not a shortlist Boolean.
-
-Future product versions may add separate decision and fulfilment dimensions when users choose or manage multiple events. Those future dimensions must not be folded into `availabilityStatus`, ratings or navigation.
-
-### 4.4 Required publishable-candidate information
-
-Every publishable candidate must provide all fields needed by the status contract:
-
-- current status;
-- human status explanation;
-- known facts;
-- unknown facts, using an empty array when nothing material is currently unknown;
-- next expected update;
-- action posture;
-- supporting sources.
-
-These fields are required even when the answer is `none known`, `not applicable` or an empty list. Absence of a field must not be used to represent an explicit empty state.
-
-Supporting sources are the exception to the empty-list rule: a publishable candidate must always have at least one source.
-
-## 5. Gift Edition v0.1 representation
-
-For delivery speed, v0.1 may use a flattened local structure.
-
-Recommended TypeScript shape:
+## 3. Minimal TypeScript shape
 
 ```ts
-export type AvailabilityStatus =
-  | "research_candidate"
-  | "officially_announced"
-  | "waiting_for_programme_or_confirmation"
-  | "waiting_for_dates"
-  | "dates_published"
-  | "waiting_for_sales"
-  | "sales_open"
-  | "suitable_seats_available"
-  | "archived";
-
-export type ActionPosture =
-  | "watching"
-  | "planning_possible"
-  | "ticket_action_available";
-
 export interface CandidateSource {
   label: string;
   url: string;
@@ -253,17 +45,12 @@ export interface Candidate {
   title: string;
   eventType: string;
 
-  production?: {
-    title: string;
-    creators?: string[];
-    description?: string;
-  };
-
   organisation: {
     name: string;
-    type?: string;
     officialUrl?: string;
   };
+
+  creatorNames?: string[];
 
   venue?: {
     name: string;
@@ -274,28 +61,19 @@ export interface Candidate {
     id: string;
     name: string;
     country: string;
-    editorialNote?: string;
-    travelNoteFromMoscow?: string;
   };
 
-  schedule: {
-    dateLabel: string;
-    startDate?: string;
-    endDate?: string;
-    exactDates?: string[];
-  };
+  dateLabel: string;
 
-  availabilityStatus: AvailabilityStatus;
+  statusLabel: string;
   statusNote: string;
-  nextExpectedUpdate: string;
-  actionPosture: ActionPosture;
+  nextExpectedUpdate?: string;
 
   summary: string;
   whyEvent: string;
   whyCity: string;
   knownFacts: string[];
   unknownFacts: string[];
-  risks?: string[];
 
   image?: {
     src: string;
@@ -304,15 +82,43 @@ export interface Candidate {
   };
 
   sources: NonEmptyArray<CandidateSource>;
-
-  tags?: string[];
   sortOrder: 1 | 2 | 3 | 4 | 5 | 6;
 }
 ```
 
-## 6. City identity
+`statusLabel`, `statusNote` and `nextExpectedUpdate` are manually edited display text. They are not a state machine.
 
-Cities must use stable identifiers.
+Examples:
+
+```ts
+{
+  statusLabel: "Ждём даты",
+  statusNote: "Постановка подтверждена, но подходящие даты сезона ещё не опубликованы.",
+  nextExpectedUpdate: "Проверить афишу после публикации осеннего расписания."
+}
+```
+
+```ts
+{
+  statusLabel: "Продажи открыты",
+  statusNote: "Билеты на опубликованные даты доступны на официальной странице."
+}
+```
+
+Gift Edition v0.1 does not require or define:
+
+- an availability lifecycle enum;
+- `archived` or other terminal status keys;
+- `ActionPosture`;
+- `watching`;
+- `planning_possible`;
+- `ticket_action_available`;
+- lifecycle transition validation;
+- shortlist, decision, purchase or fulfilment fields.
+
+## 4. City identity
+
+City ratings are keyed by stable city identity rather than candidate ID.
 
 Example:
 
@@ -324,118 +130,13 @@ Example:
 }
 ```
 
-The same city rating applies across all candidates linked to that city.
+If two candidates use the same city ID, they use the same city rating.
 
-In v0.1 the city object may be duplicated inside a static candidate file for convenience, but application state must derive city identity from `city.id`.
-
-## 7. Local evaluation model
-
-### 7.1 Rating value
+## 5. Local evaluation model
 
 ```ts
 export type RatingValue = 1 | 2 | 3 | 4 | 5;
-```
 
-### 7.2 Event rating
-
-```ts
-export interface EventRating {
-  candidateId: string;
-  value: RatingValue;
-  updatedAt?: string;
-}
-```
-
-Event scale:
-
-- `1` — `Не моё`;
-- `2` — `Скорее не интересно`;
-- `3` — `Интересно, но не приоритет`;
-- `4` — `Очень интересно`;
-- `5` — `Очень хочу увидеть`.
-
-### 7.3 City rating
-
-```ts
-export interface CityRating {
-  cityId: string;
-  value: RatingValue;
-  updatedAt?: string;
-}
-```
-
-City scale:
-
-- `1` — `Не хочется`;
-- `2` — `Скорее не привлекает`;
-- `3` — `Было бы интересно`;
-- `4` — `Очень хочется`;
-- `5` — `Очень хочу поехать`.
-
-### 7.4 Candidate comment
-
-```ts
-export interface CandidateComment {
-  candidateId: string;
-  body: string;
-  updatedAt?: string;
-}
-```
-
-The interface provides an editable `Комментарий художественному совету` control for every candidate.
-
-The user may leave it empty. Empty or whitespace-only text should be treated as no saved comment.
-
-### 7.5 No decision field
-
-Do not add a Gift Edition v0.1 field such as:
-
-```ts
-// Not part of v0.1
-decision: "shortlist" | "keep" | "reject";
-```
-
-Low interest is represented by the rating itself. `Не моё` is the label for event rating `1`, not a rejection command.
-
-### 7.6 Evaluation progress
-
-Progress is derived, not independently authoritative:
-
-```ts
-export type EvaluationProgress =
-  | "not_started"
-  | "partial"
-  | "complete";
-
-export function getEvaluationProgress(
-  eventRating?: RatingValue,
-  cityRating?: RatingValue,
-): EvaluationProgress {
-  if (eventRating && cityRating) return "complete";
-  if (eventRating || cityRating) return "partial";
-  return "not_started";
-}
-```
-
-A candidate is complete only when both ratings exist. A comment does not affect completion.
-
-### 7.7 Storage
-
-For the local-only prototype, ratings and comments may be stored in `localStorage` or an equivalent browser-local abstraction.
-
-Requirements:
-
-- stable candidate and city keys;
-- immediate save after rating selection or comment change;
-- restoration in the same browser and device;
-- editable and removable comments;
-- editable ratings;
-- no implication of shared persistence;
-- no participant identity required for v0.1.
-
-A possible local state shape is:
-
-```ts
 export interface LocalEvaluationState {
   eventRatings: Record<string, RatingValue | undefined>;
   cityRatings: Record<string, RatingValue | undefined>;
@@ -443,151 +144,73 @@ export interface LocalEvaluationState {
 }
 ```
 
-## 8. Summary score
+Rules:
 
-For Gift Edition v0.1:
+- event ratings are keyed by candidate ID;
+- city ratings are keyed by city ID;
+- comments are keyed by candidate ID;
+- ratings and comments are stored only in the current browser and device;
+- rating changes are saved immediately;
+- the latest comment value is saved immediately after each edit;
+- before navigation, detail close, summary generation, Share or Copy, the latest in-memory comment value is committed;
+- comments may be empty, edited or removed;
+- no participant identity is required.
+
+A candidate is complete when both event and city ratings exist. A comment is optional and does not affect completion.
+
+## 6. Summary
+
+For a completed candidate:
 
 ```ts
 combinedScore = eventRating + cityRating;
 ```
 
-The possible range is `2–10`.
-
-The score is used only after both ratings exist and must always be displayed with its components.
+Range: `2–10`.
 
 Summary order:
 
 1. combined score descending;
 2. event rating descending;
-3. original `sortOrder` ascending.
+3. `sortOrder` ascending.
 
-The combined score is transparent orientation, not an opaque recommendation algorithm and not an automatic final decision.
+The interface always shows both component ratings beside the total.
 
-Every non-empty candidate comment is included with the corresponding candidate in every complete Web Share, clipboard-copy and manually selectable result payload. Comments do not affect ordering.
+The total is Polina's transparent two-part score only. The dataset must not include or display synthetic, community, artistic-council or test-data aggregate ratings in Gift Edition v0.1.
 
-## 9. Source requirements
+Every non-empty comment is included with its candidate in every complete Web Share, clipboard-copy and manually selectable result payload.
 
-Every published candidate must contain at least one source and must expose its source links in candidate detail.
+## 7. Source rules
 
-Publication rules:
+Every published candidate must have a non-empty source list and at least one primary or official source.
 
-- `sources` is a non-empty collection;
-- at least one primary source is required for a public Gift Edition candidate;
-- `officially_announced` and all later factual lifecycle stages must be supported by a primary source;
-- dates, sales and suitable-seat claims require a source that supports that specific claim;
-- a secondary discovery source may add context, but it does not replace primary evidence for publication;
-- a candidate without sufficient primary evidence remains `research_candidate` and is not one of the six public cards.
+A source records:
 
-The detail view should present external links as useful paths for further reading, not only as internal evidence metadata. A source label should tell Polina what she can learn there, for example:
-
-- official event or production page;
-- programme and dates;
-- official ticket page;
-- interview, review or editorial context.
-
-Required source fields:
-
-- label;
+- a readable label;
 - URL;
-- source type;
-- supported claim.
+- whether it is primary or secondary;
+- which claim it supports.
 
-The UI must not infer stronger certainty than the sources support.
+Claims about dates, sales or availability require evidence supporting that specific claim.
 
-Optional future fields:
+Secondary sources may add context but cannot replace primary evidence for publication.
 
-- last checked time;
-- content fingerprint;
-- monitoring method;
-- detected change;
-- confidence;
-- source availability.
+A research direction without enough evidence is not one of the six published candidates.
 
-The absence of automated monitoring infrastructure does not change the user-facing candidate status contract. Manual editorial checks may update the same fields.
+The UI exposes source links in candidate detail with readable labels such as:
 
-## 10. Date representation
+- `Официальная страница`;
+- `Программа`;
+- `Афиша и билеты`;
+- `Подробнее`.
 
-The model supports:
+## 8. Data-quality rules
 
-- one concrete performance in `exactDates`;
-- two concrete performances;
-- several exact dates plus a compact `dateLabel` range;
-- a longer `startDate`–`endDate` period;
-- a confirmed festival period with an incomplete programme;
-- a human `dateLabel` such as `Даты ожидаются` when exact dates are absent.
-
-Do not invent exact dates to satisfy the schema.
-
-## 11. Derived presentation values
-
-The UI may derive:
-
-- evaluation progress per candidate;
-- count of complete candidates;
-- event rating;
-- city rating;
-- transparent combined score;
-- summary order;
-- number of candidates in a city;
-- progress through availability stages.
-
-Action posture is explicit candidate data, not an optional inference. Implementations may validate consistency between `availabilityStatus` and `actionPosture`, but must not omit the field.
-
-Do not derive or display shortlist votes in Gift Edition v0.1.
-
-## 12. Data quality rules
-
-- Do not invent exact dates.
-- Do not present a secondary source as official.
-- Preserve uncertainty in `statusNote` and `unknownFacts`.
-- Record city and venue separately.
-- Record organisation and production separately where known.
-- Do not treat ticket availability as equivalent to suitable-seat availability.
-- Keep editorial rationale separate from factual description.
-- Use stable IDs and slugs.
-- Include image credit when required by the source.
-- Keep candidate status separate from ratings.
-- Keep navigation separate from domain state.
-- Keep comments separate from rating completion and ranking.
-- Require a non-empty source list and at least one primary source before publication.
-- Do not publish the Nizhny Novgorod research direction until it becomes a concrete sourced proposition.
-
-## 13. Future decision and fulfilment model
-
-A later product may let a user follow or choose multiple events simultaneously. That future model may require independent fields such as:
-
-```ts
-export type DecisionStatus =
-  | "considering"
-  | "selected";
-
-export type FulfilmentStatus =
-  | "not_started"
-  | "planning"
-  | "purchased"
-  | "completed";
-```
-
-These names and states are illustrative, not approved current schema.
-
-Future decision and fulfilment must remain separate from:
-
-- availability status;
-- event and city ratings;
-- `На радаре` navigation;
-- `Следующий акт` summary.
-
-## 14. Deferred model areas
-
-Gift Edition v0.1 does not need to finalise:
-
-- production deduplication across organisations;
-- cast-specific event identity;
-- complex festival programme hierarchy;
-- seat inventory tracking;
-- automated source-change history;
-- notification subscriptions and channels;
-- user authentication and permissions;
-- public/private repertoire ownership;
-- commercial ticket-provider integration;
-- multi-event decision and fulfilment workflows.
+- Do not invent dates, sales, availability, cast details, URLs or credits.
+- Use `Даты ожидаются` or equivalent honest text when exact dates are unknown.
+- Keep factual summary separate from editorial rationale.
+- Keep event and city rationales separate.
+- Keep status text separate from ratings.
+- Keep navigation separate from candidate data.
+- Do not publish an empty Nizhny Novgorod placeholder.
+- Do not add fields for speculative future product behaviour during v0.1 implementation.
