@@ -6,86 +6,138 @@ Present the gift on **8 August 2026**.
 
 ## Goal
 
-Deliver a coherent mobile-first gift experience opened from the printed Open Ticket QR. Polina must understand the two-ticket gift, inspect the curated candidates, evaluate events and cities separately, leave feedback and see how candidates progress toward a real date and available ticket.
+Deliver a coherent mobile-first cultural-season experience opened from the printed Open Ticket QR. Polina should understand the curatorial idea, inspect six curated candidates, rate events and cities separately, leave optional comments and share the completed result.
+
+This is a time-bounded personal gift with human-operated editorial follow-up. It is not a public marketplace, autonomous recommendation service or safety-critical system.
+
+## Normative source for implementation
+
+For issues #4, #5, #6 and #7, `docs/ux/gift-v0.1-experience-spec.md` is the **single normative product and interaction contract**.
+
+Supporting document roles:
+
+- `docs/domain/candidate-model.md` — minimal implementation shape subordinate to the experience contract;
+- `docs/product/gift-mvp.md` — gift intent and scope summary;
+- `docs/product/product-language.md` — terminology and copy reference;
+- `docs/ux/website-concept.md` — broader background concept, not a source of additional v0.1 requirements;
+- `docs/research/2026-08-05-cultural-trip/` — dated research and provenance, not runtime truth;
+- `docs/ux/gift-ticket.md` — accepted Open Ticket baseline, with the owner-accepted terminology limitation recorded in issue #8.
+
+The printed Open Ticket defines ticket quantity and companion entitlement. The website does not need to repeat, explain or validate those mechanics.
+
+Earlier drafts, examples and speculative future models must not add features, fields or states to Gift Edition v0.1.
 
 ## Active workstreams
 
 - #4 — application foundation, stack and deployment;
-- #5 — initial typed candidate dataset;
-- #6 — landing page and candidate catalogue;
+- #5 — exactly six sourced candidate records;
+- #6 — landing page, repertoire and candidate details;
 - #7 — ratings, comments and `Следующий акт`;
-- #8 — accepted Open Ticket candidate and final print reconciliation;
-- #9 — release, production URL, QR and end-to-end validation.
+- #8 — final print reconciliation;
+- #9 — production URL, QR and end-to-end release validation.
 
-## Accepted inputs
+## Approved MVP
 
-- accepted product, UX, domain and release documentation under `docs/`;
-- Open Ticket candidate **v0.5** in `docs/ux/gift-ticket.md`, subject to controlled final reconciliation in #8;
-- dated research snapshot `docs/research/2026-08-05-cultural-trip/` as source material and provenance, not current runtime truth;
-- lifecycle model and stable identifiers in `docs/domain/candidate-model.md`;
-- owner-approved decisions recorded in the active issues.
+Gift Edition v0.1 includes:
 
-## In scope
+- QR landing without login;
+- the approved first-screen cultural-season explanation;
+- exactly six sourced cultural candidates;
+- mobile repertoire browsing and candidate detail;
+- simple manually edited status text per candidate;
+- visible source links;
+- separate event and city ratings;
+- optional editable comments;
+- device-local saving in the current browser and device;
+- `Следующий акт` after all six rating pairs are complete;
+- transparent total `eventRating + cityRating`;
+- complete Share, Copy and manual-selection result paths.
 
-- a static-first, mobile-web Gift Edition;
-- a concise gift explanation and candidate catalogue;
-- 6–12 strong candidates in a separate typed runtime dataset;
-- separate event and city ratings, comments and shortlist interaction;
-- honest availability lifecycle presentation;
-- public deployment, stable URL, final QR and print-flow validation;
-- deliberate deadline-driven simplifications documented in the relevant issue or release report.
+Candidate status for v0.1 is plain editorial text. The iteration does not require a lifecycle enum, `ActionPosture`, `watching`, `planning_possible`, `ticket_action_available`, `archived` or transition logic.
+
+The interface does not show synthetic, test, community or artistic-council aggregate ratings. The only total is Polina's event rating plus city rating.
+
+## Allowed simplifications
+
+- static local candidate data;
+- manual candidate and status updates;
+- device-local ratings and comments;
+- one mobile page with a detail layer instead of complex routing;
+- controlled image placeholders where final licensed images are unavailable;
+- no final brand domain if a stable production URL exists;
+- restrained motion and no optional animation work before P0 is complete.
 
 ## Out of scope
 
-- general-market onboarding or a permanent product platform;
-- authentication, account recovery or public social features;
-- production-grade database, CMS or administration;
+- authentication or account recovery;
+- shared or cross-device state;
+- multiple participants or aggregate voting;
+- backend, database, CMS or administration;
 - automated crawling, monitoring or notifications;
-- ticket purchasing integrations;
-- native mobile applications;
-- broad reorganisation of existing documentation.
+- ticket purchase and travel-planning integrations;
+- restating ticket quantity or companion entitlement in website copy;
+- formal candidate state machines;
+- public-market onboarding or platform architecture;
+- native applications;
+- production-scale reliability, audit or compliance work.
 
-## Allowed v0.1 simplifications
+## Source and content integrity
 
-- typed local data rather than a database;
-- device-local ratings, comments and shortlist state, stated honestly in the UI;
-- manual candidate and availability updates;
-- one mobile-first page with expandable sections rather than complete routing;
-- a limited candidate set and restrained animation;
-- no final brand domain if a stable production URL is available.
+Every publishable candidate must:
 
-## Source and data integrity
+- be one of exactly six public records;
+- have at least one primary or official source;
+- separate factual description from editorial rationale;
+- show an honest date/status statement;
+- preserve uncertainty;
+- provide claim-specific evidence for dates, sales or availability when those claims are made.
 
-Canonical documentation, dated research snapshots, runtime data, current availability facts and hypotheses are separate layers.
+Do not invent dates, availability, ticket status, sources, URLs or image credits.
 
-A candidate may remain valid at an early lifecycle stage without a concrete performance date or ticket page. Revalidate the stage actually claimed: official announcements can support early stages; published dates, sales and suitable-ticket availability require current corresponding evidence.
+## Review boundary
 
-Do not invent or infer unsupported dates, sales, availability, prices, URLs, sources or credits. Preserve uncertainty and provenance. Do not treat `turn...` markers as public sources. Do not silently rewrite the dated snapshot when facts change.
+A finding blocks release only when it can:
+
+- break the QR-to-mobile gift flow;
+- lose or materially misrepresent ratings or comments;
+- publish unsupported event, date, sales or availability claims;
+- make a required mobile interaction unusable;
+- falsely describe local persistence, sharing or manual monitoring.
+
+The following are non-blocking unless they threaten those criteria:
+
+- enterprise hardening;
+- future-platform concerns;
+- speculative domain modelling;
+- minor terminology or implementation preferences;
+- owner-accepted limitations.
+
+Review must not create new product requirements from background documents or early drafts.
 
 ## Release completion criteria
 
 The iteration is complete when:
 
-1. the printed QR opens a stable public mobile page without login;
-2. the gift and `Полина + 1` proposition are immediately understandable;
-3. at least six complete, sourced candidates are visible;
-4. event and city ratings, comments and `Следующий акт` work as documented;
-5. availability stages and persistence limitations are truthful;
-6. critical source links, mobile layout and the printed QR flow are validated;
-7. the Open Ticket and website are reconciled and contain no production placeholders;
-8. known limitations and deferred work are recorded in the release report.
+1. the printed QR opens a stable mobile page without login;
+2. the personal cultural-season proposition is understandable;
+3. exactly six complete, sourced candidates are visible;
+4. candidate details show event, city, simple status, uncertainty and sources;
+5. event and city ratings work independently;
+6. comments can be edited without losing the latest input;
+7. local values survive reload on the same device;
+8. `Следующий акт` shows all six completed evaluations and comments;
+9. Share, Copy and manual selection preserve the complete result;
+10. the Open Ticket and production website contain no placeholders that block the QR-to-repertoire flow.
 
 ## Owner-decision stop conditions
 
-Stop and request an owner decision when work would:
+Stop and request a decision only when work would:
 
-- broaden Gift Edition v0.1 or add excluded infrastructure;
-- change accepted gift mechanics, product language or the Open Ticket candidate outside the authorized issue;
-- publish a disputed or unsupported candidate fact;
-- choose a material persistence, deployment or architecture direction not authorized by #4;
-- threaten the 8 August delivery target through optional scope;
-- require changing this iteration boundary.
+- change the approved gift mechanics;
+- add infrastructure outside the approved MVP;
+- publish a disputed or unsupported fact;
+- change persistence from device-local;
+- threaten the 8 August deadline through optional scope;
+- alter this iteration boundary.
 
-## Transition after the gift release
-
-After presentation, post the release report to #1. Do not automatically carry deferred features into implementation. The owner must select and authorize the next iteration, which may address shared persistence, administration, richer content, status history, targeted monitoring and broader product validation.
+Do not stop for speculative future-model questions that are not required by the approved experience contract.

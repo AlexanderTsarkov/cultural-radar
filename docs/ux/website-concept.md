@@ -1,311 +1,208 @@
 # UX Concept: Gift Website
 
-## 1. Purpose
+## 1. Role and authority
 
-The website is part of the gift, not only a catalogue.
+This document preserves the broader product and visual concept of the Gift Edition website.
 
-It must:
+It is **background guidance**, not an implementation contract.
 
-- clearly state that Polina has received two tickets;
-- explain that the final event will be selected together;
-- present the first curated candidate set;
-- allow Polina to evaluate the event and the city separately;
-- show how uncertain candidates become real dates and available tickets;
-- create a recognisable theatrical/festival experience;
-- remain useful during the following weeks as the repertoire develops.
+For Gift Edition v0.1:
+
+- `docs/ux/gift-v0.1-experience-spec.md` is the single normative product and interaction contract;
+- `docs/domain/candidate-model.md` defines the minimal subordinate data shape;
+- issues #5, #6 and #7 define their bounded implementation work;
+- this document must not introduce additional fields, states, controls or acceptance requirements.
+
+When this concept conflicts with the normative contract or an explicit owner decision, the normative contract and owner decision prevail.
 
 ## 2. Experience principle
 
-Formula:
+The website is part of the gift, not only a catalogue.
 
-> Personal theatre season × curated watchlist × collaborative decision.
+It should communicate that:
 
-The site should feel closer to a contemporary theatre or festival website than to a ticket marketplace, voting survey, travel aggregator or technical dashboard.
+- Polina has received a personal cultural season;
+- the first curated repertoire is already prepared;
+- a proposal combines event, city and company without making travel mandatory;
+- Polina participates in the final choice;
+- research and follow-up are performed manually in Gift Edition v0.1.
+
+Conceptual formula:
+
+> Personal theatre season × curated repertoire × collaborative choice.
+
+The site should feel closer to a contemporary theatre or festival publication than to a ticket marketplace, survey, travel aggregator or technical dashboard.
 
 ## 3. Visual direction
 
-### Required qualities
+Visual formula:
+
+> **Серьёзность большого театра × современная фестивальная редактура × язык печатного билета.**
+
+Use:
 
 - strong editorial typography;
-- large poster-like headings;
-- expressive event photography;
-- asymmetrical but controlled grid;
+- poster-like headings;
+- expressive event photography or controlled placeholders;
+- asymmetrical but disciplined composition;
 - generous whitespace;
-- theatre-programme and ticket details;
-- clear status labels;
-- subtle travel notation where relevant;
-- excellent mobile readability.
+- clear programme and ticket details;
+- restrained travel notation;
+- excellent mobile readability;
+- individual art direction for each candidate within one shared hierarchy;
+- graphite, red and grey semantics aligned with the printed Open Ticket.
 
-### Avoid
+Avoid:
 
 - generic SaaS dashboard styling;
-- rows of identical marketplace cards;
-- excessive gradients and glass effects;
-- decorative theatre clichés;
+- identical marketplace cards;
 - travel-booking visual language;
+- decorative theatre masks, curtains, velvet and gold as a default style;
 - radar screens, military symbols or neon control-room styling;
-- dense research-report text on the first screen.
+- copied theatre or festival identities;
+- motion that competes with reading.
 
-## 4. First screen
+## 4. First-screen concept
 
-### Primary hierarchy
+The first screen should prioritise the value of Cultural Radar rather than repeat only the printed ticket mechanics.
 
-```text
-КУЛЬТУРНЫЙ РАДАР
+It should establish:
 
-ЛИЧНЫЙ СЕЗОН ПОЛИНЫ
-2026/27
+- Polina's personal cultural season;
+- the difficulty and value of curatorial discovery;
+- the combination of event, city and company;
+- the fact that the first repertoire is ready;
+- the primary action `ОТКРЫТЬ РЕПЕРТУАР`.
 
-Подарок, в выборе которого можно участвовать.
-```
+Exact hierarchy and copy are defined only in `docs/ux/gift-v0.1-experience-spec.md`.
 
-Suggested explanation:
+## 5. Information architecture concept
 
-```text
-Мы собрали спектакли, балеты, оперы, концерты,
-фестивали и культурные поездки, которые могут стать
-следующим большим впечатлением.
+The intended mobile flow contains:
 
-Оценивай отдельно события и города,
-оставляй комментарии и помогай формировать
-финальный выбор.
-```
+1. entry and gift explanation;
+2. `На радаре` repertoire;
+3. candidate detail;
+4. `Следующий акт` completed summary and sharing;
+5. optional explanatory content such as `Как работает радар` or `О подарке`.
 
-Gift block:
+`На радаре` and `Следующий акт` are navigation destinations, not candidate states.
 
-```text
-В ПОДАРОК
-2 билета — для Полины и спутника по её выбору.
+The implementation may use one mobile-first page with anchored sections and a detail layer when that is the most reliable delivery approach.
 
-МЫ
-покупаем билеты себе на тот же показ
-и присоединяемся.
-```
+## 6. Candidate presentation concept
 
-Core phrase:
+Gift Edition v0.1 presents exactly six sourced candidates, as defined by the normative contract and issue #5.
 
-```text
-Событие ещё не выбрано.
-Впечатление уже подарено.
-```
-
-Primary action:
-
-> Открыть текущий репертуар
-
-Secondary action:
-
-> Как работает подарок
-
-## 5. Information architecture
-
-### Public navigation
-
-1. **На радаре** — all current candidates.
-2. **Следующий акт** — shortlist and aggregate view.
-3. **Города** — optional for v0.1, required later.
-4. **О подарке** — mechanics, terms and current stage.
-
-### Editorial/admin navigation
-
-5. **Редакция** — candidate management; may be absent in v0.1.
-
-For the Saturday prototype, navigation may be implemented as one page with anchored sections if this improves reliability and speed.
-
-## 6. Candidate catalogue
-
-The initial catalogue should contain the strongest subset from the research, preferably 6–12 candidates.
-
-A candidate card must provide enough information for an initial judgement without forcing the user to open a separate page.
-
-### Card content
+A repertoire card should support fast browsing and may show:
 
 - candidate number;
-- hero image;
-- event name;
-- genre;
+- image or controlled placeholder;
+- event title and type;
+- organisation or relevant creator;
 - city;
-- theatre, festival, company or organiser;
-- venue, if known;
-- date or date-status;
-- concise description;
-- **Почему событие**;
-- **Почему город** or **Почему можно остаться дома**;
-- availability status;
-- official source;
-- event rating control;
-- city rating control;
-- decision reaction;
-- comment field or link to comments.
+- concise editorial proposition;
+- date label;
+- plain-language status;
+- evaluation progress;
+- action to open the detail.
 
-### Expanded content
+Candidate detail should explain:
 
-A detail page, modal or expanded card may additionally show:
+- what the event is;
+- why it is culturally interesting;
+- why the city is interesting, or why travel is not required;
+- organisation, creators and venue when known;
+- date or honest date-status text;
+- plain-language status and uncertainty;
+- what may be checked next;
+- visible source links;
+- event and city ratings;
+- optional comment for the artistic council;
+- previous and next candidate navigation.
 
-- creative team;
-- performers;
-- longer editorial note;
-- risks and uncertainty;
-- additional sources;
-- trailer or media;
-- related candidates in the same city;
-- vote summary.
+The v0.1 record shape is defined only by `docs/domain/candidate-model.md` and issue #5.
 
-## 7. Separate event and city evaluation
+This broader concept does **not** define or require:
 
-The city and event are independent product dimensions.
+- availability lifecycle enums;
+- `ActionPosture`;
+- `watching`;
+- `planning_possible`;
+- `ticket_action_available`;
+- visibility or archive state;
+- `archived`;
+- lifecycle transition logic;
+- shortlist, selection, purchase or fulfilment fields.
 
-Required questions:
+## 7. Evaluation and comments concept
 
-```text
-Насколько хочется увидеть это событие?
-1  2  3  4  5
+Polina evaluates each candidate through:
 
-Насколько хочется оказаться в этом городе?
-1  2  3  4  5
-```
+- event rating `1–5`;
+- city rating `1–5`;
+- an optional editable comment.
 
-Quick decision:
+`Не моё` is the event-rating `1/5` label, not a reject command.
 
-- **В следующий акт**;
-- **Оставить на радаре**;
-- **Не моё**.
+There is no separate shortlist, keep, reject or candidate-level `В следующий акт` action in Gift Edition v0.1.
 
-Comment label:
+Exact completion, persistence, comment-saving and scale behaviour are defined in the normative contract and issue #7.
 
-> Комментарий художественному совету
+## 8. Candidate status concept
 
-A city rating should conceptually belong to the city, not be duplicated for every event. For the v0.1 interface it may appear inside each candidate card, but the data model should preserve city identity.
+Candidate status is ordinary manually edited editorial text.
 
-## 8. Candidate availability
+It should help Polina understand:
 
-Availability is a core feature, not metadata hidden in small print.
+- what is known now;
+- what remains uncertain;
+- whether dates are known;
+- what may be checked next;
+- which sources support the statement.
 
-The interface must clearly show the current step:
+The implementation uses the minimal fields approved in the candidate model:
 
-1. Кандидат исследования.
-2. Официально анонсировано.
-3. Ждём даты.
-4. Даты опубликованы.
-5. Ждём продажи.
-6. Продажи открыты.
-7. Подходящие места доступны.
-8. В следующем акте.
-9. Выбрано.
-10. Билеты приобретены.
+- `statusLabel`;
+- `statusNote`;
+- optional `nextExpectedUpdate`.
 
-A compact progress line or stage badge may be used. The current state, missing information and next expected change should be visible.
+These fields are display content, not a state machine.
 
-Example:
+Manual checks, edits to the local data file and redeployment are intentional parts of Gift Edition v0.1. The interface must not claim automated monitoring or notifications.
 
-```text
-ЖДЁМ ДАТЫ
-Постановка подтверждена, расписание сезона ещё не опубликовано.
-Следующая проверка: сентябрь 2026.
-```
+## 9. `Следующий акт` and sharing concept
 
-## 9. Следующий акт
+`Следующий акт` is the completed six-candidate evaluation summary.
 
-This section represents the current shortlist based on all available opinions.
+It should remain readable, editorial and suitable for sharing without resembling an analytics dashboard.
 
-### Views
+The normative contract defines:
 
-- общий рейтинг;
-- лучшие события;
-- лучшие города;
-- больше всего решений «В следующий акт»;
-- уже можно покупать;
-- ждём даты;
-- финалисты.
+- when the summary unlocks;
+- ordering and transparent totals;
+- inclusion of ratings and comments;
+- device-local persistence;
+- Web Share behaviour;
+- clipboard-copy and manual-selection fallback.
 
-For v0.1, one combined shortlist is sufficient.
+This document does not define an additional share, screenshot or fallback contract.
 
-### Score display
+## 10. Use during implementation and review
 
-Ratings must remain transparent:
+Use this document to understand:
 
-```text
-Событие: 4.8
-Город: 4.2
-Общий ориентир: 4.5
-В следующий акт: 3 голоса
-```
+- the desired cultural tone;
+- visual principles;
+- the relationship between the printed ticket and website;
+- the intended emotional and editorial character of the experience.
 
-The score informs the choice but does not determine it automatically.
+Do not use it to derive:
 
-Recommended note:
+- additional data fields;
+- lifecycle or workflow states;
+- new user controls;
+- new P0 features;
+- additional acceptance criteria.
 
-> Результаты голосования учитываются художественным советом вместе с афишей, календарями и наличием четырёх хороших мест.
-
-## 10. Comments
-
-Comments should support practical cultural decision-making, for example:
-
-- «В этот город давно хотела»;
-- «Этого режиссёра уже видела»;
-- «Оперу рассматриваю, но не Вагнера»;
-- «На эту дату точно не смогу».
-
-The site does not need a general chat. Comments belong to candidates or cities.
-
-For v0.1, local browser storage is acceptable if the interface clearly does not claim shared persistence.
-
-## 11. Candidate management
-
-The owner must eventually be able to:
-
-- add a candidate;
-- edit content;
-- connect an existing or new city;
-- change availability status;
-- add official sources;
-- mark a candidate as shortlisted;
-- hide or archive a candidate;
-- mark the final choice;
-- record that tickets were purchased.
-
-For Saturday, candidate management may be performed by editing a local data file and redeploying.
-
-## 12. Homepage state model
-
-The gift website may evolve through these stages:
-
-1. **Формируется репертуар** — initial candidates published.
-2. **Идёт обсуждение** — votes and comments collected.
-3. **Следующий акт** — finalists selected.
-4. **Ждём даты или продажи** — candidate monitoring.
-5. **Выбор сделан** — final event selected.
-6. **Билеты приобретены** — concrete date and venue shown.
-7. **После события** — archive, photos and impressions.
-
-The same printed QR code remains useful throughout these stages.
-
-## 13. Mobile requirements
-
-The primary gift flow is mobile-first.
-
-Required:
-
-- first meaning visible without excessive scrolling;
-- readable type at normal zoom;
-- large tap targets;
-- rating controls usable with one hand;
-- candidate images with controlled crop;
-- source links open correctly;
-- no horizontal scrolling;
-- QR landing loads over ordinary mobile connection;
-- the ticket statement and candidate catalogue remain usable on a narrow screen.
-
-## 14. Saturday acceptance checklist
-
-- [ ] The first screen clearly explains the gift.
-- [ ] Two tickets are explicitly stated.
-- [ ] Polina's active role is explicit.
-- [ ] At least 6 candidates are presented.
-- [ ] Each candidate has event, city, source and availability information.
-- [ ] Event and city can be rated separately.
-- [ ] Comments are visible or demonstrably usable.
-- [ ] The shortlist concept is visible.
-- [ ] The current project stage is visible.
-- [ ] The site works on a modern mobile browser.
-- [ ] The design resembles a curated cultural project, not a store or dashboard.
+Implementation and review must use `docs/ux/gift-v0.1-experience-spec.md` and the relevant issue as the authoritative scope.
