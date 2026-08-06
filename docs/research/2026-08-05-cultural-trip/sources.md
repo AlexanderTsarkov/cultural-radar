@@ -6,9 +6,10 @@ This manifest was recovered from the original Word export of the 2026-08-05 deep
 
 - Recovery date: **2026-08-06**.
 - Original research date: **2026-08-05**.
-- These URLs identify the pages used by the research session.
+- These URLs identify the public web pages used by the research session.
 - They do **not** freeze the page contents or guarantee that dates, ticket sales, seat availability or programmes remain unchanged.
 - Issue #5 must revisit the official pages before publishing the runtime dataset.
+- Revalidation means confirming the candidate's current lifecycle stage; it does not require every candidate to have an exact date, time or ticket page.
 - The numbered references below correspond to the `[1]`–`[22]` citations in the original Word export.
 - `turn...` identifiers listed under each source correspond to citations retained in the Markdown snapshot.
 
@@ -134,10 +135,22 @@ This manifest was recovered from the original Word export of the 2026-08-05 deep
 - Used for: lack of a published 2026 programme and notification-only state.
 - Original session markers: `turn27view7`
 
+## Evidence by candidate stage
+
+A source is valid when it supports the state actually shown for the candidate:
+
+- `research_candidate` — discovery evidence may be secondary, but uncertainty must remain explicit;
+- `officially_announced` / `waiting_for_dates` — an official production, season or festival announcement is sufficient even without a performance date;
+- `dates_published` / `waiting_for_sales` — an official schedule or event announcement must support the date claim;
+- `sales_open` — an official ticket or venue page must support the sale claim;
+- `suitable_seats_available` — a recent manual seat check is required and is inherently short-lived.
+
+The product is intended to carry candidates through these stages. Missing dates or sales are often the monitored condition, not a data defect.
+
 ## Known limitations
 
-1. The Word export resolves the cited pages, but it does not archive their contents.
+1. The Word export resolves the cited public pages, but it does not archive their contents.
 2. Some research paragraphs cite multiple original-session markers while the Word export groups them under one numbered hyperlink; the mappings above preserve all recoverable identifiers.
-3. Source [13] is reused by the Word export for two distinct claims. The `Пиши балет` claim therefore remains provenance-incomplete until #5 locates a direct official page.
-4. The research brief cited as `turn0file0` is a separate input artifact, not a public web source.
-5. Runtime candidate records must store the current official URL and a fresh `checkedAt` value rather than copying historical availability claims unchanged.
+3. Source [13] is reused by the Word export for two distinct claims. The `Пиши балет` claim therefore remains public-web-provenance-incomplete until #5 locates a direct official page.
+4. The research brief cited as `turn0file0` is a separate non-web input artifact and is not currently archived or linked in the repository. Full research-session provenance therefore remains incomplete even though the public-web citations are largely resolvable.
+5. Runtime candidate records must store the current official URL and a fresh `checkedAt` value appropriate to the claimed lifecycle stage rather than copying historical availability claims unchanged.
