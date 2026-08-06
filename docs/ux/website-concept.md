@@ -10,6 +10,7 @@ It must:
 - explain that the final event will be selected together;
 - present the first curated candidate set;
 - allow Polina to evaluate the event and the city separately;
+- provide a comment channel for the artistic council;
 - show what is known, what remains uncertain and what Cultural Radar continues to follow;
 - create a recognisable theatrical/festival experience;
 - remain useful during the following weeks as candidate information develops.
@@ -29,6 +30,7 @@ Gift Edition v0.1 separates:
 - navigation;
 - candidate information status;
 - event and city ratings;
+- optional user comment content through a required comment control;
 - completed summary and sharing.
 
 ## 3. Visual direction
@@ -109,18 +111,13 @@ Core phrase remains:
 ### Gift Edition v0.1 navigation
 
 1. **На радаре** — the screen containing all six current candidate cards and evaluation progress.
-2. **Candidate detail** — complete editorial, status, source and rating view with direct previous/next candidate navigation.
+2. **Candidate detail** — complete editorial, status, source, rating and comment view with direct previous/next candidate navigation.
 3. **Следующий акт** — the completed summary and share screen, available after all six candidates have both ratings.
 4. **Как работает радар / О подарке** — explanatory content.
 
 `На радаре` and `Следующий акт` are navigation destinations, not candidate states or rating actions.
 
-For the v0.1 prototype, navigation may be implemented as one page with anchored sections plus a detail layer if this improves reliability and speed.
-
-### Future navigation
-
-- **Города** may become a separate view later.
-- Editorial/admin navigation is deferred.
+For v0.1, navigation may be implemented as one page with anchored sections plus a detail layer if this improves reliability and speed.
 
 ## 6. Candidate repertoire
 
@@ -135,7 +132,7 @@ Gift Edition v0.1 contains exactly six publishable, sourced candidates:
 
 The Nizhny Novgorod direction is approved, but an unresolved research ticket is not a publishable card. The release is incomplete until the sixth concrete proposition exists.
 
-A seventh candidate is not required in v0.1.
+A seventh candidate is not part of v0.1.
 
 ### Repertoire card content
 
@@ -153,6 +150,7 @@ A card supports fast browsing and shows:
 - evaluation state;
 - current event and city ratings when present;
 - transparent total when both ratings are present;
+- optional `Есть комментарий` marker when a local comment exists;
 - action `Открыть`.
 
 Cards do not contain a shortlist, keep, reject or `Не моё` action.
@@ -170,12 +168,15 @@ Detail shows:
 - current informational status;
 - exact dates or date range where known;
 - what Cultural Radar follows next;
+- current action posture;
 - official and supporting sources;
 - event rating control;
 - city rating control;
-- optional comment;
+- required editable `Комментарий художественному совету` control;
 - direct previous/next navigation;
 - return to `На радаре`.
+
+The comment control is P0. The user may leave it empty.
 
 ## 7. Repertoire carousel
 
@@ -194,9 +195,7 @@ Required:
 
 Polina may browse all cards before opening any detail, open candidates in any order, or move sequentially between detail screens.
 
-## 8. Separate event and city evaluation
-
-The city and event are independent product dimensions.
+## 8. Event and city evaluation
 
 Required questions:
 
@@ -230,13 +229,25 @@ The interface should show endpoint labels and a dynamic explanation of the selec
 
 A city rating belongs to stable city identity. If multiple candidates use one city, the same rating applies to each.
 
-Optional comment label:
+A candidate is complete only when both ratings exist.
+
+## 9. Comment interaction
+
+Every candidate detail contains:
 
 > Комментарий художественному совету
 
-A comment does not affect evaluation completion or ranking.
+Requirements:
 
-## 9. Evaluation progress
+- the control is present and usable in P0;
+- entering text is optional;
+- comment saves only in the current browser and device;
+- it can be edited or removed;
+- it does not affect completion or ranking;
+- non-empty comments may be included in `Следующий акт` and the shared result;
+- the UI must not claim that a locally saved comment was delivered.
+
+## 10. Evaluation progress
 
 Each repertoire card shows one of three derived states:
 
@@ -264,9 +275,7 @@ Global progress:
 ОЦЕНЕНО 4 ИЗ 6
 ```
 
-A candidate is complete only when both ratings exist.
-
-## 10. Candidate status and availability
+## 11. Candidate status and availability
 
 Candidate status is a core information block, not metadata hidden in small print.
 
@@ -290,19 +299,15 @@ Recommended human-readable statuses:
 7. `Продажи открыты`;
 8. `Подходящие места доступны`.
 
-Example:
+Every publishable candidate also provides one required action posture:
 
-```text
-ЖДЁМ ДАТЫ
-Постановка подтверждена, расписание следующих
-показов ещё не опубликовано.
+- `watching`;
+- `planning_possible`;
+- `ticket_action_available`.
 
-ЧТО ДАЛЬШЕ
-Следим за публикацией афиши. Когда появится
-важное обновление, изменим статус и сообщим вам.
-```
+The UI renders human wording rather than the internal key.
 
-Manual checks and updates may fulfil this promise in v0.1. The interface must not falsely say that monitoring or notifications are automated.
+Manual checks and updates may fulfil the observation promise in v0.1. The interface must not falsely say that monitoring or notifications are automated.
 
 ### Dates
 
@@ -315,8 +320,6 @@ Use the most useful compact representation:
 - `Фестиваль пройдёт 10–20 октября; программа ожидается`;
 - `Даты ожидаются`.
 
-Expand exact dates in detail when a range hides meaningful differences.
-
 ### Not part of v0.1 status
 
 - `На радаре`;
@@ -326,69 +329,48 @@ Expand exact dates in detail when a range hides meaningful differences.
 
 Future product versions may add separate decision and fulfilment states for multiple chosen events.
 
-## 11. `Следующий акт`
+## 12. `Следующий акт`
 
 `Следующий акт` is the completed evaluation summary, not a shortlist state.
 
-### Unlock rule
-
 It becomes active only after all six candidates have both event and city ratings.
 
-Before completion, the interface may show:
+Before completion:
 
 ```text
 СЛЕДУЮЩИЙ АКТ
 Оцените ещё 2 кандидатов
 ```
 
-### Summary contents
-
-The screen contains all six candidates sorted by:
+The completed screen contains all six candidates sorted by:
 
 1. event rating plus city rating, descending;
 2. event rating, descending, when totals are equal;
 3. original editorial order when both ratings are equal.
 
-Example:
+Component ratings remain visible beside the total. Non-empty comments may appear with their candidates. Comments never affect ordering.
 
-```text
-ПАРСИФАЛЬ
-Событие: 5 / 5
-Город:   4 / 5
-Итого:   9 / 10
-Статус:  Ждём даты
-```
+Ratings and comments remain editable after the summary opens; the result updates immediately.
 
-The transparent total supports orientation but does not make the final decision automatically. Component ratings remain visible.
-
-Ratings remain editable after the summary opens; order and shared output update immediately.
-
-Recommended note:
-
-> Результаты учитываются художественным советом вместе с афишей, календарями и наличием четырёх хороших мест.
-
-## 12. Local persistence
+## 13. Local persistence
 
 For v0.1, browser-local storage is acceptable.
 
 Required behaviour:
 
 - save each rating immediately;
-- restore it in the same browser on the same device;
-- keep ratings editable;
-- recalculate summary after changes;
+- save comments after editing;
+- restore ratings and comments in the same browser on the same device;
+- keep all inputs editable;
+- recalculate summary after rating changes;
 - do not imply shared persistence.
 
 Required first-save message:
 
 > **Ваш выбор сохранён**  
-> Оценки хранятся только в этом браузере на этом устройстве. Вы можете вернуться и изменить их. Художественный совет увидит результат только после того, как вы отправите `Следующий акт`.
+> Оценки и комментарии хранятся только в этом браузере на этом устройстве. Вы можете вернуться и изменить их. Художественный совет увидит результат только после того, как вы отправите `Следующий акт`.
 
-Required summary note:
-
-> Результат пока хранится только на этом устройстве и ещё не отправлен.
-
-## 13. Sharing
+## 14. Sharing
 
 Primary summary action:
 
@@ -398,9 +380,10 @@ P0 opens the system share sheet with:
 
 - concise summary text;
 - component ratings and totals;
+- non-empty comments when practical;
 - page URL.
 
-The URL itself does not contain device-local ratings.
+The URL itself does not contain device-local inputs.
 
 If sharing is unsupported, fails or is cancelled:
 
@@ -409,46 +392,26 @@ If sharing is unsupported, fails or is cancelled:
 - offer screenshot/manual-send instructions;
 - allow retry.
 
-Fallback:
-
-> **Результат ещё не отправлен**  
-> Сделайте скриншот этого экрана и отправьте его художественному совету.
-
 A generated image is optional, not P0.
 
-## 14. Candidate management
+## 15. Candidate management
 
 For v0.1, candidate management may be performed by editing a local data file and redeploying.
 
-The owner must be able to maintain:
+Each published record maintains:
 
 - candidate content;
 - city identity;
 - current status;
+- known and unknown facts;
 - known dates and date label;
-- next expected update;
+- required next expected update;
+- required action posture;
 - sources;
 - visibility or archive state;
 - editorial order.
 
 Shortlist, final-choice and purchased fields are not required in v0.1.
-
-A future product may add separate decision and fulfilment management without changing the meaning of ratings or navigation.
-
-## 15. Future website evolution
-
-The same QR code may remain useful after Gift Edition v0.1.
-
-Possible future phases include:
-
-1. repertoire changes and new candidates;
-2. automatic source monitoring;
-3. explicit notification channels;
-4. multiple selected events;
-5. planning or purchase tracking;
-6. completed-event archive, photos and impressions.
-
-These are directions, not current commitments.
 
 ## 16. Mobile requirements
 
@@ -457,12 +420,11 @@ Required:
 - first meaning visible without excessive scrolling;
 - readable type at normal zoom;
 - large tap targets;
-- rating controls usable with one hand;
+- rating and comment controls usable with one hand;
 - candidate images with controlled crop;
 - source links open correctly;
 - intentional carousel movement without page-level horizontal overflow;
 - QR landing loads over an ordinary mobile connection;
-- card status and evaluation state remain legible;
 - candidate detail supports direct previous/next navigation;
 - summary is screenshot-ready.
 
@@ -475,14 +437,15 @@ Required:
 - [ ] Nizhny Novgorod is represented only by a concrete sourced proposition.
 - [ ] `На радаре` is the repertoire screen, not a candidate decision.
 - [ ] Each card shows event, city, status and evaluation state.
-- [ ] Detail shows rationale, uncertainty, dates and sources.
+- [ ] Detail shows rationale, uncertainty, dates, action posture and sources.
 - [ ] Event and city are rated separately.
 - [ ] Scale meanings are visible and accessible.
+- [ ] Every candidate detail has an editable comment control.
+- [ ] Ratings and comments persist locally and remain editable.
 - [ ] No candidate-level shortlist/keep/reject control exists.
-- [ ] Direct previous/next detail navigation works.
-- [ ] `Следующий акт` opens only after six complete evaluations.
-- [ ] Summary displays all six candidates and transparent totals.
-- [ ] Device-local storage is disclosed honestly.
-- [ ] Share failure or cancellation never claims successful delivery.
-- [ ] The design resembles a curated cultural project, not a store or dashboard.
+- [ ] `Следующий акт` opens only after all six rating pairs are complete.
+- [ ] Summary shows all six candidates with transparent totals and components.
+- [ ] Non-empty comments can reach the shared result.
+- [ ] Share fallback never claims successful transmission.
 - [ ] The site works on a modern mobile browser.
+- [ ] The design resembles a curated cultural project, not a store or dashboard.
