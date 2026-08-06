@@ -58,15 +58,27 @@ Do not begin broad work while a material product, data or architecture decision 
 - Keep `_working/` local and untracked.
 - Never commit secrets or private local artifacts.
 
-Before commit and before PR creation, inspect the complete issue diff:
+Before each commit, inspect all pending working-tree and staged changes:
+
+```bash
+git status --short
+git diff --name-only
+git diff --check
+git diff
+git diff --cached --name-only
+git diff --cached --check
+git diff --cached
+```
+
+Before PR creation and again before final handoff, inspect the complete committed issue diff:
 
 ```bash
 git diff --name-only origin/main...HEAD
-git diff --check
+git diff --check origin/main...HEAD
 git diff origin/main...HEAD
 ```
 
-Stop if unrelated or unauthorized changes appear.
+Stop if unrelated or unauthorized changes appear in any layer.
 
 ## Validation
 
