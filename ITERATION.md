@@ -29,8 +29,10 @@ Deliver a coherent mobile-first gift experience opened from the printed Open Tic
 
 - a static-first, mobile-web Gift Edition;
 - a concise gift explanation and candidate catalogue;
-- 6–12 strong candidates in a separate typed runtime dataset;
-- separate event and city ratings, comments and shortlist interaction;
+- exactly six strong candidates in a separate typed runtime dataset;
+- separate event and city ratings;
+- an editable comment control for the artistic council, with optional comment entry;
+- `Следующий акт` as the completed summary and share interaction after all six rating pairs are complete;
 - honest availability lifecycle presentation;
 - public deployment, stable URL, final QR and print-flow validation;
 - deliberate deadline-driven simplifications documented in the relevant issue or release report.
@@ -48,11 +50,24 @@ Deliver a coherent mobile-first gift experience opened from the printed Open Tic
 ## Allowed v0.1 simplifications
 
 - typed local data rather than a database;
-- device-local ratings, comments and shortlist state, stated honestly in the UI;
+- device-local ratings and comments, stated honestly in the UI;
+- device-local completion and `Следующий акт` summary state;
 - manual candidate and availability updates;
 - one mobile-first page with expandable sections rather than complete routing;
-- a limited candidate set and restrained animation;
+- a six-candidate set and restrained animation;
 - no final brand domain if a stable production URL is available.
+
+## Interaction boundary
+
+Gift Edition v0.1 does not use per-candidate shortlist, keep or reject states.
+
+- `На радаре` is the repertoire navigation screen.
+- `Следующий акт` is the completed summary and share screen.
+- `Не моё` is the semantic label for event rating `1/5`, not a separate action.
+- A candidate is complete when both event and city ratings exist.
+- A comment is optional and does not affect completion or ranking.
+
+Exact interaction behaviour is defined by `docs/ux/gift-v0.1-experience-spec.md` and implemented by issue #7.
 
 ## Source and data integrity
 
@@ -62,15 +77,17 @@ A candidate may remain valid at an early lifecycle stage without a concrete perf
 
 Do not invent or infer unsupported dates, sales, availability, prices, URLs, sources or credits. Preserve uncertainty and provenance. Do not treat `turn...` markers as public sources. Do not silently rewrite the dated snapshot when facts change.
 
+Every publishable candidate must provide the status information required by the approved contract, including the next expected update and current action posture.
+
 ## Release completion criteria
 
 The iteration is complete when:
 
 1. the printed QR opens a stable public mobile page without login;
 2. the gift and `Полина + 1` proposition are immediately understandable;
-3. at least six complete, sourced candidates are visible;
+3. exactly six complete, sourced candidates are visible;
 4. event and city ratings, comments and `Следующий акт` work as documented;
-5. availability stages and persistence limitations are truthful;
+5. availability stages, action posture and persistence limitations are truthful;
 6. critical source links, mobile layout and the printed QR flow are validated;
 7. the Open Ticket and website are reconciled and contain no production placeholders;
 8. known limitations and deferred work are recorded in the release report.
