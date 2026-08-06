@@ -2,9 +2,11 @@
 
 ## 1. Purpose
 
-This document fixes the current naming system for Cultural Radar and prevents the individual names from competing with each other.
+This document fixes the current naming system for Cultural Radar and prevents individual names from competing with each other.
 
 Each term describes a different layer of the product.
+
+For Gift Edition v0.1, exact interaction behaviour is defined by `docs/ux/gift-v0.1-experience-spec.md`.
 
 ## 2. Canonical names
 
@@ -18,15 +20,18 @@ Meaning:
 - expands the user's field of view beyond familiar listings;
 - keeps potential events under observation;
 - helps distinguish valuable signals from general noise;
-- follows a candidate until dates and tickets become actionable.
+- follows a candidate until dates and tickets become actionable;
+- updates meaningful status information and informs the user.
 
 Canonical usage:
 
 - «Культурный радар находит события заранее»;
-- «Добавить источник в Культурный радар»;
+- «Культурный радар продолжает следить за кандидатом»;
 - «Культурный радар Полины · Сезон 2026/27».
 
 Do not reduce the product to travel. A city is one dimension of the radar, not a mandatory destination.
+
+Do not claim that observation or notification is automated unless automation actually exists. Manual editorial follow-up may fulfil the same user-facing promise in Gift Edition v0.1.
 
 ### Свой репертуар
 
@@ -34,50 +39,67 @@ Do not reduce the product to travel. A city is one dimension of the radar, not a
 
 Meaning:
 
-- the user's selected cultural candidates;
+- the user's current curated cultural candidates;
 - events, productions, festivals and possible trips that matter specifically to this person;
 - a collection that may contain candidates without exact dates.
 
 Canonical usage:
 
-- «Добавить в свой репертуар»;
-- «В вашем репертуаре 12 кандидатов»;
+- «Открыть репертуар»;
+- «В вашем репертуаре шесть кандидатов»;
 - «Репертуар сезона 2026/27».
 
 ### На радаре
 
-**Level:** candidate pool and observation state.
+**Level:** current repertoire screen and observed candidate collection.
 
-Meaning:
+Meaning in Gift Edition v0.1:
 
-- the candidate has been noticed;
-- it is potentially relevant;
-- information may still be incomplete;
-- the system or curator continues to watch it.
+- the screen containing all six current candidate cards;
+- the place where Polina browses the repertoire and sees evaluation progress;
+- the collection remains visible whether a candidate is unrated, partially rated or fully rated.
 
 Canonical usage:
 
 - «Сейчас на радаре»;
-- «Добавить на радар»;
-- «Событие остаётся на радаре до публикации дат».
+- «Вернуться на радар»;
+- «На радаре — шесть культурных предложений».
+
+Do not use `На радаре` as:
+
+- a rating;
+- a separate user decision;
+- an action equivalent to keeping or shortlisting a candidate;
+- a replacement for the candidate's informational status.
+
+Future product versions may use related observation terminology in broader repertoire management, but Gift Edition v0.1 has no candidate-level `on_radar` selection state.
 
 ### Следующий акт
 
-**Level:** shortlist and decision stage.
+**Level:** completed evaluation summary and share stage.
 
-Meaning:
+Meaning in Gift Edition v0.1:
 
-- candidates have passed the first review;
-- participants are actively comparing options;
-- the next cultural choice is being formed.
+- becomes active after all six candidates have both event and city ratings;
+- shows every candidate, not only a shortlist;
+- orders candidates by the transparent sum of the two ratings;
+- preserves separate event and city values;
+- provides the screenshot-ready result sent to the artistic council.
 
 Canonical usage:
 
-- «Перейти к следующему акту»;
-- «Кандидаты следующего акта»;
-- «Следующий акт: выбираем вместе».
+- «Открыть Следующий акт»;
+- «Ваш Следующий акт готов»;
+- «Отправить Следующий акт художественному совету».
 
-This is not necessarily a theatre-only term. It is a metaphor for the next meaningful cultural experience.
+Do not use `Следующий акт` as:
+
+- a candidate status;
+- a per-card button or decision;
+- a synonym for `shortlisted`;
+- a hidden algorithmic recommendation.
+
+It remains a metaphor for the next meaningful cultural experience, but in v0.1 its concrete interface role is the completed summary.
 
 ### Открытый билет
 
@@ -98,7 +120,7 @@ Core phrase:
 
 > Событие ещё не выбрано. Впечатление уже подарено.
 
-## 3. Gift edition naming
+## 3. Gift Edition naming
 
 Full name:
 
@@ -122,11 +144,11 @@ Primary descriptor:
 
 Product explanation:
 
-> Культурный радар помогает находить достойные события заранее, собирать свой репертуар и не пропускать момент, когда появляются даты и билеты.
+> Культурный радар помогает находить достойные события заранее, собирать свой репертуар и не пропускать момент, когда появляются программа, даты и билеты.
 
 Gift explanation:
 
-> Мы собрали события и города, которые могут стать следующим большим впечатлением. Оценивай их отдельно, оставляй комментарии и участвуй в финальном выборе.
+> Мы собрали события и города, которые могут стать следующим большим впечатлением. Оценивай отдельно событие и город, а затем отправь свой Следующий акт художественному совету.
 
 Primary gift statement:
 
@@ -136,7 +158,49 @@ Company statement:
 
 > Мы покупаем билеты себе на тот же показ и присоединяемся.
 
-## 5. Voice and tone
+## 5. Evaluation language
+
+Gift Edition v0.1 has two independent ratings:
+
+- `Событие` — how much Polina wants to see the event;
+- `Город` — how much Polina wants to be in or travel to the city.
+
+Event scale:
+
+1. `Не моё`;
+2. `Скорее не интересно`;
+3. `Интересно, но не приоритет`;
+4. `Очень интересно`;
+5. `Очень хочу увидеть`.
+
+City scale:
+
+1. `Не хочется`;
+2. `Скорее не привлекает`;
+3. `Было бы интересно`;
+4. `Очень хочется`;
+5. `Очень хочу поехать`.
+
+`Не моё` is an explanation of event rating `1/5`, not a candidate action or rejection state.
+
+Completion language:
+
+- `Ещё не оценено`;
+- `Оценено частично`;
+- `Оценено`;
+- `Оценено X из 6`.
+
+Summary language:
+
+```text
+Событие  5 / 5
+Город    4 / 5
+Итого    9 / 10
+```
+
+`Итого` is always the visible, transparent sum of the two ratings. It does not replace them.
+
+## 6. Voice and tone
 
 The product should sound:
 
@@ -145,7 +209,8 @@ The product should sound:
 - theatrical but not ornate;
 - warm in the gift edition, restrained in the product layer;
 - honest about incomplete information;
-- interested in cities without turning into a travel agency.
+- interested in cities without turning into a travel agency;
+- confident about continued observation without falsely claiming automation.
 
 Avoid:
 
@@ -155,21 +220,26 @@ Avoid:
 - imitation of a ticket marketplace;
 - military radar terminology;
 - claims that unconfirmed events are guaranteed;
-- language that implies travel is mandatory.
+- language that implies travel is mandatory;
+- language that implies device-local ratings were already transmitted.
 
-## 6. Interface verbs
+## 7. Interface verbs
 
 Preferred verbs:
 
+- открыть;
 - найти;
 - заметить;
-- добавить;
 - сохранить;
 - наблюдать;
+- следить;
+- обновить;
+- сообщить;
 - оценить;
 - обсудить;
 - дождаться;
 - выбрать;
+- отправить;
 - поехать;
 - купить.
 
@@ -183,30 +253,66 @@ Avoid overusing:
 
 The radar is a metaphor, not an air-defence control panel.
 
-## 7. Status language
+## 8. Candidate status language
+
+Candidate status describes evidence and availability, not navigation or user evaluation.
 
 Recommended human-readable statuses:
 
-1. **Кандидат исследования** — найден в ходе поиска, требует проверки или дальнейшего наблюдения.
-2. **Официально анонсировано** — событие подтверждено первичным источником.
-3. **Ждём даты** — событие известно, точное расписание отсутствует.
-4. **Даты опубликованы** — известны конкретные показы.
-5. **Ждём продажи** — даты есть, билеты ещё недоступны.
-6. **Продажи открыты** — билеты поступили в продажу.
-7. **Подходящие места доступны** — можно приобрести нужное количество приемлемых мест.
-8. **В следующем акте** — кандидат включён в финальный шорт-лист.
-9. **Выбрано** — принято окончательное решение.
-10. **Билеты приобретены** — подарок переведён в конкретный показ.
-11. **Архив** — кандидат снят или поездка завершена.
+1. **Кандидат исследования** — found in research and requires additional confirmation.
+2. **Официально анонсировано** — confirmed by a primary source.
+3. **Ждём программу или подтверждение** — the direction is known, but programme or concrete proposition is incomplete.
+4. **Ждём даты** — the event is known, but exact performance dates are absent.
+5. **Даты опубликованы** — concrete performances are known.
+6. **Ждём продажи** — dates are known, but tickets are not available yet.
+7. **Продажи открыты** — public ticket sales have started.
+8. **Подходящие места доступны** — the required number and quality of seats appear purchasable.
 
-## 8. Naming decisions not yet final
+Each candidate should also state:
 
-The following may change after the Gift MVP:
+- what is true now;
+- which dates are known;
+- what remains unknown;
+- what Cultural Radar follows next;
+- what action is possible now.
+
+The following are not v0.1 candidate statuses:
+
+- `На радаре`;
+- `В следующем акте`;
+- `Не моё`;
+- `Выбрано`;
+- `Билеты приобретены`.
+
+Future versions may add decision and fulfilment states for users following multiple selected events. Those states must remain separate from navigation, ratings and availability.
+
+## 9. Device-local and share language
+
+Required first-save message:
+
+> **Ваш выбор сохранён**  
+> Оценки хранятся только в этом браузере на этом устройстве. Вы можете вернуться и изменить их. Художественный совет увидит результат только после того, как вы отправите `Следующий акт`.
+
+Required summary note:
+
+> Результат пока хранится только на этом устройстве и ещё не отправлен.
+
+Required fallback:
+
+> **Результат ещё не отправлен**  
+> Сделайте скриншот этого экрана и отправьте его художественному совету.
+
+Avoid `Ваш голос принят`, `Отправлено` or any equivalent unless transmission can actually be confirmed.
+
+## 10. Naming decisions not yet final
+
+The following may change after Gift Edition v0.1:
 
 - public product descriptor;
 - English brand rendering;
 - final domain name;
-- public-market terminology for candidate and watch states;
-- exact label for group decision and voting.
+- public-market terminology for long-term repertoire management;
+- future decision and fulfilment states;
+- exact notification channels.
 
-The canonical Russian hierarchy above is accepted for the current project phase.
+The Russian hierarchy and Gift Edition meanings above are accepted for the current project phase.
