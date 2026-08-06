@@ -244,7 +244,8 @@ Requirements:
 - comment saves only in the current browser and device;
 - it can be edited or removed;
 - it does not affect completion or ranking;
-- non-empty comments may be included in `Следующий акт` and the shared result;
+- every non-empty comment is preserved in every complete Web Share, clipboard-copy and manually selectable result payload;
+- comment text may be visually collapsed in `Следующий акт`, but visual compression must not remove it from the transmitted or copied result;
 - the UI must not claim that a locally saved comment was delivered.
 
 ## 10. Evaluation progress
@@ -348,13 +349,13 @@ The completed screen contains all six candidates sorted by:
 2. event rating, descending, when totals are equal;
 3. original editorial order when both ratings are equal.
 
-Component ratings remain visible beside the total. Non-empty comments may appear with their candidates. Comments never affect ordering.
+Component ratings remain visible beside the total. Non-empty comments may be visually collapsed or grouped to preserve readability, but every non-empty comment remains mandatory in the complete generated share/copy payload. Comments never affect ordering.
 
 Ratings and comments remain editable after the summary opens; the result updates immediately.
 
 ## 13. Local persistence
 
-For v0.1, browser-local storage is acceptable.
+For v0.1, browser-local storage is required.
 
 Required behaviour:
 
@@ -363,7 +364,7 @@ Required behaviour:
 - restore ratings and comments in the same browser on the same device;
 - keep all inputs editable;
 - recalculate summary after rating changes;
-- do not imply shared persistence.
+- do not implement or imply shared persistence or cross-device restoration.
 
 Required first-save message:
 
@@ -376,21 +377,24 @@ Primary summary action:
 
 > Отправить художественному совету
 
-P0 opens the system share sheet with:
+P0 opens the system share sheet with one complete generated result containing:
 
-- concise summary text;
+- all six candidates;
 - component ratings and totals;
-- non-empty comments when practical;
+- compact candidate statuses;
+- every non-empty comment;
 - page URL.
 
-The URL itself does not contain device-local inputs.
+The same complete payload is used for Web Share, clipboard copy and manual text selection. The URL itself does not contain device-local inputs and must not replace the complete result.
 
-If sharing is unsupported, fails or is cancelled:
+If system Share is unsupported, fails or is cancelled:
 
-- preserve the summary;
+- preserve the summary and complete generated text;
 - do not claim successful delivery;
-- offer screenshot/manual-send instructions;
-- allow retry.
+- provide `Копировать результат`;
+- keep the complete text manually selectable if clipboard access fails;
+- allow retry;
+- offer multiple screenshots only as a secondary option when they cover all six candidates and comments.
 
 A generated image is optional, not P0.
 
@@ -445,7 +449,7 @@ Required:
 - [ ] No candidate-level shortlist/keep/reject control exists.
 - [ ] `Следующий акт` opens only after all six rating pairs are complete.
 - [ ] Summary shows all six candidates with transparent totals and components.
-- [ ] Non-empty comments can reach the shared result.
-- [ ] Share fallback never claims successful transmission.
+- [ ] Every non-empty comment is included in every complete Web Share, clipboard-copy and manually selectable payload.
+- [ ] Share fallback preserves the complete result and never claims successful transmission.
 - [ ] The site works on a modern mobile browser.
 - [ ] The design resembles a curated cultural project, not a store or dashboard.
