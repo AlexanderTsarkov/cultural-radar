@@ -5,268 +5,182 @@
 - **Product:** Культурный радар
 - **Edition:** Культурный радар Полины · Сезон 2026/27
 - **Artifact:** Открытый билет
-- **Target presentation:** Saturday, 8 August 2026
+- **Target presentation:** 8 August 2026
 - **Release tag:** `v0.1.0-polinas-season`
 
-## 2. Release objective
+## 2. Authority
 
-Deliver a coherent and usable first presentation of the gift.
+This is an operational release checklist. It does not add product requirements.
 
-The release is successful when the printed ticket and the website together communicate:
+The single normative product and interaction contract is `docs/ux/gift-v0.1-experience-spec.md`.
 
-- two tickets are gifted;
-- Polina participates in the choice;
-- a curated candidate set already exists;
-- events and cities are evaluated separately;
-- candidates have visible schedule/ticket states;
-- the project will continue to develop after the birthday.
+## 3. Release objective
 
-## 3. P0 deliverables
+Deliver a coherent personal gift consisting of:
 
-### Project foundation
+- the printed Open Ticket;
+- a stable mobile website;
+- exactly six sourced cultural candidates;
+- Polina's ratings and optional comments;
+- a complete `Следующий акт` result;
+- human-operated editorial follow-up after the gift.
 
-- [ ] Product and Gift MVP documentation merged.
-- [ ] Implementation issues created.
+## 4. P0 deliverables
+
+### Foundation
+
 - [ ] Repository can be cloned and started from documented commands.
-- [ ] No secrets committed.
+- [ ] No secrets are committed.
+- [ ] Production build succeeds.
+- [ ] Stable production URL exists.
 
 ### Content
 
-- [ ] Exactly six complete, publishable candidate records prepared.
-- [ ] Every candidate has at least one primary external source.
-- [ ] Every material date, sales or availability claim is supported by an appropriate source.
-- [ ] Images have usable sources and credits.
-- [ ] Availability statuses reviewed.
+- [ ] Exactly six complete candidate records exist.
+- [ ] Each candidate has at least one primary or official source.
+- [ ] Date, sales and availability claims have claim-specific evidence.
+- [ ] Each candidate has understandable `statusLabel` and `statusNote` text.
+- [ ] Uncertainty is stated honestly.
+- [ ] Images have usable sources and credits, or controlled placeholders are used.
 
 ### Website
 
-- [ ] Mobile-first landing page.
-- [ ] Gift proposition clearly visible.
-- [ ] Candidate catalogue.
-- [ ] Expanded candidate information.
-- [ ] Separate event and city rating UI.
-- [ ] Comment UI with device-local persistence.
-- [ ] Следующий акт view.
-- [ ] Availability status presentation.
-- [ ] System Share with complete copyable-text fallback.
-- [ ] Public deployment.
+- [ ] Mobile-first landing page communicates the gift.
+- [ ] Primary CTA opens the repertoire.
+- [ ] Six candidate cards and details work.
+- [ ] Event and city ratings work independently.
+- [ ] Comments can be entered, edited and removed.
+- [ ] Ratings and comments persist in the same browser and device.
+- [ ] `Следующий акт` unlocks after all six rating pairs are complete.
+- [ ] Summary shows all six candidates, both ratings, transparent totals and all non-empty comments.
+- [ ] System Share uses the complete result where supported.
+- [ ] Clipboard copy and manual selection preserve the complete result when Share is unavailable, fails or is cancelled.
+- [ ] External source links open correctly.
 
 ### Open Ticket
 
-- [ ] Front copy approved.
-- [ ] Back copy approved.
-- [ ] Visual direction aligned with website.
-- [ ] Final production URL known.
-- [ ] QR generated.
-- [ ] QR tested from physical print.
-- [ ] Print-ready file produced.
+- [ ] Front and back copy are approved.
+- [ ] Production URL is final.
+- [ ] QR is generated and tested from the physical print.
+- [ ] Short URL is printed as fallback.
+- [ ] Print-ready artifact contains no blocking placeholders.
 
 ### Quality
 
-- [ ] Mobile smoke test.
-- [ ] Desktop smoke test.
-- [ ] All source links checked.
-- [ ] No placeholder text visible unless intentionally labelled.
-- [ ] No unsupported factual claims.
-- [ ] Basic accessibility check.
-- [ ] Final gift flow tested from QR to candidate interaction.
+- [ ] Mobile smoke test passes.
+- [ ] Desktop smoke test passes.
+- [ ] QR-to-site flow passes.
+- [ ] All required controls are usable in a modern mobile browser.
+- [ ] No unsupported factual claims are visible.
+- [ ] No user input is lost during normal navigation, summary generation or sharing.
 
-## 4. Recommended execution order
+## 5. Execution order
 
 ### Phase 1 — Foundation
 
-1. Merge project documentation.
-2. Choose implementation stack.
-3. Create implementation tickets.
-4. Bootstrap web application.
+1. Choose the implementation stack.
+2. Bootstrap the application.
+3. Confirm local start and production build.
 
-### Phase 2 — Content model
+### Phase 2 — Candidate data
 
-1. Extract the strongest candidates from the research.
-2. Normalise event, city and source fields.
-3. Add initial images.
-4. Validate availability states.
+1. Prepare exactly six records.
+2. Add simple status text and source links.
+3. Validate factual claims and images.
 
 ### Phase 3 — Core interface
 
-1. Implement design tokens and typography.
-2. Implement the first screen and gift explanation.
-3. Implement candidate cards.
-4. Implement candidate expansion or detail pages.
-5. Implement availability status.
+1. Implement first screen and gift explanation.
+2. Implement repertoire cards and details.
+3. Implement sources and plain-language status presentation.
 
 ### Phase 4 — Participation
 
-1. Implement event rating.
-2. Implement city rating.
-3. Implement comments.
-4. Implement Следующий акт.
-5. Add device-local persistence for ratings and comments.
-6. Add system Share with a complete copyable-text fallback.
+1. Implement event and city ratings.
+2. Implement comments.
+3. Implement device-local persistence.
+4. Implement `Следующий акт`.
+5. Implement complete Share, Copy and manual-selection result paths.
 
 ### Phase 5 — Release
 
-1. Deploy the website.
-2. Freeze the production URL.
-3. Generate the ticket QR code.
-4. Produce and test the print artifact.
-5. Run acceptance tests.
-6. Fix only P0 defects.
+1. Deploy.
+2. Freeze production URL.
+3. Generate and test QR.
+4. Produce print artifact.
+5. Run P0 acceptance checks.
+6. Fix only release-blocking defects.
 
-## 5. Decision gates
+## 6. Fixed decisions
 
-### Gate A: persistence
+### Candidate count
 
-Gift Edition v0.1 uses device-local persistence only.
+Gift Edition v0.1 contains exactly six published candidates. There is no seventh public card.
 
-Required:
+### Persistence
 
-- ratings and comments are stored in the current browser on the current device;
-- state restores after reload in that browser;
-- no authentication, server persistence, multi-user aggregation or cross-device restoration is introduced;
-- the interface discloses the limitation honestly.
+Ratings and comments are stored only in the current browser and device. There is no authentication, server persistence, multi-user aggregation or cross-device restoration.
 
-Shared persistence is deferred to a later owner-authorised iteration. It is not an optional v0.1 upgrade path.
+### Status
 
-### Gate B: candidate count
+Candidate status is manually edited plain text:
 
-Do not delay the release to publish the entire research report.
+- `statusLabel`;
+- `statusNote`;
+- optional `nextExpectedUpdate`.
 
-Required for Gift Edition v0.1:
+The release does not require a lifecycle enum, action posture or transition engine.
 
-- exactly six strong, complete, sourced candidates;
-- no seventh card;
-- remaining research directions may be added only in a later iteration authorized by the owner.
+### Scoring
 
-### Gate C: page structure
+The only total is:
 
-Separate routes are optional.
+```text
+eventRating + cityRating
+```
 
-Fallback:
+Both components remain visible. There are no synthetic, test, community or council aggregate ratings in the interface.
 
-- one mobile-first page;
-- anchored sections;
-- expandable candidate cards;
-- no fragile routing dependency.
+### Fallback
 
-### Gate D: admin interface
+Clipboard copy and manual text selection are the complete-result fallback paths. Screenshots are not presented as a substitute for the complete comment-preserving payload.
 
-Admin UI is not required for v0.1.
+## 7. Definition of Done
 
-Fallback:
+The release is done when:
 
-- typed local data file;
-- manual edit and redeploy.
+1. the printed QR opens a stable mobile page without login;
+2. the gift proposition is understandable;
+3. exactly six complete sourced candidates are visible;
+4. candidate details show event, city, simple status, uncertainty and sources;
+5. ratings and comments work and survive reload on the same device;
+6. `Следующий акт` displays the complete six-candidate result;
+7. Share, Copy and manual selection preserve all ratings and non-empty comments;
+8. the Open Ticket contains the tested production QR;
+9. known non-blocking limitations are recorded.
 
-## 6. Definition of Done
+## 8. Non-blocking imperfections
 
-### Website
+The following do not block the personal Gift Edition when the P0 flow works:
 
-- production URL responds successfully;
-- page loads on a mobile connection;
-- primary gift meaning is understandable within the first screen and initial scroll;
-- exactly six candidates are complete, sourced and publishable;
-- ratings are interactable;
-- the user can enter a comment;
-- ratings and comments restore only in the same browser and device;
-- availability status is visible;
-- official and supporting external sources open;
-- system Share transfers the complete result where available;
-- after Share failure, cancellation or unavailability, the complete text for all six candidates remains visible, selectable and copyable;
-- screenshot guidance requires enough captures to include all six candidates when one viewport is insufficient;
-- no critical layout break exists on mobile.
-
-### Ticket
-
-- print is physically readable;
-- gift contains two tickets unambiguously;
-- QR opens the production URL;
-- short URL is printed as fallback;
-- ticket uses the approved product language;
-- front and back contain no unresolved placeholders.
-
-### Project
-
-- known limitations are documented;
-- no secrets are present in the repository;
-- unfinished P1 work is captured in issues;
-- release status is recorded in umbrella issue #1.
-
-## 7. Non-blocking imperfections
-
-The following do not block v0.1 if the gift remains clear and usable:
-
-- no full authentication;
-- local-only votes;
-- local-only comments;
-- no admin UI;
-- incomplete city catalogue;
-- no automated monitoring;
-- simplified animations;
+- no authentication;
+- no backend or CMS;
+- no automatic monitoring;
 - manual status updates;
-- no final brand domain.
+- no final brand domain;
+- controlled image placeholders;
+- simplified animation;
+- no broader city catalogue;
+- no production-scale architecture.
 
-The six-candidate count, source requirements and device-local persistence model are release invariants, not optional simplifications.
+## 9. Release blockers
 
-## 8. Release risks
+Block release only for defects that can:
 
-### Content overload
+- break the QR-to-mobile flow;
+- make a required interaction unusable;
+- lose or materially misrepresent ratings or comments;
+- publish unsupported facts;
+- falsely claim server storage, successful transmission or automated monitoring.
 
-Risk: importing the entire research report creates unreadable cards.
-
-Control: use concise editorial summaries and retain source links for depth.
-
-### Visual overreach
-
-Risk: time is spent on decorative experimentation while the gift flow remains incomplete.
-
-Control: one strong visual system, limited components, mobile-first review.
-
-### Persistence scope creep
-
-Risk: authentication, database or shared-state work consumes the release window and contradicts the approved local-only disclosure.
-
-Control: device-local persistence is the only v0.1 path; shared persistence is deferred.
-
-### Incomplete share fallback
-
-Risk: a single mobile screenshot omits candidates, ratings or comments from the completed result.
-
-Control: retain the full generated text, provide `Копировать результат`, allow manual text selection and describe screenshots only as a multi-capture secondary option.
-
-### QR dependency
-
-Risk: the ticket is printed before the final URL is stable.
-
-Control: deploy first, freeze URL, then generate and print QR.
-
-### Incorrect availability claims
-
-Risk: future programmes change or research data becomes stale.
-
-Control: visible status note, official sources and final manual review.
-
-## 9. Post-release work
-
-The first post-gift iteration should prioritise:
-
-1. shared participant persistence;
-2. admin candidate editing;
-3. robust shortlist aggregation;
-4. richer city pages;
-5. candidate status history;
-6. targeted monitoring of selected candidates;
-7. notification experiments.
-
-## 10. Release report
-
-After presentation, add a report to issue #1 containing:
-
-- URL;
-- printed ticket version;
-- implemented features;
-- deferred features;
-- defects discovered during presentation;
-- Polina's initial reaction;
-- observed usage and feedback;
-- recommended v0.2 scope.
+Do not delay the gift for speculative future-platform concerns or background-document modelling differences.
