@@ -6,7 +6,7 @@ Present the gift on **8 August 2026**.
 
 ## Goal
 
-Deliver a coherent mobile-first gift experience opened from the printed Open Ticket QR. Polina should understand the gift, inspect six curated candidates, rate events and cities separately, leave optional comments and share the completed result.
+Deliver a coherent mobile-first cultural-season experience opened from the printed Open Ticket QR. Polina should understand the curatorial idea, inspect six curated candidates, rate events and cities separately, leave optional comments and share the completed result.
 
 This is a time-bounded personal gift with human-operated editorial follow-up. It is not a public marketplace, autonomous recommendation service or safety-critical system.
 
@@ -22,6 +22,8 @@ Supporting document roles:
 - `docs/ux/website-concept.md` — broader background concept, not a source of additional v0.1 requirements;
 - `docs/research/2026-08-05-cultural-trip/` — dated research and provenance, not runtime truth;
 - `docs/ux/gift-ticket.md` — accepted Open Ticket baseline, with the owner-accepted terminology limitation recorded in issue #8.
+
+The printed Open Ticket defines ticket quantity and companion entitlement. The website does not need to repeat, explain or validate those mechanics.
 
 Earlier drafts, examples and speculative future models must not add features, fields or states to Gift Edition v0.1.
 
@@ -39,7 +41,7 @@ Earlier drafts, examples and speculative future models must not add features, fi
 Gift Edition v0.1 includes:
 
 - QR landing without login;
-- the approved first-screen gift explanation;
+- the approved first-screen cultural-season explanation;
 - exactly six sourced cultural candidates;
 - mobile repertoire browsing and candidate detail;
 - simple manually edited status text per candidate;
@@ -73,6 +75,7 @@ The interface does not show synthetic, test, community or artistic-council aggre
 - backend, database, CMS or administration;
 - automated crawling, monitoring or notifications;
 - ticket purchase and travel-planning integrations;
+- restating ticket quantity or companion entitlement in website copy;
 - formal candidate state machines;
 - public-market onboarding or platform architecture;
 - native applications;
@@ -116,7 +119,7 @@ Review must not create new product requirements from background documents or ear
 The iteration is complete when:
 
 1. the printed QR opens a stable mobile page without login;
-2. the gift and `Полина + 1` proposition are understandable;
+2. the personal cultural-season proposition is understandable;
 3. exactly six complete, sourced candidates are visible;
 4. candidate details show event, city, simple status, uncertainty and sources;
 5. event and city ratings work independently;
@@ -124,7 +127,7 @@ The iteration is complete when:
 7. local values survive reload on the same device;
 8. `Следующий акт` shows all six completed evaluations and comments;
 9. Share, Copy and manual selection preserve the complete result;
-10. the Open Ticket and production website contain no placeholders that block the gift flow.
+10. the Open Ticket and production website contain no placeholders that block the QR-to-repertoire flow.
 
 ## Owner-decision stop conditions
 
