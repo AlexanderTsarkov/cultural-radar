@@ -32,9 +32,9 @@ The release is successful when the printed ticket and the website together commu
 
 ### Content
 
-- [ ] Strongest research candidates selected.
-- [ ] At least 6 complete candidate records prepared.
-- [ ] Every candidate has an official source where available.
+- [ ] Exactly six complete, publishable candidate records prepared.
+- [ ] Every candidate has at least one primary external source.
+- [ ] Every material date, sales or availability claim is supported by an appropriate source.
 - [ ] Images have usable sources and credits.
 - [ ] Availability statuses reviewed.
 
@@ -127,10 +127,11 @@ Fallback:
 
 Do not delay the release to publish the entire research report.
 
-Preferred:
+Required for Gift Edition v0.1:
 
-- 6–12 strong, complete candidates;
-- remaining candidates added after presentation.
+- exactly six strong, complete, sourced candidates;
+- no seventh card;
+- remaining research directions may be added only in a later iteration authorized by the owner.
 
 ### Gate C: page structure
 
@@ -159,11 +160,11 @@ Fallback:
 - production URL responds successfully;
 - page loads on a mobile connection;
 - primary gift meaning is understandable within the first screen and initial scroll;
-- at least 6 candidates are complete;
+- exactly six candidates are complete, sourced and publishable;
 - ratings are interactable;
 - the user can enter a comment;
 - availability status is visible;
-- official sources open;
+- official and supporting external sources open;
 - no critical layout break exists on mobile.
 
 ### Ticket
@@ -193,9 +194,10 @@ The following do not block v0.1 if the gift remains clear and usable:
 - incomplete city catalogue;
 - no automated monitoring;
 - simplified animations;
-- limited candidate count;
 - manual status updates;
 - no final brand domain.
+
+The six-candidate count and source requirements are release invariants, not optional simplifications.
 
 ## 8. Release risks
 
