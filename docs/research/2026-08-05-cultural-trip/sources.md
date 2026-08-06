@@ -6,12 +6,23 @@ This manifest was recovered from the original Word export of the 2026-08-05 deep
 
 - Recovery date: **2026-08-06**.
 - Original research date: **2026-08-05**.
-- These URLs identify the public web pages used by the research session.
+- The original research brief is archived in [`00-research-brief.md`](./00-research-brief.md).
+- Original-session marker `turn0file0` resolves to that archived brief.
+- The URLs below identify the public web pages used by the research session.
 - They do **not** freeze the page contents or guarantee that dates, ticket sales, seat availability or programmes remain unchanged.
 - Issue #5 must revisit the official pages before publishing the runtime dataset.
 - Revalidation means confirming the candidate's current lifecycle stage; it does not require every candidate to have an exact date, time or ticket page.
 - The numbered references below correspond to the `[1]`–`[22]` citations in the original Word export.
 - `turn...` identifiers listed under each source correspond to citations retained in the Markdown snapshot.
+
+## Non-web input artifact
+
+### `turn0file0` — Original research brief
+
+- Repository target: [`00-research-brief.md`](./00-research-brief.md)
+- Type: user-provided research prompt
+- Used for: gift context, recipient profile, date window, geography, candidate categories, source requirements, scoring criteria, report structure and monitoring expectations.
+- Status: archived and resolvable.
 
 ## Sources
 
@@ -152,5 +163,4 @@ The product is intended to carry candidates through these stages. Missing dates 
 1. The Word export resolves the cited public pages, but it does not archive their contents.
 2. Some research paragraphs cite multiple original-session markers while the Word export groups them under one numbered hyperlink; the mappings above preserve all recoverable identifiers.
 3. Source [13] is reused by the Word export for two distinct claims. The `Пиши балет` claim therefore remains public-web-provenance-incomplete until #5 locates a direct official page.
-4. The research brief cited as `turn0file0` is a separate non-web input artifact and is not currently archived or linked in the repository. Full research-session provenance therefore remains incomplete even though the public-web citations are largely resolvable.
-5. Runtime candidate records must store the current official URL and a fresh `checkedAt` value appropriate to the claimed lifecycle stage rather than copying historical availability claims unchanged.
+4. Runtime candidate records must store the current official URL and a fresh `checkedAt` value appropriate to the claimed lifecycle stage rather than copying historical availability claims unchanged.
