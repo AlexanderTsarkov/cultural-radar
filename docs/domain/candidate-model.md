@@ -2,9 +2,11 @@
 
 ## 1. Purpose
 
-This document defines the minimum domain model required for the Gift MVP while preserving the distinctions needed by a future Cultural Radar product.
+This document defines the minimum domain model required for Gift Edition v0.1 while preserving distinctions needed by a future Cultural Radar product.
 
 The model must support incomplete cultural information. A candidate may exist before there is a concrete date, venue or ticket page.
+
+Exact Gift Edition interaction behaviour is defined by `docs/ux/gift-v0.1-experience-spec.md`.
 
 ## 2. Core entities
 
@@ -17,8 +19,8 @@ It answers:
 - why this item is relevant to this user or group;
 - what is currently known;
 - what remains uncertain;
-- what should be monitored next;
-- whether it belongs in the shortlist.
+- what Cultural Radar should follow next;
+- which evidence supports the current statement.
 
 A candidate is not always the same as a production or a scheduled performance. It is the editorial and user-specific observation object.
 
@@ -64,7 +66,7 @@ The city may carry:
 - editorial description;
 - travel value;
 - practical travel notes;
-- user ratings;
+- user rating;
 - comments;
 - multiple candidate events.
 
@@ -83,33 +85,39 @@ Examples:
 
 A source should record which claim it supports and whether it is primary or secondary.
 
-### Availability state
+### Availability status
 
-The current operational stage of the candidate from discovery to purchase.
+The current evidence and operational stage of the candidate: discovery, announcement, programme, dates, sales or suitable seats.
 
-### Vote
+### Event rating
 
-A participant's assessment of an event or city.
+Polina's `1–5` assessment of how much she wants to see a specific candidate.
+
+### City rating
+
+Polina's `1–5` assessment of how much she wants to be in or travel to a stable city identity.
+
+### Evaluation progress
+
+A derived presentation state indicating whether a candidate has neither rating, one rating or both ratings.
 
 ### Comment
 
-A participant's note connected to a candidate or city.
+An optional participant note connected to a candidate or city.
 
-## 3. Candidate lifecycle
+## 3. Availability lifecycle
 
-Canonical states:
+Canonical v0.1 states:
 
 ```text
 research_candidate
 officially_announced
+waiting_for_programme_or_confirmation
 waiting_for_dates
 dates_published
 waiting_for_sales
 sales_open
 suitable_seats_available
-shortlisted
-selected
-purchased
 archived
 ```
 
@@ -119,15 +127,19 @@ Human labels are defined in `docs/product/product-language.md`.
 
 #### `research_candidate`
 
-The item was discovered in research but requires additional confirmation or observation.
+The item was discovered in research but requires additional confirmation. It is not automatically publishable.
 
 #### `officially_announced`
 
 A primary source confirms the production, festival or relevant programme.
 
+#### `waiting_for_programme_or_confirmation`
+
+A festival, city direction or other cultural proposition is known, but the programme or concrete publishable candidate remains incomplete.
+
 #### `waiting_for_dates`
 
-The cultural event is confirmed, but a concrete suitable date is not yet published.
+The cultural event is sufficiently confirmed, but a concrete suitable date is not yet published.
 
 #### `dates_published`
 
@@ -139,50 +151,43 @@ A suitable date exists, but tickets are not yet on sale.
 
 #### `sales_open`
 
-Tickets are publicly available. This does not yet mean that four suitable seats exist.
+Tickets are publicly available. This does not mean that the required suitable seats exist.
 
 #### `suitable_seats_available`
 
 The required quantity and quality of seats appear purchasable.
 
-For the Polina Gift Edition, the operational target is four seats: two gifted seats and two seats purchased by the donors.
-
-#### `shortlisted`
-
-The candidate has entered **Следующий акт**. This is an editorial/user decision and may coexist conceptually with another availability stage.
-
-For the MVP, this may be represented as a separate Boolean flag rather than as a single lifecycle state.
-
-#### `selected`
-
-The group has chosen this candidate.
-
-#### `purchased`
-
-The required tickets have been acquired.
+For the Polina Gift Edition, the operational target is four seats: two gifted seats and two seats for the donors.
 
 #### `archived`
 
-The candidate is no longer active or the completed experience has moved to history.
+The candidate is no longer active, became impossible or moved to historical records.
 
-## 4. Important modelling rule
+## 4. Important modelling rules
 
-Availability and editorial selection are separate dimensions.
+### 4.1 Availability is not navigation
 
-A candidate can be:
+`На радаре` and `Следующий акт` are interface destinations in Gift Edition v0.1. They are not values of `availabilityStatus`.
 
-- `waiting_for_dates` and shortlisted;
-- `sales_open` but not shortlisted;
-- `selected` before purchase;
-- archived because the event became impossible.
+### 4.2 Availability is not evaluation
 
-Therefore the future model should use:
+Event and city ratings never alter candidate availability.
 
-- `availabilityStatus`;
-- `selectionStatus`;
-- optional `archiveReason`.
+A candidate may be:
 
-## 5. Gift MVP representation
+- `waiting_for_dates` with ratings `5/5` and `4/5`;
+- `sales_open` but still unrated;
+- `suitable_seats_available` with low user interest.
+
+### 4.3 No selection state in Gift Edition v0.1
+
+Gift Edition v0.1 does not store per-candidate `shortlisted`, `keep`, `reject`, `selected` or `purchased` states.
+
+`Следующий акт` contains all six completed evaluations. It is not a shortlist Boolean.
+
+Future product versions may add separate decision and fulfilment dimensions when users choose or manage multiple events. Those future dimensions must not be folded into `availabilityStatus`, ratings or navigation.
+
+## 5. Gift Edition v0.1 representation
 
 For delivery speed, v0.1 may use a flattened local structure.
 
@@ -192,20 +197,13 @@ Recommended TypeScript shape:
 export type AvailabilityStatus =
   | "research_candidate"
   | "officially_announced"
+  | "waiting_for_programme_or_confirmation"
   | "waiting_for_dates"
   | "dates_published"
   | "waiting_for_sales"
   | "sales_open"
   | "suitable_seats_available"
-  | "selected"
-  | "purchased"
   | "archived";
-
-export type SelectionStatus =
-  | "on_radar"
-  | "shortlisted"
-  | "rejected"
-  | "selected";
 
 export interface Candidate {
   id: string;
@@ -246,13 +244,15 @@ export interface Candidate {
   };
 
   availabilityStatus: AvailabilityStatus;
-  selectionStatus: SelectionStatus;
   statusNote: string;
   nextExpectedUpdate?: string;
+  actionPosture?: "watching" | "can_decide" | "action_available";
 
   summary: string;
   whyEvent: string;
   whyCity: string;
+  knownFacts?: string[];
+  unknownFacts?: string[];
   risks?: string[];
 
   image?: {
@@ -265,12 +265,11 @@ export interface Candidate {
     label: string;
     url: string;
     type: "primary" | "secondary";
-    supports?: string;
+    supports: string;
   }>;
 
   tags?: string[];
-  featured?: boolean;
-  sortOrder?: number;
+  sortOrder: 1 | 2 | 3 | 4 | 5 | 6;
 }
 ```
 
@@ -288,62 +287,134 @@ Example:
 }
 ```
 
-The same city rating should apply across all candidates linked to that city.
+The same city rating applies across all candidates linked to that city.
 
-In v0.1 the city object may be duplicated inside a static candidate file for convenience, but the application layer should derive city identity from `city.id`.
+In v0.1 the city object may be duplicated inside a static candidate file for convenience, but application state must derive city identity from `city.id`.
 
-## 7. Votes
+## 7. Local evaluation model
 
-Conceptual vote model:
+### 7.1 Event rating
 
 ```ts
-export interface Vote {
-  id: string;
-  participantId: string;
+export type RatingValue = 1 | 2 | 3 | 4 | 5;
+
+export interface EventRating {
   candidateId: string;
-  eventRating?: 1 | 2 | 3 | 4 | 5;
-  decision?: "shortlist" | "keep" | "reject";
-  createdAt: string;
-  updatedAt: string;
+  value: RatingValue;
+  updatedAt?: string;
 }
 ```
 
-City rating is separate:
+Event scale:
+
+- `1` — `Не моё`;
+- `2` — `Скорее не интересно`;
+- `3` — `Интересно, но не приоритет`;
+- `4` — `Очень интересно`;
+- `5` — `Очень хочу увидеть`.
+
+### 7.2 City rating
 
 ```ts
-export interface CityVote {
-  id: string;
-  participantId: string;
+export interface CityRating {
   cityId: string;
-  cityRating: 1 | 2 | 3 | 4 | 5;
-  createdAt: string;
-  updatedAt: string;
+  value: RatingValue;
+  updatedAt?: string;
 }
 ```
 
-This prevents a user from accidentally rating the same city multiple times through different event cards.
+City scale:
 
-For the local-only prototype, votes may be stored in `localStorage` using anonymous participant identity.
+- `1` — `Не хочется`;
+- `2` — `Скорее не привлекает`;
+- `3` — `Было бы интересно`;
+- `4` — `Очень хочется`;
+- `5` — `Очень хочу поехать`.
 
-## 8. Comments
+### 7.3 No decision field
 
-Conceptual comment model:
+Do not add a Gift Edition v0.1 field such as:
+
+```ts
+// Not part of v0.1
+decision: "shortlist" | "keep" | "reject";
+```
+
+Low interest is represented by the rating itself. `Не моё` is the label for event rating `1`, not a rejection command.
+
+### 7.4 Evaluation progress
+
+Progress is derived, not independently authoritative:
+
+```ts
+export type EvaluationProgress =
+  | "not_started"
+  | "partial"
+  | "complete";
+
+export function getEvaluationProgress(
+  eventRating?: RatingValue,
+  cityRating?: RatingValue,
+): EvaluationProgress {
+  if (eventRating && cityRating) return "complete";
+  if (eventRating || cityRating) return "partial";
+  return "not_started";
+}
+```
+
+A candidate is complete only when both ratings exist. An optional comment does not affect completion.
+
+### 7.5 Storage
+
+For the local-only prototype, ratings may be stored in `localStorage` or an equivalent browser-local abstraction.
+
+Requirements:
+
+- stable candidate and city keys;
+- immediate save after selection;
+- restoration in the same browser and device;
+- editable values;
+- no implication of shared persistence;
+- no participant identity required for v0.1.
+
+## 8. Summary score
+
+For Gift Edition v0.1:
+
+```ts
+combinedScore = eventRating + cityRating;
+```
+
+The possible range is `2–10`.
+
+The score is used only after both ratings exist and must always be displayed with its components.
+
+Summary order:
+
+1. combined score descending;
+2. event rating descending;
+3. original `sortOrder` ascending.
+
+The combined score is transparent orientation, not an opaque recommendation algorithm and not an automatic final decision.
+
+## 9. Comments
+
+Conceptual optional comment model:
 
 ```ts
 export interface Comment {
-  id: string;
-  participantId: string;
   candidateId?: string;
   cityId?: string;
   body: string;
-  createdAt: string;
   updatedAt?: string;
 }
 ```
 
 Exactly one of `candidateId` or `cityId` should normally be present.
 
-## 9. Source requirements
+Comments are optional in v0.1 and do not affect rating completion or ranking.
+
+## 10. Source requirements
 
 Every published candidate should contain at least one official or otherwise primary source whenever available.
 
@@ -365,43 +436,88 @@ Optional future fields:
 - confidence;
 - source availability.
 
-## 10. Derived presentation values
+The absence of automated monitoring infrastructure does not change the user-facing candidate status contract. Manual editorial checks may update the same fields.
+
+## 11. Date representation
+
+The model supports:
+
+- one concrete performance in `exactDates`;
+- two concrete performances;
+- several exact dates plus a compact `dateLabel` range;
+- a longer `startDate`–`endDate` period;
+- a confirmed festival period with an incomplete programme;
+- a human `dateLabel` such as `Даты ожидаются` when exact dates are absent.
+
+Do not invent exact dates to satisfy the schema.
+
+## 12. Derived presentation values
 
 The UI may derive:
 
-- average event rating;
-- average city rating;
-- combined orientation score;
-- number of shortlist votes;
-- number of comments;
+- evaluation progress per candidate;
+- count of complete candidates;
+- event rating;
+- city rating;
+- transparent combined score;
+- summary order;
 - number of candidates in a city;
 - progress through availability stages;
-- whether action is currently required.
+- whether action is currently possible.
 
-The combined score should remain transparent and must not replace separate event and city ratings.
+Do not derive or display shortlist votes in Gift Edition v0.1.
 
-## 11. Data quality rules
+## 13. Data quality rules
 
 - Do not invent exact dates.
 - Do not present a secondary source as official.
 - Preserve uncertainty in `statusNote`.
 - Record city and venue separately.
 - Record organisation and production separately where known.
-- Do not treat ticket availability as equivalent to suitable seat availability.
+- Do not treat ticket availability as equivalent to suitable-seat availability.
 - Keep editorial rationale separate from factual description.
 - Use stable IDs and slugs.
 - Include image credit when required by the source.
+- Keep candidate status separate from ratings.
+- Keep navigation separate from domain state.
+- Do not publish the Nizhny Novgorod research direction until it becomes a concrete sourced proposition.
 
-## 12. Deferred model areas
+## 14. Future decision and fulfilment model
 
-The Gift MVP does not need to finalise:
+A later product may let a user follow or choose multiple events simultaneously. That future model may require independent fields such as:
+
+```ts
+export type DecisionStatus =
+  | "considering"
+  | "selected";
+
+export type FulfilmentStatus =
+  | "not_started"
+  | "planning"
+  | "purchased"
+  | "completed";
+```
+
+These names and states are illustrative, not approved current schema.
+
+Future decision and fulfilment must remain separate from:
+
+- availability status;
+- event and city ratings;
+- `На радаре` navigation;
+- `Следующий акт` summary.
+
+## 15. Deferred model areas
+
+Gift Edition v0.1 does not need to finalise:
 
 - production deduplication across organisations;
 - cast-specific event identity;
 - complex festival programme hierarchy;
 - seat inventory tracking;
 - automated source-change history;
-- notification subscriptions;
+- notification subscriptions and channels;
 - user authentication and permissions;
 - public/private repertoire ownership;
-- commercial ticket-provider integration.
+- commercial ticket-provider integration;
+- multi-event decision and fulfilment workflows.
