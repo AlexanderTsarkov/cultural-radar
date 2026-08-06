@@ -463,7 +463,7 @@ Summary order:
 
 The combined score is transparent orientation, not an opaque recommendation algorithm and not an automatic final decision.
 
-Non-empty candidate comments may be included with the corresponding candidate in the shared summary. Comments do not affect ordering.
+Every non-empty candidate comment is included with the corresponding candidate in every complete Web Share, clipboard-copy and manually selectable result payload. Comments do not affect ordering.
 
 ## 9. Source requirements
 
