@@ -48,6 +48,7 @@ The release is successful when the printed ticket and the website together commu
 - [ ] Comment UI with device-local persistence.
 - [ ] Следующий акт view.
 - [ ] Availability status presentation.
+- [ ] System Share with complete copyable-text fallback.
 - [ ] Public deployment.
 
 ### Open Ticket
@@ -170,7 +171,9 @@ Fallback:
 - ratings and comments restore only in the same browser and device;
 - availability status is visible;
 - official and supporting external sources open;
-- the full summary can be transferred through system Share or copied as complete text;
+- system Share transfers the complete result where available;
+- after Share failure, cancellation or unavailability, the complete text for all six candidates remains visible, selectable and copyable;
+- screenshot guidance requires enough captures to include all six candidates when one viewport is insufficient;
 - no critical layout break exists on mobile.
 
 ### Ticket
@@ -224,6 +227,12 @@ Control: one strong visual system, limited components, mobile-first review.
 Risk: authentication, database or shared-state work consumes the release window and contradicts the approved local-only disclosure.
 
 Control: device-local persistence is the only v0.1 path; shared persistence is deferred.
+
+### Incomplete share fallback
+
+Risk: a single mobile screenshot omits candidates, ratings or comments from the completed result.
+
+Control: retain the full generated text, provide `Копировать результат`, allow manual text selection and describe screenshots only as a multi-capture secondary option.
 
 ### QR dependency
 
