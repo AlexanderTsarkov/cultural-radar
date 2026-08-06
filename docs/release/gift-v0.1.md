@@ -45,7 +45,7 @@ The release is successful when the printed ticket and the website together commu
 - [ ] Candidate catalogue.
 - [ ] Expanded candidate information.
 - [ ] Separate event and city rating UI.
-- [ ] Comment UI or honest local prototype.
+- [ ] Comment UI with device-local persistence.
 - [ ] Следующий акт view.
 - [ ] Availability status presentation.
 - [ ] Public deployment.
@@ -100,7 +100,8 @@ The release is successful when the printed ticket and the website together commu
 2. Implement city rating.
 3. Implement comments.
 4. Implement Следующий акт.
-5. Add local or shared persistence according to remaining time.
+5. Add device-local persistence for ratings and comments.
+6. Add system Share with a complete copyable-text fallback.
 
 ### Phase 5 — Release
 
@@ -115,13 +116,16 @@ The release is successful when the printed ticket and the website together commu
 
 ### Gate A: persistence
 
-Use shared persistence only if it can be implemented without threatening deployment and ticket production.
+Gift Edition v0.1 uses device-local persistence only.
 
-Fallback:
+Required:
 
-- localStorage for ratings and comments;
-- honest UI note that opinions are currently saved on the device;
-- shared persistence moved to v0.2.
+- ratings and comments are stored in the current browser on the current device;
+- state restores after reload in that browser;
+- no authentication, server persistence, multi-user aggregation or cross-device restoration is introduced;
+- the interface discloses the limitation honestly.
+
+Shared persistence is deferred to a later owner-authorised iteration. It is not an optional v0.1 upgrade path.
 
 ### Gate B: candidate count
 
@@ -163,8 +167,10 @@ Fallback:
 - exactly six candidates are complete, sourced and publishable;
 - ratings are interactable;
 - the user can enter a comment;
+- ratings and comments restore only in the same browser and device;
 - availability status is visible;
 - official and supporting external sources open;
+- the full summary can be transferred through system Share or copied as complete text;
 - no critical layout break exists on mobile.
 
 ### Ticket
@@ -197,7 +203,7 @@ The following do not block v0.1 if the gift remains clear and usable:
 - manual status updates;
 - no final brand domain.
 
-The six-candidate count and source requirements are release invariants, not optional simplifications.
+The six-candidate count, source requirements and device-local persistence model are release invariants, not optional simplifications.
 
 ## 8. Release risks
 
@@ -215,9 +221,9 @@ Control: one strong visual system, limited components, mobile-first review.
 
 ### Persistence scope creep
 
-Risk: authentication and database work consume the release window.
+Risk: authentication, database or shared-state work consumes the release window and contradicts the approved local-only disclosure.
 
-Control: local persistence fallback approved in advance.
+Control: device-local persistence is the only v0.1 path; shared persistence is deferred.
 
 ### QR dependency
 
