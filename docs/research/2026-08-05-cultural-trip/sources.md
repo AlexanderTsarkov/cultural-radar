@@ -132,11 +132,14 @@ This manifest was recovered from the original Word export of the 2026-08-05 deep
 - Used for: event details and sold-out status.
 - Original session markers: `turn27view4`
 
-### [19] — Moscow Philharmonic, VIVACELLO
+### [19] — Moscow Philharmonic, VIVACELLO, 14 November 2026
 
-- URL: https://meloman.ru/concert/kzch-2026-11-12/
-- Authority: official organiser/venue event page
-- Used for: date, programme, international participants and sale status.
+- Event URL: https://meloman.ru/concert/kzch-2026-11-12/
+- Festival subscription URL: https://meloman.ru/subscription/xviii-mezhdunarodnyj-violonchelnyj-festival-vivacello-2026-18/
+- Authority: official organiser/venue event and subscription pages.
+- Used for: the current 14 November 2026 date, programme, international participants and sale status.
+- Date reconciliation: the event URL retains the legacy `2026-11-12` slug, but the official page content and festival subscription list the performance on **14 November 2026**. The subscription page explicitly states that the concert had been planned for 12 November before subscription sales began.
+- Data rule: do not infer a current event date from a URL slug; use the date displayed in the current official page content and record the verification date.
 - Original session markers: `turn24search24`
 
 ### [20] — NET festival
@@ -163,4 +166,5 @@ The product is intended to carry candidates through these stages. Missing dates 
 1. The Word export resolves the cited public pages, but it does not archive their contents.
 2. Some research paragraphs cite multiple original-session markers while the Word export groups them under one numbered hyperlink; the mappings above preserve all recoverable identifiers.
 3. Source [13] is reused by the Word export for two distinct claims. The `Пиши балет` claim therefore remains public-web-provenance-incomplete until #5 locates a direct official page.
-4. Runtime candidate records must store the current official URL and a fresh `checkedAt` value appropriate to the claimed lifecycle stage rather than copying historical availability claims unchanged.
+4. Official page slugs may retain superseded dates after schedule changes. Runtime data must use the date displayed in current official content, not a date parsed from the URL.
+5. Runtime candidate records must store the current official URL and a fresh `checkedAt` value appropriate to the claimed lifecycle stage rather than copying historical availability claims unchanged.
