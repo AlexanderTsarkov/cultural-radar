@@ -213,6 +213,8 @@ Every publishable candidate must provide all fields needed by the status contrac
 
 These fields are required even when the answer is `none known`, `not applicable` or an empty list. Absence of a field must not be used to represent an explicit empty state.
 
+Supporting sources are the exception to the empty-list rule: a publishable candidate must always have at least one source.
+
 ## 5. Gift Edition v0.1 representation
 
 For delivery speed, v0.1 may use a flattened local structure.
@@ -235,6 +237,15 @@ export type ActionPosture =
   | "watching"
   | "planning_possible"
   | "ticket_action_available";
+
+export interface CandidateSource {
+  label: string;
+  url: string;
+  type: "primary" | "secondary";
+  supports: string;
+}
+
+export type NonEmptyArray<T> = [T, ...T[]];
 
 export interface Candidate {
   id: string;
@@ -292,12 +303,7 @@ export interface Candidate {
     credit?: string;
   };
 
-  sources: Array<{
-    label: string;
-    url: string;
-    type: "primary" | "secondary";
-    supports: string;
-  }>;
+  sources: NonEmptyArray<CandidateSource>;
 
   tags?: string[];
   sortOrder: 1 | 2 | 3 | 4 | 5 | 6;
@@ -461,9 +467,23 @@ Non-empty candidate comments may be included with the corresponding candidate in
 
 ## 9. Source requirements
 
-Every published candidate should contain at least one official or otherwise primary source whenever available.
+Every published candidate must contain at least one source and must expose its source links in candidate detail.
 
-The UI must not infer stronger certainty than the sources support.
+Publication rules:
+
+- `sources` is a non-empty collection;
+- at least one primary source is required for a public Gift Edition candidate;
+- `officially_announced` and all later factual lifecycle stages must be supported by a primary source;
+- dates, sales and suitable-seat claims require a source that supports that specific claim;
+- a secondary discovery source may add context, but it does not replace primary evidence for publication;
+- a candidate without sufficient primary evidence remains `research_candidate` and is not one of the six public cards.
+
+The detail view should present external links as useful paths for further reading, not only as internal evidence metadata. A source label should tell Polina what she can learn there, for example:
+
+- official event or production page;
+- programme and dates;
+- official ticket page;
+- interview, review or editorial context.
 
 Required source fields:
 
@@ -471,6 +491,8 @@ Required source fields:
 - URL;
 - source type;
 - supported claim.
+
+The UI must not infer stronger certainty than the sources support.
 
 Optional future fields:
 
@@ -527,6 +549,7 @@ Do not derive or display shortlist votes in Gift Edition v0.1.
 - Keep candidate status separate from ratings.
 - Keep navigation separate from domain state.
 - Keep comments separate from rating completion and ranking.
+- Require a non-empty source list and at least one primary source before publication.
 - Do not publish the Nizhny Novgorod research direction until it becomes a concrete sourced proposition.
 
 ## 13. Future decision and fulfilment model
