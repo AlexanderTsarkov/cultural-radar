@@ -19,15 +19,17 @@ The report serves four explicit roles:
 - Imported into the repository: **2026-08-06**.
 - Source-recovery artifact: the user-provided original Word export of the deep-research report, which retained clickable official-source hyperlinks lost from the Markdown export.
 - Repository transcription: the report is split into three Markdown files only to keep review manageable.
-- Resolvable source URLs and recovered `turn...` mappings are stored in [`sources.md`](./sources.md).
+- Resolvable public-web source URLs and recovered `turn...` mappings are stored in [`sources.md`](./sources.md).
 - The wording and conclusions are preserved as the research output.
 - Dates, sales status, seat availability, programmes and official announcements are time-sensitive and must be revalidated before publication or purchase.
 
 ### Provenance status
 
-**Resolvable with one documented exception.**
+**Public-web citations are resolvable with one documented exception; full snapshot provenance is incomplete until the original research brief is archived.**
 
-The Word export restored the official URLs lost from the Markdown export. One recovered reference, source `[13]`, was reused by the export for both Diaghilev P. S. and the `Пиши балет` claim. The latter must receive a direct official source during issue #5 revalidation.
+The Word export restored the official URLs lost from the Markdown export. One recovered web reference, source `[13]`, was reused by the export for both Diaghilev P. S. and the `Пиши балет` claim. The latter must receive a direct official source during issue #5 revalidation.
+
+The snapshot also cites `turn0file0`, the original research brief supplied to the research session. That brief is a non-web input artifact and is not currently archived or linked in the repository. Until it is preserved, contributors can audit the public-web evidence and the report conclusions, but not the complete input provenance of the research session.
 
 ## Files
 
@@ -36,7 +38,7 @@ The Word export restored the official URLs lost from the Markdown export. One re
 3. [`03-final-selection-and-monitoring-plan.md`](./03-final-selection-and-monitoring-plan.md) — recommended choices, practical ranking, monitoring cadence and certificate guidance.
 4. [`sources.md`](./sources.md) — official URLs, numbered Word references, original-session marker mapping and known provenance limitations.
 
-Together these files constitute the repository research snapshot and its source manifest.
+Together these files constitute the repository research snapshot and its public-web source manifest.
 
 ## Relationship to application data
 
@@ -51,11 +53,13 @@ Issue #5 must derive a separate, typed implementation dataset from it. That data
 - use availability values reviewed against current official information;
 - remain replaceable without rewriting the archived research snapshot.
 
+A candidate does not need a concrete performance date or ticket page to be valid. Its sources must support the lifecycle stage actually claimed: for example, an official season announcement may support `officially_announced` or `waiting_for_dates`, while a ticket page is required only for claims such as `sales_open`.
+
 The expected flow is:
 
 ```text
-research snapshot + resolvable source manifest
-        ↓ editorial selection and fact revalidation (#5)
+research snapshot + resolvable public-web source manifest
+        ↓ editorial selection and lifecycle-stage revalidation (#5)
 typed candidate dataset
         ↓ presentation (#6)
 ratings, comments and Следующий акт (#7)
