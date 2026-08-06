@@ -74,7 +74,7 @@ A comment:
 - may be changed or removed;
 - does not affect rating completion;
 - does not affect ordering in `Следующий акт`;
-- may be included in the shared result when non-empty.
+- is included in every complete Web Share, clipboard-copy and manually selectable result payload when non-empty.
 
 ### 3.4 Candidate information status
 
@@ -172,7 +172,7 @@ Open Ticket v0.5 remains unchanged.
 - `Следующий акт` unlocked after all six candidates have both ratings;
 - transparent summary score `eventRating + cityRating`;
 - screenshot-ready summary;
-- non-empty comments included in the share result when practical;
+- every non-empty candidate comment included in every complete Web Share, clipboard-copy and manually selectable result payload;
 - system Share contract with a complete copyable-text fallback and optional multi-screenshot/manual-send guidance;
 - mobile-first visual grammar aligned with Open Ticket v0.5;
 - reduced-motion-safe behaviour.
@@ -227,8 +227,8 @@ QR entry
     ├── All six completed evaluations
     ├── Transparent totals and components
     ├── Candidate statuses
-    ├── Non-empty comments where useful
-    └── Share result
+    ├── Non-empty comments, possibly visually collapsed
+    └── Complete share/copy result with every non-empty comment
 ```
 
 Persistent navigation is not required. A compact sticky affordance may expose `На радаре`, progress and the locked or active `Следующий акт`, provided it does not obstruct screenshots or reading.
@@ -253,7 +253,7 @@ Persistent navigation is not required. A compact sticky affordance may expose `�
 16. After completion, `Следующий акт` displays all six candidates sorted by the transparent score.
 17. Polina may return and revise any rating or comment; the summary updates immediately.
 18. Polina taps `Отправить художественному совету`.
-19. Where system Share is available, the browser share sheet opens with the result and page URL.
+19. Where system Share is available, the browser share sheet opens with the complete result and page URL.
 20. Where Share is unavailable, fails or is cancelled, the page preserves and exposes the complete text result, offers `Копировать результат`, supports manual text selection, and may additionally suggest multiple screenshots covering all six candidates. It never claims transmission.
 
 No step may imply that ratings or comments are already visible on another device.
@@ -456,7 +456,8 @@ The control must be usable on mobile and must not be hidden behind an optional f
 - restore in the same browser and device;
 - allow editing and complete removal;
 - do not require a comment before moving to the next candidate;
-- do not include empty or whitespace-only comments in the share result;
+- include every non-empty comment in every complete Web Share, clipboard-copy and manually selectable result payload;
+- do not include empty or whitespace-only comments in the result payload;
 - do not imply that a saved local comment has been delivered.
 
 Suggested helper copy:
@@ -504,11 +505,11 @@ Example:
 
 The combined value is a transparent orientation score. It never replaces the two component ratings.
 
-A non-empty comment may appear beneath the corresponding candidate or in a compact comments section. Comments never affect ordering.
+A non-empty comment may appear beneath the corresponding candidate, in a compact comments section or behind a visual expand/collapse affordance. Visual compression is allowed, but every non-empty comment remains mandatory in the complete generated share/copy payload. Comments never affect ordering.
 
 ### 13.3 Editing after completion
 
-Ratings and comments remain editable after the summary opens. Any rating change immediately recalculates order and the screenshot/share result. Comment changes update the share result without changing order.
+Ratings and comments remain editable after the summary opens. Any rating change immediately recalculates order and the screenshot/share result. Comment changes update every complete share/copy payload without changing order.
 
 ## 14. Candidate status and dates
 
@@ -630,7 +631,7 @@ P0 uses the system share sheet where supported. The payload contains:
 - every non-empty candidate comment;
 - the page URL.
 
-The complete text payload is generated independently of system Share so the same full result can be copied when Share is unavailable or cancelled.
+The complete text payload is generated independently of system Share so the same full result can be copied when Share is unavailable or cancelled. Web Share, clipboard copy and manual selection must use the same complete comment-preserving payload.
 
 Example:
 
@@ -657,6 +658,8 @@ Example:
 ```
 
 The URL does not contain device-local ratings or comments. It must not be treated as a substitute for the complete result text.
+
+If system Share cannot accept the complete generated payload, including every non-empty comment, the operation must be treated as unavailable or failed rather than silently truncating feedback.
 
 If system Share is unsupported, fails or is cancelled:
 
@@ -930,7 +933,7 @@ Nizhny Novgorod is not publishable until issue #5 identifies and sources a concr
 - [ ] `Следующий акт` remains inactive until all six candidates are complete.
 - [ ] Summary contains all six candidates sorted by transparent sum.
 - [ ] Component ratings remain visible beside the total.
-- [ ] Non-empty comments can be represented in the summary/share result.
+- [ ] Every non-empty comment is included in every complete Web Share, clipboard-copy and manually selectable result payload.
 - [ ] Summary remains screenshot-ready.
 - [ ] Share cancellation or failure never claims successful sending.
 - [ ] Complete text for all six candidates remains available after Share failure or cancellation.
@@ -967,7 +970,7 @@ The owner approved:
 15. no terminal selection or purchase states in v0.1;
 16. required P0 comment control with optional user input;
 17. device-local persistence wording for ratings and comments;
-18. system text sharing with a complete copyable-text fallback and optional multi-screenshot/manual-send guidance;
+18. system text sharing with every non-empty comment preserved across Web Share, clipboard copy and manual selection, plus optional multi-screenshot guidance;
 19. the visual direction and reference principles;
 20. this document as the implementation contract for issues #4–#7.
 
