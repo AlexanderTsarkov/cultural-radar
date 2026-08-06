@@ -20,6 +20,7 @@ It answers:
 - what is currently known;
 - what remains uncertain;
 - what Cultural Radar should follow next;
+- whether any practical action is currently possible;
 - which evidence supports the current statement.
 
 A candidate is not always the same as a production or a scheduled performance. It is the editorial and user-specific observation object.
@@ -67,7 +68,6 @@ The city may carry:
 - travel value;
 - practical travel notes;
 - user rating;
-- comments;
 - multiple candidate events.
 
 ### Source
@@ -83,11 +83,21 @@ Examples:
 - primary social-media announcement;
 - secondary discovery source.
 
-A source should record which claim it supports and whether it is primary or secondary.
+A source records which claim it supports and whether it is primary or secondary.
 
 ### Availability status
 
 The current evidence and operational stage of the candidate: discovery, announcement, programme, dates, sales or suitable seats.
+
+### Action posture
+
+The practical consequence of the current candidate information:
+
+- `watching` — no practical action is available yet; Cultural Radar continues to follow the candidate;
+- `planning_possible` — dates or a sufficiently concrete period are known and planning can begin, but ticket action is not yet available or not yet appropriate;
+- `ticket_action_available` — current evidence supports a ticket-related action.
+
+Action posture concerns the real-world candidate situation. It is not a rating, navigation state or final selection.
 
 ### Event rating
 
@@ -103,7 +113,9 @@ A derived presentation state indicating whether a candidate has neither rating, 
 
 ### Comment
 
-An optional participant note connected to a candidate or city.
+An optional note for the artistic council connected to a candidate.
+
+The comment value is optional, but the comment control is a required Gift Edition v0.1 interaction.
 
 ## 3. Availability lifecycle
 
@@ -171,7 +183,7 @@ The candidate is no longer active, became impossible or moved to historical reco
 
 ### 4.2 Availability is not evaluation
 
-Event and city ratings never alter candidate availability.
+Event and city ratings never alter candidate availability or action posture.
 
 A candidate may be:
 
@@ -186,6 +198,20 @@ Gift Edition v0.1 does not store per-candidate `shortlisted`, `keep`, `reject`, 
 `Следующий акт` contains all six completed evaluations. It is not a shortlist Boolean.
 
 Future product versions may add separate decision and fulfilment dimensions when users choose or manage multiple events. Those future dimensions must not be folded into `availabilityStatus`, ratings or navigation.
+
+### 4.4 Required publishable-candidate information
+
+Every publishable candidate must provide all fields needed by the status contract:
+
+- current status;
+- human status explanation;
+- known facts;
+- unknown facts, using an empty array when nothing material is currently unknown;
+- next expected update;
+- action posture;
+- supporting sources.
+
+These fields are required even when the answer is `none known`, `not applicable` or an empty list. Absence of a field must not be used to represent an explicit empty state.
 
 ## 5. Gift Edition v0.1 representation
 
@@ -204,6 +230,11 @@ export type AvailabilityStatus =
   | "sales_open"
   | "suitable_seats_available"
   | "archived";
+
+export type ActionPosture =
+  | "watching"
+  | "planning_possible"
+  | "ticket_action_available";
 
 export interface Candidate {
   id: string;
@@ -245,14 +276,14 @@ export interface Candidate {
 
   availabilityStatus: AvailabilityStatus;
   statusNote: string;
-  nextExpectedUpdate?: string;
-  actionPosture?: "watching" | "can_decide" | "action_available";
+  nextExpectedUpdate: string;
+  actionPosture: ActionPosture;
 
   summary: string;
   whyEvent: string;
   whyCity: string;
-  knownFacts?: string[];
-  unknownFacts?: string[];
+  knownFacts: string[];
+  unknownFacts: string[];
   risks?: string[];
 
   image?: {
@@ -293,11 +324,15 @@ In v0.1 the city object may be duplicated inside a static candidate file for con
 
 ## 7. Local evaluation model
 
-### 7.1 Event rating
+### 7.1 Rating value
 
 ```ts
 export type RatingValue = 1 | 2 | 3 | 4 | 5;
+```
 
+### 7.2 Event rating
+
+```ts
 export interface EventRating {
   candidateId: string;
   value: RatingValue;
@@ -313,7 +348,7 @@ Event scale:
 - `4` — `Очень интересно`;
 - `5` — `Очень хочу увидеть`.
 
-### 7.2 City rating
+### 7.3 City rating
 
 ```ts
 export interface CityRating {
@@ -331,7 +366,21 @@ City scale:
 - `4` — `Очень хочется`;
 - `5` — `Очень хочу поехать`.
 
-### 7.3 No decision field
+### 7.4 Candidate comment
+
+```ts
+export interface CandidateComment {
+  candidateId: string;
+  body: string;
+  updatedAt?: string;
+}
+```
+
+The interface provides an editable `Комментарий художественному совету` control for every candidate.
+
+The user may leave it empty. Empty or whitespace-only text should be treated as no saved comment.
+
+### 7.5 No decision field
 
 Do not add a Gift Edition v0.1 field such as:
 
@@ -342,7 +391,7 @@ decision: "shortlist" | "keep" | "reject";
 
 Low interest is represented by the rating itself. `Не моё` is the label for event rating `1`, not a rejection command.
 
-### 7.4 Evaluation progress
+### 7.6 Evaluation progress
 
 Progress is derived, not independently authoritative:
 
@@ -362,20 +411,31 @@ export function getEvaluationProgress(
 }
 ```
 
-A candidate is complete only when both ratings exist. An optional comment does not affect completion.
+A candidate is complete only when both ratings exist. A comment does not affect completion.
 
-### 7.5 Storage
+### 7.7 Storage
 
-For the local-only prototype, ratings may be stored in `localStorage` or an equivalent browser-local abstraction.
+For the local-only prototype, ratings and comments may be stored in `localStorage` or an equivalent browser-local abstraction.
 
 Requirements:
 
 - stable candidate and city keys;
-- immediate save after selection;
+- immediate save after rating selection or comment change;
 - restoration in the same browser and device;
-- editable values;
+- editable and removable comments;
+- editable ratings;
 - no implication of shared persistence;
 - no participant identity required for v0.1.
+
+A possible local state shape is:
+
+```ts
+export interface LocalEvaluationState {
+  eventRatings: Record<string, RatingValue | undefined>;
+  cityRatings: Record<string, RatingValue | undefined>;
+  comments: Record<string, string | undefined>;
+}
+```
 
 ## 8. Summary score
 
@@ -397,24 +457,9 @@ Summary order:
 
 The combined score is transparent orientation, not an opaque recommendation algorithm and not an automatic final decision.
 
-## 9. Comments
+Non-empty candidate comments may be included with the corresponding candidate in the shared summary. Comments do not affect ordering.
 
-Conceptual optional comment model:
-
-```ts
-export interface Comment {
-  candidateId?: string;
-  cityId?: string;
-  body: string;
-  updatedAt?: string;
-}
-```
-
-Exactly one of `candidateId` or `cityId` should normally be present.
-
-Comments are optional in v0.1 and do not affect rating completion or ranking.
-
-## 10. Source requirements
+## 9. Source requirements
 
 Every published candidate should contain at least one official or otherwise primary source whenever available.
 
@@ -438,7 +483,7 @@ Optional future fields:
 
 The absence of automated monitoring infrastructure does not change the user-facing candidate status contract. Manual editorial checks may update the same fields.
 
-## 11. Date representation
+## 10. Date representation
 
 The model supports:
 
@@ -451,7 +496,7 @@ The model supports:
 
 Do not invent exact dates to satisfy the schema.
 
-## 12. Derived presentation values
+## 11. Derived presentation values
 
 The UI may derive:
 
@@ -462,16 +507,17 @@ The UI may derive:
 - transparent combined score;
 - summary order;
 - number of candidates in a city;
-- progress through availability stages;
-- whether action is currently possible.
+- progress through availability stages.
+
+Action posture is explicit candidate data, not an optional inference. Implementations may validate consistency between `availabilityStatus` and `actionPosture`, but must not omit the field.
 
 Do not derive or display shortlist votes in Gift Edition v0.1.
 
-## 13. Data quality rules
+## 12. Data quality rules
 
 - Do not invent exact dates.
 - Do not present a secondary source as official.
-- Preserve uncertainty in `statusNote`.
+- Preserve uncertainty in `statusNote` and `unknownFacts`.
 - Record city and venue separately.
 - Record organisation and production separately where known.
 - Do not treat ticket availability as equivalent to suitable-seat availability.
@@ -480,9 +526,10 @@ Do not derive or display shortlist votes in Gift Edition v0.1.
 - Include image credit when required by the source.
 - Keep candidate status separate from ratings.
 - Keep navigation separate from domain state.
+- Keep comments separate from rating completion and ranking.
 - Do not publish the Nizhny Novgorod research direction until it becomes a concrete sourced proposition.
 
-## 14. Future decision and fulfilment model
+## 13. Future decision and fulfilment model
 
 A later product may let a user follow or choose multiple events simultaneously. That future model may require independent fields such as:
 
@@ -507,7 +554,7 @@ Future decision and fulfilment must remain separate from:
 - `На радаре` navigation;
 - `Следующий акт` summary.
 
-## 15. Deferred model areas
+## 14. Deferred model areas
 
 Gift Edition v0.1 does not need to finalise:
 
