@@ -24,6 +24,14 @@ Target presentation date: **8 August 2026**.
 
 The first release is intentionally small. It must communicate the gift clearly, present an initial curated catalogue, show event and city ratings, explain availability stages, and open from a QR code on a mobile device. It does not need to be a complete production application.
 
+GitHub is the canonical project workspace. Dated research snapshots preserve source material and historical context; they do not automatically represent the current runtime dataset or current ticket availability.
+
+## Active workspace
+
+- [Active iteration](ITERATION.md)
+- [AI agent operating policy](AGENTS.md)
+- [Local AI execution overlay](CLAUDE.md)
+
 ## Documentation
 
 - [`docs/product/vision.md`](docs/product/vision.md)
