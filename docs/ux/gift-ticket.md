@@ -1,78 +1,136 @@
-# UX Concept: Открытый билет
+# UX specification: Открытый билет
 
-## 1. Purpose
+## 1. Current status
 
-**Открытый билет** is the physical entry point into the gift experience.
+Candidate **v0.5** was accepted on 2026-08-06 as a real gift-ticket candidate.
 
-It must look like an intentional cultural artifact rather than a generic gift certificate. The recipient should first read it as a real theatre or festival ticket, then discover that the event is still being selected and that the selection process is part of the gift.
+It is not production-final. The composition, copy and colour system are frozen as the working baseline, but the implemented website, final content, stable production URL, final QR code and print tests may require a controlled final revision.
 
-## 2. Gift mechanics
+## 2. Purpose
+
+**Открытый билет** is the physical entry point into the Cultural Radar Gift Edition.
+
+The recipient should first read it as a real contemporary cultural ticket. While reading, the object reveals that:
+
+- the cultural event is still open;
+- a researched candidate repertoire already exists;
+- the first curatorial selection has already been completed;
+- Polina enters the process as co-author of the next act;
+- the QR opens the current selection stage rather than an empty form.
+
+Core phrase:
+
+```text
+Событие ещё не выбрано.
+Впечатление уже подарено.
+```
+
+## 3. Gift mechanics
 
 The ticket represents:
 
-- two tickets to one selected cultural event;
-- one place for Polina;
-- one place for a companion of her choice;
-- participation in choosing the event and city;
-- the donors' intention to buy their own tickets to the same performance and join.
+- two seats at one selected event;
+- one seat for Polina;
+- one seat for a companion of her choice;
+- Polina's participation in choosing the event and city;
+- a shared next act with the donors, who arrange their own seats.
 
-Travel costs are not part of the gift definition. Travel remains an optional and potentially valuable part of the experience.
-
-## 3. Visual direction
-
-Formula:
-
-> Contemporary theatre festival × travel ticket.
-
-The base visual language should be theatrical and editorial:
-
-- strong poster typography;
-- asymmetric grid;
-- high contrast;
-- warm paper-like background or deep dark background;
-- one saturated accent colour;
-- serial number;
-- QR code;
-- perforation or visually separated control section;
-- restrained route notation.
-
-Travel is expressed through information structure, not through imitation of Russian Railways or an airline ticket.
-
-Avoid:
-
-- theatrical masks;
-- velvet curtains;
-- gold ornamental borders;
-- generic certificate templates;
-- excessive train and suitcase icons;
-- direct copying of real ticket brands.
+The ticket intentionally does not over-explain the donors' ticket purchase or travel costs. Travel is not presented as a paid part of the gift.
 
 ## 4. Physical format
 
-Preferred format:
+- one double-sided horizontal ticket;
+- exact size: **210 × 100 mm**;
+- main content zone: **150 mm**;
+- QR/control zone: **60 mm**;
+- straight corners;
+- visual perforation line, not a detachable requirement;
+- safe margin: approximately 7–8 mm;
+- tolerate normal home-duplex registration error;
+- QR target size: approximately 30 mm;
+- A4 landscape imposition at 100% with crop marks;
+- separate exact-size two-page PDF for professional printing.
 
-- one horizontal ticket;
-- approximately 220 × 95 mm;
-- main information zone;
-- narrow control/QR zone;
-- dense matte paper;
-- optional narrow envelope or sleeve.
+The ticket is issued as **ПОЛИНА + 1**, not as two separate pieces.
 
-The ticket is issued for **Polina + 1**, not as two separate pieces. This keeps the companion choice explicit and the object visually coherent.
+## 5. Visual system
 
-## 5. Front side: content hierarchy
+Working formula:
 
-### Header
+> 75% festival ticket · 20% curatorial catalogue · 5% route document
+
+The route layer is expressed through:
+
+- one progress line;
+- three stations;
+- serial and technical notation;
+- restrained service typography;
+- the QR as the entry to the current stage.
+
+Do not use:
+
+- literal trains, rails or stations;
+- RZD or airline branding;
+- theatrical masks, curtains or gold ornament;
+- generic certificate decoration;
+- military-radar graphics;
+- direct imitation of a real transport ticket.
+
+## 6. Typography
+
+The candidate uses one coherent Cyrillic-capable system:
+
+- **Noto Sans Condensed ExtraBold** — festival/poster headings;
+- **Noto Sans** — content and ticket information;
+- **Noto Sans Mono** — serial number, route stages and technical labels.
+
+All used styles were verified against the actual Russian copy, including `Ё/ё`.
+
+Font binaries are not stored in the repository. The exported PDFs embed the required subsets.
+
+## 7. Colour semantics
+
+```text
+PAPER    white, no background flood
+GRAPHITE #171717
+CURRENT  #E23B24
+FUTURE   #9A9A9A
+```
+
+Semantic rule:
+
+- graphite — completed and primary information;
+- red — open/current stage and invitation to act;
+- grey/dashed — future stage;
+- QR — black on white with a full quiet zone.
+
+Red is not a direct RZD quotation. It works simultaneously as festival-poster colour, route signal and current-state marker.
+
+## 8. Front-side hierarchy and copy
+
+### Service line
 
 ```text
 КУЛЬТУРНЫЙ РАДАР
 ПОЛИНА · СЕЗОН 2026/27
+CR-POLINA-2026-01
 ```
 
 ### Main title
 
 ```text
-ОТКРЫТЫЙ БИЛЕТ
+ОТКРЫТЫЙ
+БИЛЕТ
+```
+
+`ОТКРЫТЫЙ` is red; `БИЛЕТ` is graphite.
+
+### Recipient
+
+```text
+ЗРИТЕЛИ
+ПОЛИНА
++ 1
 ```
 
 ### Main statement
@@ -85,159 +143,181 @@ The ticket is issued for **Polina + 1**, not as two separate pieces. This keeps 
 ### Ticket fields
 
 ```text
-ЗРИТЕЛИ
-Полина + 1
-
 СОБЫТИЕ
-Одно из тех, которых стоит ждать
+Одно из тех, ради которых стоит поехать —
+или остаться в городе
 
 МЕСТО ДЕЙСТВИЯ
-Москва, Санкт-Петербург или другой город,
-выбранный не случайно
+Москва, Санкт-Петербург или другой
+город, выбранный не случайно
 
 ПЕРИОД
-Конец сентября 2026 — начало мая 2027
+Конец сентября 2026 —
+начало мая 2027
 
-КОЛИЧЕСТВО МЕСТ
+МЕСТА
 2 рядом
 
 СТАТУС
-Репертуар формируется
+Ищем то, ради чего стоит ехать.
+Пока неясно куда — но уже ясно зачем.
 
-КЛАСС
-В хорошей компании
-
-СЕРИЙНЫЙ НОМЕР
-CR-POLINA-2026-01
+РОЛЬ ВЛАДЕЛЬЦА
+Соавтор следующего акта
 ```
 
-## 6. QR control section
-
-Heading:
+### QR/control zone
 
 ```text
-ТЕКУЩИЙ РЕПЕРТУАР
+НА
+РАДАРЕ
+
+Кандидаты уже собраны.
+
+Открыть отбор,
+оценить события и города
+и войти в совет.
+
+[QR]
+
+culturalradar.ru
+
+Радар уже работает.
+Открывайте.
+
+CURATED SELECTION · ACT II OPEN
 ```
 
-Instruction:
+The actual QR remains a placeholder until issue #9 provides the stable production URL and final QR asset.
+
+### Route/progress band
+
+The three stations use one consistent layout: title above the line, state/action below the line, node on the line.
 
 ```text
-Открыть кандидатов,
-оценить события и города,
-оставить комментарии
-и перейти к следующему акту.
+01  ПЕРВЫЙ ОТБОР
+    ЗАВЕРШЁН
+
+02  ВЫБОР ОТКРЫТ
+    ВХОД ПО QR
+
+03  СЛЕДУЮЩИЙ АКТ
+    ВПЕРЕДИ
 ```
 
-Small label:
+Station 01 is placed under the `РОЛЬ ВЛАДЕЛЬЦА` area so the reading sequence becomes:
 
-```text
-Вход для члена художественного совета
-```
+> Полина — соавтор · первый отбор завершён · выбор открыт · следующий акт впереди.
 
-Requirements:
+## 9. Back-side copy
 
-- QR code must point to the final public URL;
-- a readable short URL must also be printed;
-- QR must be tested from the actual printed size;
-- sufficient quiet zone and contrast are mandatory;
-- the QR section must look like part of the ticket, not an advertisement.
-
-## 7. Back side: approved draft
-
-### Title
+### Header
 
 ```text
 ПОДАРОК В АКТИВНОЙ ПОСТАНОВКЕ
 ```
 
-### Main text
+### Gift definition
 
 ```text
-Этот открытый билет даёт Полине право на два места
-на одном из событий специально подготовленного
-персонального репертуара.
+Этот открытый билет даёт Полине два места
+на одном из событий персонального репертуара
+сезона 2026/27.
 
-Полина участвует в выборе: оценивает отдельно
-события и города, оставляет комментарии
-и помогает формировать финальный шорт-лист.
+Одно место — для Полины.
 
-После окончательного решения дарители приобретают
-два билета для Полины и спутника по её выбору.
-Себе дарители покупают места на тот же показ
-и присоединяются к вечеру или поездке.
+Второе — для спутника по её выбору.
 ```
 
-### Dramaturgy block
+### Completed first act
 
 ```text
-ДЕЙСТВИЕ I
-На радаре появляются достойные кандидаты.
+ПЕРВЫЙ АКТ УЖЕ СОСТОЯЛСЯ
 
+Мы вышли за пределы текущей афиши
+одного города, посмотрели будущие сезоны
+и собрали сильных кандидатов
+из разных культурных центров.
+
+У каждого есть свои основания
+оказаться на радаре.
+```
+
+### Co-author action
+
+```text
+ТЕПЕРЬ В ДЕЙСТВИЕ ВСТУПАЕТ СОАВТОР
+
+01  Оценить отдельно событие и город
+02  Оставить комментарий
+03  Сохранить кандидата на радаре
+04  Перевести его в следующий акт
+```
+
+### Core dramaturgy
+
+```text
+СОБЫТИЕ — КУЛЬМИНАЦИЯ,
+НО НЕ ВЕСЬ СЮЖЕТ
+
+Следующий акт складывается из города, даты,
+дороги, ожидания, атмосферы
+и разговора после.
+```
+
+### Acts strip
+
+```text
 ДЕЙСТВИЕ II
-Художественный совет обсуждает события и города.
+ОБСУЖДЕНИЕ
+События, города, даты и возможные сценарии.
 
 ДЕЙСТВИЕ III
-Появляются даты, открываются продажи,
-сходятся календари и находятся четыре хороших места.
+СОВПАДЕНИЕ
+Сходятся афиша и календари.
+Находятся четыре хороших места.
 
 СЛЕДУЮЩИЙ АКТ
-Выбор сделан. Билеты приобретены. Идём вместе.
+ДАЛЬШЕ — ВМЕСТЕ
+Выбор сделан. Билеты приобретены.
 ```
 
-### Conditions block
+### Small print
 
 ```text
-В ПОДАРОК ВХОДЯТ
-Два билета на выбранное событие.
+ПРИМЕЧАНИЕ ХУДОЖЕСТВЕННОГО СОВЕТА
 
-В ЗАМЫСЕЛ ВХОДЯТ
-Новый вечер или город, прогулки, разговоры
-и совместное впечатление.
-
-КОМПАНИЯ ДАРИТЕЛЕЙ
-Прилагается и приобретает билеты себе самостоятельно.
-
-СРОК ДЕЙСТВИЯ
-До начала мая 2027 года.
-
-СРОК ДЕЙСТВИЯ ВОСПОМИНАНИЙ
-Не установлен.
-```
-
-Final small-print line:
-
-```text
 Результаты голосования учитываются художественным советом
-наряду с афишей, наличием билетов и суровой реальностью календарей.
+наряду с афишей, наличием билетов
+и суровой реальностью календарей.
 ```
 
-## 8. Connection to the website
+## 10. Website contract
 
-The printed ticket and the website must share:
+The ticket and the implemented Gift Edition website must reconcile on:
 
-- project name;
-- season notation;
-- typography logic;
-- primary colour system;
-- status vocabulary;
-- main phrase;
-- QR entry point;
-- concept of a personal cultural repertoire.
+- project and season naming;
+- typography roles;
+- accent colour and progress-state semantics;
+- `На радаре`, `Выбор открыт` and `Следующий акт` vocabulary;
+- two-seat proposition;
+- the co-author role;
+- the exact URL and QR landing destination;
+- the candidate content available at gift time.
 
-The ticket must remain meaningful after the gift is fulfilled. Later, the same QR destination may show:
+The ticket may be revised after website implementation if the site makes any ticket statement inaccurate or creates a visible mismatch in the shared visual system.
 
-- the selected event;
-- purchased status;
-- city and date;
-- post-event photos or notes.
+## 11. Remaining acceptance gates
 
-## 9. Saturday acceptance checklist
-
-- [ ] Front and back layouts are readable at print size.
-- [ ] It is unambiguous that the gift contains two tickets.
-- [ ] The recipient's participation is clear.
-- [ ] The donors' company is described without implying that travel is paid as part of the gift.
-- [ ] QR code opens the production website.
-- [ ] Short URL is printed as fallback.
-- [ ] Ticket and website use the same visual language.
-- [ ] A test print has been scanned from at least two phones.
+- [x] One-ticket `Полина + 1` gift is unambiguous.
+- [x] Recipient participation is clear.
+- [x] Travel is not presented as a paid part of the gift.
+- [x] Candidate front and back are readable in the exact-size render.
+- [x] Editable source, exact PDF, A4 PDF and preview assets exist as candidate artifacts.
+- [ ] Website visual system is implemented and reconciled.
+- [ ] Stable production URL is frozen.
+- [ ] Final QR replaces the placeholder.
+- [ ] Short fallback URL is confirmed.
+- [ ] No production placeholder remains.
+- [ ] Physical duplex print is reviewed.
+- [ ] Printed QR scans successfully on at least two phones.
