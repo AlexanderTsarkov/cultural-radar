@@ -8,6 +8,22 @@ Present the gift on **8 August 2026**.
 
 Deliver a coherent mobile-first gift experience opened from the printed Open Ticket QR. Polina must understand the two-ticket gift, inspect the curated candidates, evaluate events and cities separately, leave feedback and see how candidates progress toward a real date and available ticket.
 
+## Delivery and review profile
+
+This iteration is a time-bounded personal gift for one known recipient, with a supporting web experience and human-operated editorial follow-up. It is not a public marketplace, autonomous recommendation service or safety-critical system.
+
+Manual research, candidate validation, monitoring, status updates, communication and the final event/travel decision are intentional parts of Gift Edition v0.1.
+
+Review should block release only when a finding can:
+
+- break the QR-to-mobile gift flow;
+- lose or materially misrepresent Polina's ratings or comments;
+- publish unsupported event, date, sales or availability claims;
+- make a required mobile interaction unusable;
+- falsely describe local persistence or manual monitoring.
+
+Enterprise hardening, automated operations, speculative future-platform requirements, minor implementation preferences and owner-accepted limitations are not release blockers for this two-day Gift Edition unless they threaten the criteria above.
+
 ## Active workstreams
 
 - #4 — application foundation, stack and deployment;
