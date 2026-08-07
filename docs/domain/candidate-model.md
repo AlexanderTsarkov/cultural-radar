@@ -27,6 +27,8 @@ A published candidate must contain enough information to render its card and det
 
 The dataset contains exactly six publishable candidates.
 
+A candidate normally represents a concrete cultural event or festival. An explicitly owner-approved candidate may instead represent a source-backed cultural scenario when the exact event is intentionally still being selected. Such a record must have a supported cultural basis, explicit unknown facts and concrete monitoring targets; it is not an empty city placeholder.
+
 ## 3. Minimal TypeScript shape
 
 ```ts
@@ -156,6 +158,8 @@ Rules:
 - comments may be empty, edited or removed;
 - no participant identity is required.
 
+For an explicitly approved cultural-scenario candidate, the event rating measures interest in the scenario rather than in an already selected performance. It uses the same `eventRatings` storage and completion rules.
+
 A candidate is complete when both event and city ratings exist. A comment is optional and does not affect completion.
 
 ## 6. Summary
@@ -195,7 +199,7 @@ Claims about dates, sales or availability require evidence supporting that speci
 
 Secondary sources may add context but cannot replace primary evidence for publication.
 
-A research direction without enough evidence is not one of the six published candidates.
+A research direction without enough evidence is not one of the six published candidates. A source-backed cultural scenario may be publishable when explicitly approved by the owner and when its current basis, uncertainty and next monitoring targets are documented.
 
 The UI exposes source links in candidate detail with readable labels such as:
 
@@ -212,5 +216,5 @@ The UI exposes source links in candidate detail with readable labels such as:
 - Keep event and city rationales separate.
 - Keep status text separate from ratings.
 - Keep navigation separate from candidate data.
-- Do not publish an empty Nizhny Novgorod placeholder.
+- Do not publish an empty Nizhny Novgorod placeholder; the approved Nizhny Novgorod cultural scenario must remain source-backed and explicit about its unknown final event.
 - Do not add fields for speculative future product behaviour during v0.1 implementation.
