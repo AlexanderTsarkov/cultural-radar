@@ -1,0 +1,385 @@
+/* Shared editorial primitives: actions, artwork, landing, radar explanation. */
+
+.button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1rem;
+  border: 1px solid transparent;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-stretch: 62.5%;
+  font-weight: 800;
+  gap: 0.625rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.button[disabled] {
+  border-color: var(--paper-edge);
+  color: var(--grey);
+  cursor: default;
+}
+
+.button--primary {
+  width: 100%;
+  padding-block: 0.9375rem;
+  background: var(--red-ink);
+  color: var(--paper);
+  font-size: 1.125rem;
+}
+
+.button--quiet {
+  justify-content: flex-start;
+  padding-inline: 0;
+  border-bottom: 1px solid var(--graphite);
+  border-radius: 0;
+  color: var(--graphite);
+  font-size: 0.9375rem;
+}
+
+.button--open {
+  width: 100%;
+  justify-content: space-between;
+  border-color: var(--graphite);
+}
+
+.button--arrow {
+  width: 2.75rem;
+  padding: 0;
+  border-color: var(--graphite);
+  font-size: 1.125rem;
+}
+
+.button--back {
+  justify-content: flex-start;
+  padding-inline: 0;
+  font-size: 0.875rem;
+}
+
+.button--step {
+  min-height: 3.25rem;
+  justify-content: flex-start;
+  border-color: var(--graphite);
+  font-size: 0.9375rem;
+}
+
+.button--step-next {
+  justify-content: flex-end;
+}
+
+@media (hover: hover) {
+  .button--primary:hover {
+    background: var(--graphite);
+  }
+
+  .button--open:hover:not([disabled]),
+  .button--arrow:hover:not([disabled]),
+  .button--step:hover:not([disabled]) {
+    background: var(--graphite);
+    color: var(--paper);
+  }
+
+  .button--back:hover,
+  .button--quiet:hover {
+    color: var(--red-ink);
+  }
+}
+
+/* Artwork family */
+
+.artwork {
+  position: relative;
+  border: 1px solid var(--paper-edge);
+  aspect-ratio: 16 / 9;
+  background-color: var(--paper-shade);
+  overflow: hidden;
+}
+
+.artwork::after {
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(23 23 23 / 3.5%) 0 1px,
+    transparent 1px 6px
+  );
+  content: "";
+  inset: 0;
+  pointer-events: none;
+}
+
+.artwork__svg {
+  width: 100%;
+  height: 100%;
+}
+
+.aw-ink {
+  fill: var(--graphite);
+}
+
+.aw-paper {
+  fill: var(--paper-shade);
+}
+
+.aw-accent {
+  fill: var(--red);
+}
+
+.aw-ink-line {
+  fill: none;
+  stroke: var(--graphite);
+  stroke-width: 3;
+}
+
+.aw-accent-line {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 4;
+}
+
+.aw-mute-line {
+  fill: none;
+  stroke: var(--grey);
+  stroke-width: 2;
+}
+
+.aw-mute-fill {
+  fill: var(--grey);
+  opacity: 0.26;
+}
+
+.aw-hair {
+  fill: none;
+  stroke: var(--graphite);
+  opacity: 0.16;
+  stroke-width: 1.5;
+}
+
+.aw-water {
+  fill: none;
+  stroke: var(--graphite);
+  opacity: 0.32;
+  stroke-width: 2;
+}
+
+.aw-dash {
+  stroke-dasharray: 11 9;
+}
+
+.aw-thick {
+  stroke-width: 5;
+}
+
+.aw-xthick {
+  stroke-width: 7;
+}
+
+/* Landing */
+
+.landing {
+  padding-block: clamp(1.25rem, 5vw, 2.5rem) clamp(2.5rem, 9vw, 4.5rem);
+}
+
+.landing__service {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--graphite);
+  margin-bottom: clamp(1.75rem, 7vw, 3rem);
+}
+
+.landing__title {
+  font-size: clamp(2.25rem, 11.5vw, 5rem);
+}
+
+.landing__title-line {
+  display: block;
+}
+
+.landing__title-accent {
+  color: var(--red);
+}
+
+.landing__lead {
+  max-width: 26ch;
+  margin-top: clamp(1.25rem, 5vw, 2rem);
+  font-size: clamp(1.125rem, 4.4vw, 1.5rem);
+  line-height: 1.35;
+}
+
+.landing__art {
+  margin-top: clamp(1.5rem, 6vw, 2.5rem);
+  aspect-ratio: 4 / 3;
+}
+
+.landing__formula {
+  margin-top: clamp(1.75rem, 7vw, 2.75rem);
+  font-size: clamp(1.125rem, 5vw, 1.75rem);
+  letter-spacing: 0.04em;
+}
+
+.landing__ready {
+  margin-top: 0.5rem;
+  color: var(--red-ink);
+  font-size: clamp(1.375rem, 6.5vw, 2.25rem);
+}
+
+.landing__actions {
+  display: grid;
+  margin-top: clamp(1.5rem, 6vw, 2.25rem);
+  gap: 0.875rem;
+  justify-items: start;
+}
+
+.landing__actions .button--primary {
+  justify-self: stretch;
+}
+
+.landing__narrative {
+  display: grid;
+  padding-top: clamp(1.5rem, 6vw, 2.25rem);
+  border-top: 1px solid var(--paper-edge);
+  margin-top: clamp(2.5rem, 9vw, 4rem);
+  gap: 1.125rem;
+}
+
+/* Как работает радар */
+
+.how {
+  padding-block: clamp(2.5rem, 9vw, 4.5rem);
+  border-top: 1px solid var(--paper-edge);
+  scroll-margin-top: 0.5rem;
+}
+
+.how__title {
+  margin-top: 0.5rem;
+}
+
+.how__steps {
+  display: grid;
+  margin-top: clamp(1.75rem, 7vw, 2.75rem);
+  gap: clamp(1.5rem, 5vw, 2rem);
+}
+
+.how__step {
+  padding-top: 0.875rem;
+  border-top: 2px solid var(--graphite);
+}
+
+.how__step-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.how__step-number {
+  color: var(--red-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.how__step-title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-stretch: 62.5%;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.how__step-body {
+  max-width: 42ch;
+  margin-top: 0.5rem;
+  color: var(--graphite-soft);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.how__note {
+  max-width: var(--measure);
+  padding-left: 0.875rem;
+  border-left: 2px solid var(--grey);
+  margin-top: clamp(1.75rem, 7vw, 2.5rem);
+  color: var(--grey-ink);
+  font-size: 0.9375rem;
+}
+
+/* Colophon */
+
+.colophon {
+  display: flex;
+  padding-block: clamp(2rem, 8vw, 3.5rem);
+  border-top: 1px solid var(--graphite);
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+}
+
+.colophon__note {
+  color: var(--grey-ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+  .landing__actions {
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 1.75rem;
+  }
+
+  .landing__actions .button--primary {
+    width: auto;
+    justify-self: start;
+    padding-inline: 2rem;
+  }
+
+  .how__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .landing {
+    display: grid;
+    align-items: start;
+    column-gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+
+  .landing__service,
+  .landing__narrative {
+    grid-column: 1 / -1;
+  }
+
+  .landing__title,
+  .landing__lead,
+  .landing__formula,
+  .landing__ready,
+  .landing__actions {
+    grid-column: 1;
+  }
+
+  .landing__art {
+    grid-row: 2 / span 5;
+    grid-column: 2;
+    align-self: start;
+    margin-top: 0.75rem;
+    aspect-ratio: 5 / 4;
+  }
+
+  .landing__narrative {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
