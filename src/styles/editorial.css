@@ -39,7 +39,7 @@
 }
 
 .button--primary[disabled] {
-  border-color: var(--paper-edge);
+  border-color: var(--grey);
   background: var(--paper-shade);
   color: var(--grey-ink);
 }
