@@ -13,7 +13,7 @@
 - **Культурный радар** — продукт и механизм обнаружения.
 - **Свой репертуар** — персональная коллекция пользователя.
 - **На радаре** — кандидаты, за которыми ведётся наблюдение.
-- **Следующий акт** — шорт-лист и этап совместного выбора.
+- **Следующий акт** — итоговый экран сводки и отправки после того, как все шесть кандидатов получили обе оценки.
 - **Открытый билет** — физический подарочный артефакт.
 
 ## Current release
@@ -22,7 +22,7 @@
 
 Target presentation date: **8 August 2026**.
 
-The first release is intentionally small. It must communicate the gift clearly, present an initial curated catalogue, show event and city ratings, explain availability stages, and open from a QR code on a mobile device. It does not need to be a complete production application.
+The first release is intentionally small. It must communicate the gift clearly, present an initial curated catalogue, show event and city ratings, explain each candidate's plain-language current status and uncertainty, and open from a QR code on a mobile device. It does not need to be a complete production application.
 
 GitHub is the canonical project workspace. Dated research snapshots preserve source material and historical context; they do not automatically represent the current runtime dataset or current ticket availability.
 
@@ -68,7 +68,7 @@ domain work remain in issues #6, #7 and #9.
 
 ### Requirements and local development
 
-- Node.js 22.x;
+- Node.js >=22.12.0 <23;
 - npm.
 
 ```bash

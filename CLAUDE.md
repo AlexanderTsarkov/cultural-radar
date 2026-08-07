@@ -95,7 +95,7 @@ Data changes must additionally validate required fields, stable IDs, source prov
 
 Application changes must run the repository-defined formatter, static checks, tests, build and focused manual checks.
 
-For the Gift Edition web application, use Node 22.x and run:
+For the Gift Edition web application, use Node.js >=22.12.0 <23 and run:
 
 ```bash
 npm ci
