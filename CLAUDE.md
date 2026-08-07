@@ -95,7 +95,22 @@ Data changes must additionally validate required fields, stable IDs, source prov
 
 Application changes must run the repository-defined formatter, static checks, tests, build and focused manual checks.
 
-<!-- STACK_VALIDATION_HOOKS: issue #4 must replace or extend this section with the selected stack's exact commands. -->
+For the Gift Edition web application, use Node 22.x and run:
+
+```bash
+npm ci
+npm run format:check
+npm run typecheck
+npm run validate:data
+npm test
+npm run build
+npm run smoke
+npm run validate
+```
+
+`npm run validate` is the complete automated validation hook. It runs formatting,
+tests, the data-validated TypeScript/Vite production build and an HTTP smoke test
+against the built output.
 
 ## Final report
 
