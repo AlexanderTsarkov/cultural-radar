@@ -211,33 +211,6 @@
   );
 }
 
-/* Reserved evaluation area for issue #7 */
-
-.evaluation {
-  padding: clamp(1rem, 4vw, 1.5rem);
-  border: 1px dashed var(--grey);
-}
-
-.evaluation__title {
-  margin-top: 0.25rem;
-}
-
-.evaluation__body {
-  max-width: var(--measure);
-  margin-top: 0.625rem;
-  color: var(--graphite-soft);
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-.evaluation__status {
-  margin-top: 0.875rem;
-  color: var(--grey-ink);
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-}
-
 /* Sources */
 
 .sources__list {

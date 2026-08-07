@@ -13,9 +13,16 @@ export function Landing({
 }: LandingProps): JSX.Element {
   return (
     <section className="landing shell" aria-labelledby="landing-title">
+      {/* Two meaningful units: narrow viewports break between them instead of
+          orphaning the year away from `Сезон`. */}
       <p className="service-line landing__service">
-        Культурный радар <span aria-hidden="true">·</span> Полина{" "}
-        <span aria-hidden="true">·</span> Сезон 2026/27
+        <span className="landing__service-unit">
+          Культурный радар <span aria-hidden="true">·</span> Полина
+        </span>
+        <span className="landing__service-joint" aria-hidden="true">
+          {" · "}
+        </span>
+        <span className="landing__service-unit">Сезон 2026/27</span>
       </p>
 
       <h1 className="landing__title display" id="landing-title">

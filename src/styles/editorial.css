@@ -38,6 +38,12 @@
   font-size: 1.125rem;
 }
 
+.button--primary[disabled] {
+  border-color: var(--grey);
+  background: var(--paper-shade);
+  color: var(--grey-ink);
+}
+
 .button--quiet {
   justify-content: flex-start;
   padding-inline: 0;
@@ -193,6 +199,22 @@
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--graphite);
   margin-bottom: clamp(1.75rem, 7vw, 3rem);
+}
+
+.landing__service-unit {
+  display: block;
+}
+
+.landing__service-joint {
+  display: none;
+}
+
+/* One line only where the full service line fits without wrapping. */
+@media (min-width: 34rem) {
+  .landing__service-unit,
+  .landing__service-joint {
+    display: inline;
+  }
 }
 
 .landing__title {

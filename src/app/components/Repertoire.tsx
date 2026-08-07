@@ -2,6 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 
 import type { Candidate } from "../../domain/candidate";
+import {
+  cityRatingOf,
+  eventRatingOf,
+  progressLabel,
+  remainingLabel,
+} from "../../domain/evaluation";
+import type { EvaluationState } from "../../domain/evaluation";
 import { CandidateCard } from "./CandidateCard";
 import { formatPositionOf } from "../lib/position";
 import { prefersReducedMotion } from "../lib/motion";
@@ -9,7 +16,11 @@ import { prefersReducedMotion } from "../lib/motion";
 interface RepertoireProps {
   id: string;
   candidates: readonly Candidate[];
+  evaluation: EvaluationState;
+  /** Candidates with both an event and a city rating. */
+  completed: number;
   onOpen: (index: number) => void;
+  onOpenNextAct: () => void;
   /** Index the repertoire should scroll back to and focus after detail close. */
   restoreIndex: number | null;
   onRestored: () => void;
@@ -18,7 +29,10 @@ interface RepertoireProps {
 export function Repertoire({
   id,
   candidates,
+  evaluation,
+  completed,
   onOpen,
+  onOpenNextAct,
   restoreIndex,
   onRestored,
 }: RepertoireProps): JSX.Element {
@@ -108,6 +122,9 @@ export function Repertoire({
         <h2 className="repertoire__title section-title" id="repertoire-title">
           Шесть культурных предложений
         </h2>
+        <p className="repertoire__progress" aria-live="polite">
+          {progressLabel(completed, total)}
+        </p>
         <div className="repertoire__meta">
           <p className="repertoire__position" aria-live="polite">
             <span className="visually-hidden">Предложение </span>
@@ -142,6 +159,8 @@ export function Repertoire({
             <CandidateCard
               candidate={candidate}
               index={index}
+              eventRating={eventRatingOf(evaluation, candidate)}
+              cityRating={cityRatingOf(evaluation, candidate)}
               onOpen={onOpen}
               openButtonRef={(element) => {
                 openButtonsRef.current[index] = element;
@@ -154,6 +173,22 @@ export function Repertoire({
       <p className="repertoire__hint shell label">
         Листайте вбок · всего шесть предложений
       </p>
+
+      <div className="next-act-gate shell">
+        <button
+          className="button button--primary"
+          type="button"
+          onClick={onOpenNextAct}
+          disabled={completed < total}
+        >
+          Следующий акт
+        </button>
+        <p className="next-act-gate__note">
+          {completed < total
+            ? remainingLabel(total - completed)
+            : "Все шесть предложений оценены. Соберите результат для художественного совета."}
+        </p>
+      </div>
     </section>
   );
 }
