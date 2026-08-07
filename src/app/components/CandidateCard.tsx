@@ -1,13 +1,16 @@
 import type { JSX, Ref } from "react";
 
 import type { Candidate } from "../../domain/candidate";
+import type { Rating } from "../../domain/evaluation";
 import { CandidateArtwork, motifForSlug } from "./CandidateArtwork";
-import { EvaluationPlaceholder } from "./EvaluationPlaceholder";
+import { CardEvaluation } from "./CardEvaluation";
 import { formatPosition } from "../lib/position";
 
 interface CandidateCardProps {
   candidate: Candidate;
   index: number;
+  eventRating: Rating | undefined;
+  cityRating: Rating | undefined;
   onOpen: (index: number) => void;
   openButtonRef?: Ref<HTMLButtonElement>;
 }
@@ -15,6 +18,8 @@ interface CandidateCardProps {
 export function CandidateCard({
   candidate,
   index,
+  eventRating,
+  cityRating,
   onOpen,
   openButtonRef,
 }: CandidateCardProps): JSX.Element {
@@ -61,7 +66,7 @@ export function CandidateCard({
           </div>
         </dl>
 
-        <EvaluationPlaceholder variant="card" />
+        <CardEvaluation eventRating={eventRating} cityRating={cityRating} />
 
         <button
           className="button button--open"

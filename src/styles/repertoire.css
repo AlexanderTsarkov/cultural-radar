@@ -179,13 +179,6 @@
   text-transform: uppercase;
 }
 
-.evaluation-card {
-  padding: 0.5rem 0.625rem;
-  border: 1px dashed var(--grey);
-  color: var(--grey-ink);
-  text-align: center;
-}
-
 @media (min-width: 48rem) {
   .repertoire__controls {
     display: flex;

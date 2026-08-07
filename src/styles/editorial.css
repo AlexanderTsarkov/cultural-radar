@@ -38,6 +38,12 @@
   font-size: 1.125rem;
 }
 
+.button--primary[disabled] {
+  border-color: var(--paper-edge);
+  background: var(--paper-shade);
+  color: var(--grey-ink);
+}
+
 .button--quiet {
   justify-content: flex-start;
   padding-inline: 0;

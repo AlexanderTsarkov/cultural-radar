@@ -2,14 +2,23 @@ import { useEffect, useRef } from "react";
 import type { JSX } from "react";
 
 import type { Candidate } from "../../domain/candidate";
+import type { Rating } from "../../domain/evaluation";
 import { CandidateArtwork, motifForSlug } from "./CandidateArtwork";
-import { EvaluationPlaceholder } from "./EvaluationPlaceholder";
+import { CandidateEvaluation } from "./CandidateEvaluation";
 import { formatPositionOf } from "../lib/position";
 
 interface CandidateDetailProps {
   candidate: Candidate;
   index: number;
   total: number;
+  eventRating: Rating | undefined;
+  cityRating: Rating | undefined;
+  comment: string;
+  storageWorks: boolean;
+  onEventRating: (candidate: Candidate, rating: Rating) => void;
+  onCityRating: (candidate: Candidate, rating: Rating) => void;
+  onComment: (candidate: Candidate, text: string) => void;
+  onCommit: () => void;
   onClose: () => void;
   onSelect: (index: number) => void;
 }
@@ -18,6 +27,14 @@ export function CandidateDetail({
   candidate,
   index,
   total,
+  eventRating,
+  cityRating,
+  comment,
+  storageWorks,
+  onEventRating,
+  onCityRating,
+  onComment,
+  onCommit,
   onClose,
   onSelect,
 }: CandidateDetailProps): JSX.Element {
@@ -37,6 +54,9 @@ export function CandidateDetail({
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
+
+  /* The last edit is persisted even if the layer disappears without a click. */
+  useEffect(() => onCommit, [onCommit]);
 
   const hasPrevious = index > 0;
   const hasNext = index < total - 1;
@@ -177,7 +197,17 @@ export function CandidateDetail({
           </section>
         </div>
 
-        <EvaluationPlaceholder variant="detail" />
+        <CandidateEvaluation
+          candidate={candidate}
+          eventRating={eventRating}
+          cityRating={cityRating}
+          comment={comment}
+          storageWorks={storageWorks}
+          onEventRating={(rating) => onEventRating(candidate, rating)}
+          onCityRating={(rating) => onCityRating(candidate, rating)}
+          onComment={(text) => onComment(candidate, text)}
+          onCommit={onCommit}
+        />
 
         <section className="sources" aria-labelledby="sources-title">
           <h2 className="block-title" id="sources-title">
