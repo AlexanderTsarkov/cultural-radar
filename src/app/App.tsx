@@ -97,6 +97,14 @@ export function App(): JSX.Element {
     setNextActOpen(true);
   }, [commitEvaluation]);
 
+  /* Forward path from the last candidate: the detail closes in the same update
+     as the summary opens, so the two layers never coexist. */
+  const openNextActFromDetail = useCallback(() => {
+    commitEvaluation();
+    setOpenIndex(null);
+    setNextActOpen(true);
+  }, [commitEvaluation]);
+
   const closeNextAct = useCallback(() => {
     commitEvaluation();
     setNextActOpen(false);
@@ -151,6 +159,8 @@ export function App(): JSX.Element {
           cityRating={cityRatingOf(evaluation, candidates[openIndex])}
           comment={commentTextOf(evaluation, candidates[openIndex])}
           storageWorks={storageWorks}
+          allComplete={completed === candidates.length}
+          onOpenNextAct={openNextActFromDetail}
           onEventRating={setEventRating}
           onCityRating={setCityRating}
           onComment={setComment}

@@ -15,6 +15,9 @@ interface CandidateDetailProps {
   cityRating: Rating | undefined;
   comment: string;
   storageWorks: boolean;
+  /** All six candidates carry both ratings, so the summary is reachable. */
+  allComplete: boolean;
+  onOpenNextAct: () => void;
   onEventRating: (candidate: Candidate, rating: Rating) => void;
   onCityRating: (candidate: Candidate, rating: Rating) => void;
   onComment: (candidate: Candidate, text: string) => void;
@@ -31,6 +34,8 @@ export function CandidateDetail({
   cityRating,
   comment,
   storageWorks,
+  allComplete,
+  onOpenNextAct,
   onEventRating,
   onCityRating,
   onComment,
@@ -244,15 +249,28 @@ export function CandidateDetail({
             <span aria-hidden="true">←</span>
             <span>Предыдущий</span>
           </button>
-          <button
-            className="button button--step button--step-next"
-            type="button"
-            onClick={() => onSelect(index + 1)}
-            disabled={!hasNext}
-          >
-            <span>Следующий</span>
-            <span aria-hidden="true">→</span>
-          </button>
+          {/* The last candidate leads forward into the summary once every
+              candidate is complete, instead of ending on a dead control. */}
+          {!hasNext && allComplete ? (
+            <button
+              className="button button--step button--step-next"
+              type="button"
+              onClick={onOpenNextAct}
+            >
+              <span>Следующий акт</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          ) : (
+            <button
+              className="button button--step button--step-next"
+              type="button"
+              onClick={() => onSelect(index + 1)}
+              disabled={!hasNext}
+            >
+              <span>Следующий</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          )}
         </nav>
       </article>
     </div>
