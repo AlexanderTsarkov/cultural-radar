@@ -90,9 +90,9 @@ The first screen explains the cultural-season and curatorial proposition. It doe
 3. `Пахита` — новая версия Алексея Мирошниченко, Пермь;
 4. Международный Тихоокеанский театральный фестиваль — Владивосток;
 5. TEART — Минск;
-6. one concrete, sourced cultural proposition in Нижний Новгород.
+6. Нижний Новгород — source-backed cultural scenario with a concrete event still to be selected.
 
-There is no seventh candidate in v0.1. A research direction without a concrete sourced proposition is not publishable.
+There is no seventh candidate in v0.1. The Nizhny Novgorod candidate may intentionally remain a monitored cultural scenario at gift handoff when official sources support the cultural basis and concrete monitoring targets. It must state plainly that the final event, date, sales status and suitable-seat availability are not yet known. An unsupported empty city placeholder is not publishable.
 
 The repertoire may be presented as a manual-swipe mobile carousel with:
 
@@ -119,7 +119,7 @@ Each card shows:
 
 Each candidate detail contains only the information needed for the gift decision:
 
-- what the event is;
+- what the event is, or what source-backed cultural scenario is being evaluated when a concrete event has not yet been selected;
 - why it is culturally interesting;
 - why the city is interesting, or why travel is not required;
 - organisation, creator and venue when known;
@@ -155,6 +155,8 @@ Each candidate receives two independent ratings from `1` to `5`:
 3. `Интересно, но не приоритет`
 4. `Очень интересно`
 5. `Очень хочу увидеть`
+
+For an explicitly approved cultural-scenario candidate such as Nizhny Novgorod, `eventRating` measures interest in that cultural scenario rather than in an already selected performance. The UI may adapt the prompt accordingly, for example `Насколько интересен этот культурный сценарий?`, while preserving the same `1–5` value and completion model.
 
 ### City
 
