@@ -44,7 +44,7 @@ export function CandidateCard({
         {organisation ? <p className="card__org">{organisation}</p> : null}
         {creators ? <p className="card__creators">{creators}</p> : null}
         <p className="card__city">{candidate.city.name}</p>
-        <p className="card__summary">{candidate.summary}</p>
+        <p className="card__proposition">{candidate.whyEvent}</p>
       </div>
 
       <div className="card__foot">
