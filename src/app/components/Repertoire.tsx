@@ -25,11 +25,16 @@ export function Repertoire({
   const trackRef = useRef<HTMLUListElement>(null);
   const openButtonsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
   const total = candidates.length;
 
-  const readActiveIndex = useCallback(() => {
+  /* Desktop arrows follow the real scroll extent rather than the card index:
+     several cards are visible at once, so the last card is reached before the
+     last index becomes the leftmost one. */
+  const syncScrollState = useCallback(() => {
     const track = trackRef.current;
-    if (!track) return 0;
+    if (!track) return;
 
     const trackLeft = track.getBoundingClientRect().left;
     let closest = 0;
@@ -43,41 +48,50 @@ export function Repertoire({
       }
     });
 
-    return closest;
+    setActiveIndex(closest);
+    setAtStart(track.scrollLeft <= 1);
+    setAtEnd(track.scrollLeft >= track.scrollWidth - track.clientWidth - 1);
   }, []);
 
-  const scrollToIndex = useCallback((index: number, smooth: boolean) => {
-    const track = trackRef.current;
-    const first = track?.children[0] as HTMLElement | undefined;
-    const target = track?.children[index] as HTMLElement | undefined;
-    if (!track || !first || !target) return;
+  const scrollToIndex = useCallback(
+    (index: number, smooth: boolean) => {
+      const track = trackRef.current;
+      const first = track?.children[0] as HTMLElement | undefined;
+      const target = track?.children[index] as HTMLElement | undefined;
+      if (!track || !first || !target) return;
 
-    track.scrollTo({
-      left: target.offsetLeft - first.offsetLeft,
-      behavior: smooth && !prefersReducedMotion() ? "smooth" : "auto",
-    });
-    setActiveIndex(index);
-  }, []);
+      track.scrollTo({
+        left: target.offsetLeft - first.offsetLeft,
+        behavior: smooth && !prefersReducedMotion() ? "smooth" : "auto",
+      });
+      setActiveIndex(index);
+      window.requestAnimationFrame(syncScrollState);
+    },
+    [syncScrollState],
+  );
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return undefined;
 
     let frame = 0;
-    const handleScroll = () => {
+    const handleChange = () => {
       if (frame) return;
       frame = window.requestAnimationFrame(() => {
         frame = 0;
-        setActiveIndex(readActiveIndex());
+        syncScrollState();
       });
     };
 
-    track.addEventListener("scroll", handleScroll, { passive: true });
+    syncScrollState();
+    track.addEventListener("scroll", handleChange, { passive: true });
+    window.addEventListener("resize", handleChange);
     return () => {
-      track.removeEventListener("scroll", handleScroll);
+      track.removeEventListener("scroll", handleChange);
+      window.removeEventListener("resize", handleChange);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [readActiveIndex]);
+  }, [syncScrollState]);
 
   useEffect(() => {
     if (restoreIndex === null) return;
@@ -104,7 +118,7 @@ export function Repertoire({
               className="button button--arrow"
               type="button"
               onClick={() => scrollToIndex(activeIndex - 1, true)}
-              disabled={activeIndex === 0}
+              disabled={atStart}
               aria-label="Предыдущее предложение"
             >
               <span aria-hidden="true">←</span>
@@ -113,7 +127,7 @@ export function Repertoire({
               className="button button--arrow"
               type="button"
               onClick={() => scrollToIndex(activeIndex + 1, true)}
-              disabled={activeIndex === total - 1}
+              disabled={atEnd}
               aria-label="Следующее предложение"
             >
               <span aria-hidden="true">→</span>

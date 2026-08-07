@@ -196,7 +196,7 @@
 }
 
 .landing__title {
-  font-size: clamp(2.25rem, 11.5vw, 5.5rem);
+  font-size: clamp(2.25rem, 11.5vw, 5rem);
 }
 
 .landing__title-line {
@@ -373,8 +373,9 @@
   .landing__art {
     grid-row: 2 / span 5;
     grid-column: 2;
+    align-self: start;
     margin-top: 0.75rem;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 5 / 4;
   }
 
   .landing__narrative {
